@@ -13,7 +13,7 @@ namespace Demo.Dao
         {
             _context = context;
         }
-        public IQueryable Select(int? id, String account, String password, String name, String sex, String age, String school, String phone, String address, String email)
+        public List<User> Select(int? id, String account, String password, String name, String sex, String age, String school, String phone, String address, String email)
         {
             try
             {
@@ -22,7 +22,12 @@ namespace Demo.Dao
                             && ((sex == null) || s.Sex == sex) && ((age == null) || s.Age == age) && ((school == null) || s.School == school) && ((phone == null) || s.Phone == phone) &&
                             ((address == null) || s.Address == address) && ((email == null) || s.email == email)
                             select s;
-                return items;
+                List<User> list = new List<User>();
+                foreach (var item in items)
+                {
+                    list.Add(item);
+                }
+                return list;
             }
             catch (Exception e)
             {

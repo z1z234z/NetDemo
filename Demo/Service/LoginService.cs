@@ -26,5 +26,10 @@ namespace Demo.Service
             }
             return result;
         }
+
+        public bool Register(User user)
+        {
+            return userDao.Create(user);
+        }
     }
 }

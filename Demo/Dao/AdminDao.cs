@@ -13,7 +13,7 @@ namespace Demo.Dao
         {
             _context = context;
         }
-        public IQueryable Select(int? id, String account, String password, DateTime logintime, String email)
+        public List<Admin> Select(int? id, String account, String password, DateTime logintime, String email)
         {
             try
             {
@@ -21,7 +21,12 @@ namespace Demo.Dao
                             where ((id == null) || s.ID == id) && ((account == null) || s.Account == account) && ((password == null) || s.Password == password)
                                    && ((logintime == null) || s.Last_Login_Time == logintime) && ((email == null) || s.Email == email)
                             select s;
-                return items;
+                List<Admin> list = new List<Admin>();
+                foreach(var item in items)
+                {
+                    list.Add(item);
+                }
+                return list;
             }
             catch (Exception e)
             {

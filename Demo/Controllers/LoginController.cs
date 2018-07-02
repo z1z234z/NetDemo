@@ -40,7 +40,41 @@ namespace CoremvcDemo.Controllers
             }
             return Ok(new
             {
-                comfirm = result,
+                comfirm = result
+            });
+        }
+
+        [HttpPost]
+        public IActionResult register()
+        {
+            string result = "false";
+            //前端向后端发送数据
+            string account = Request.Form["username"];
+            string password = Request.Form["password"];
+            string email = Request.Form["email"];
+            string name = Request.Form["name"];
+            string sex = Request.Form["sex"];
+            string age = Request.Form["age"];
+            string school = Request.Form["school"];
+            string phone = Request.Form["phone"];
+            string address = Request.Form["address"];
+            User user = new User();
+            user.Account = account;
+            user.Password = password;
+            user.email = email;
+            user.Name = name;
+            user.Sex = sex;
+            user.Age = age;
+            user.School = school;
+            user.Phone = phone;
+            user.Address = address;
+            if (_service.Register(user))
+            {
+                result = "true";
+            }
+            return Ok(new
+            {
+                success = result
             });
         }
     }
