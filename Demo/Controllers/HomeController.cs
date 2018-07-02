@@ -74,7 +74,7 @@ namespace Demo.Controllers
             }
             return Ok(new
             {
-                typelist = list,
+                ownerlist = list,
                 code = code
             });
         }
@@ -93,7 +93,7 @@ namespace Demo.Controllers
             }
             return Ok(new
             {
-                typelist = list,
+                finderlist = list,
                 code = code
             });
         }
