@@ -13,7 +13,7 @@ namespace Demo.Dao
         {
             _context = context;
         }
-        public List<Finder> Select(int? id, User user, String content, bool? complete, String question, String answer, DateTime time, LoseType losetype)
+        public List<Finder> Select(int? id, User user, String content, bool? complete, String question, String answer, DateTime? time, LoseType losetype)
         {
             try
             {

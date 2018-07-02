@@ -13,7 +13,7 @@ namespace Demo.Dao
         {
             _context = context;
         }
-        public List<Owner> Select(int? id, User user, String content, bool? complete, DateTime time, LoseType losetype)
+        public List<Owner> Select(int? id, User user, String content, bool? complete, DateTime? time, LoseType losetype)
         {
             try
             {
