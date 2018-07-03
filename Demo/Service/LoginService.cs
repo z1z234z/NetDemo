@@ -26,5 +26,21 @@ namespace Demo.Service
             }
             return result;
         }
+
+        public bool CheckAccount(String account)
+        {
+            bool result = true;
+            var items = userDao.Select(null, account, null, null, null, null, null, null, null, null);
+            foreach (var item in items)
+            {
+                result = false;
+            }
+            return result;
+        }
+
+        public bool Register(User user)
+        {
+            return userDao.Create(user);
+        }
     }
 }

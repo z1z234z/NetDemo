@@ -13,14 +13,19 @@ namespace Demo.Dao
         {
             _context = context;
         }
-        public IQueryable Select(int? id, String name)
+        public List<LoseType> Select(int? id, String name)
         {
             try
             {
                 var items = from s in _context.LoseTypes
                             where ((id == null) || s.ID == id) && ((name == null) || s.Name == name)
                             select s;
-                return items;
+                List<LoseType> list = new List<LoseType>();
+                foreach (var item in items)
+                {
+                    list.Add(item);
+                }
+                return list;
             }
             catch (Exception e)
             {

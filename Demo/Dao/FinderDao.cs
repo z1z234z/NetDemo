@@ -13,7 +13,7 @@ namespace Demo.Dao
         {
             _context = context;
         }
-        public IQueryable Select(int? id, User user, String content, bool? complete, String question, String answer, DateTime time, LoseType losetype)
+        public List<Finder> Select(int? id, User user, String content, bool? complete, String question, String answer, DateTime? time, LoseType losetype, int index)
         {
             try
             {
@@ -21,7 +21,13 @@ namespace Demo.Dao
                             where ((id == null) || s.ID == id) && ((user == null) || s.User == user) && ((content == null) || s.Content == content) && ((complete == null) || s.Complete == complete)
                              && ((question == null) || s.Question == question) && ((answer == null) || s.Answer == answer) && ((time == null) || s.Time == time) && ((losetype == null) || s.LoseType == losetype)
                             select s;
-                return items;
+                var li = items.OrderByDescending(u => u.Time).Skip(50 * (index - 1)).Take(50);
+                List<Finder> list = new List<Finder>();
+                foreach (var item in items)
+                {
+                    list.Add(item);
+                }
+                return list;
             }
             catch (Exception e)
             {
