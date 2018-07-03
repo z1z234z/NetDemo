@@ -334,7 +334,7 @@
                     this.$refs.registerform.validate((valid) => {
                         if (valid) {
                             _this.registering = true
-                            ajaxPost("LoginController/register", _this.registerform, function (data) {
+                            ajaxPost("/LoginController/register", _this.registerform, function (data) {
                                 if (data.code == 200) {
                                     if (data.result) {
                                         Message({
