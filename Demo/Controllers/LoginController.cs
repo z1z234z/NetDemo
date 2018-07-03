@@ -48,12 +48,12 @@ namespace CoremvcDemo.Controllers
         [HttpPost]
         public IActionResult accountRepeatable()
         {
-            string result = "false";
+            bool result = false;
             //前端向后端发送数据
             string account = Request.Form["account"];
             if (_service.CheckAccount(account))
             {
-                result = "true";
+                result = true;
             }
             return Ok(new
             {
