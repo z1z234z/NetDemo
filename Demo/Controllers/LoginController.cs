@@ -67,9 +67,9 @@ namespace CoremvcDemo.Controllers
         {
             string result = "false";
             //前端向后端发送数据
-            string account = Request.Form["account"];
-            string password = Request.Form["password"];
-            string email = Request.Form["email"];
+            string account = Request.Form["accountreg"];
+            string password = Request.Form["passwordreg"];
+            string email = Request.Form["emailreg"];
             string name = Request.Form["name"];
             string sex = Request.Form["gender"];
             string age = Request.Form["age"];

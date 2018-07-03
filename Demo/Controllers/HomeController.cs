@@ -69,6 +69,7 @@ namespace Demo.Controllers
             string type = Request.Form["type"];
             string temp = Request.Form["index"];
             int index = (temp == null) ? 0 : Convert.ToInt32(Request.Form["index"]);
+            type = (type == "") ? null : type;
             list = _service.GetOwnerByType(type, index);
             if (list == null)
             {
@@ -90,6 +91,7 @@ namespace Demo.Controllers
             string type = Request.Form["type"];
             string temp = Request.Form["index"];
             int index = (temp == null) ? 0 : Convert.ToInt32(Request.Form["index"]);
+            type = (type == "") ? null : type;
             list = _service.GetFinderByType(type, index);
             if (list == null)
             {
