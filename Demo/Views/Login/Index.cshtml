@@ -169,12 +169,11 @@
                     if (value === '') {
                         callback(new Error('请输入账号!'))
                     } else {
-                        ajaxPost("/LoginController/accountRepeatable", value, function (data) {
+                        ajaxPost("/Login/accountRepeatable", value, function (data) {
                             if (data.code == 200) {
                                 if (!data.result) {
                                     callback(new Error('该账号已经存在，请尝试新的账号!'))
                                 }
-                                
                                 callback()
                                 
                             }
@@ -334,7 +333,7 @@
                     this.$refs.registerform.validate((valid) => {
                         if (valid) {
                             _this.registering = true
-                            ajaxPost("/LoginController/register", _this.registerform, function (data) {
+                            ajaxPost("/Login/register", _this.registerform, function (data) {
                                 if (data.code == 200) {
                                     if (data.result) {
                                         Message({
