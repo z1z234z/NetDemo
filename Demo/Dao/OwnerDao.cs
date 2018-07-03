@@ -13,7 +13,7 @@ namespace Demo.Dao
         {
             _context = context;
         }
-        public List<Owner> Select(int? id, User user, String content, bool? complete, DateTime? time, LoseType losetype)
+        public List<Owner> Select(int? id, User user, String content, bool? complete, DateTime? time, LoseType losetype, int index)
         {
             try
             {
@@ -21,6 +21,7 @@ namespace Demo.Dao
                             where ((id == null) || s.ID == id) && ((user == null) || s.User == user) && ((content == null) || s.Content == content) && ((complete == null) || s.Complete == complete)
                             && ((time == null) || s.Time == time) && ((losetype == null) || s.LoseType == losetype)
                             select s;
+                var li = items.OrderByDescending(u => u.Time).Skip(50 * (index - 1)).Take(50);
                 List<Owner> list = new List<Owner>();
                 foreach (var item in items)
                 {

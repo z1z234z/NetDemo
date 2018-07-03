@@ -67,7 +67,9 @@ namespace Demo.Controllers
             List<Owner> list = new List<Owner>();
             //前端向后端发送数据
             string type = Request.Form["type"];
-            list = _service.GetOwnerByType(type);
+            string temp = Request.Form["index"];
+            int index = (temp == null) ? 0 : Convert.ToInt32(Request.Form["index"]);
+            list = _service.GetOwnerByType(type, index);
             if (list == null)
             {
                 code = 500;
@@ -86,7 +88,9 @@ namespace Demo.Controllers
             List<Finder> list = new List<Finder>();
             //前端向后端发送数据
             string type = Request.Form["type"];
-            list = _service.GetFinderByType(type);
+            string temp = Request.Form["index"];
+            int index = (temp == null) ? 0 : Convert.ToInt32(Request.Form["index"]);
+            list = _service.GetFinderByType(type, index);
             if (list == null)
             {
                 code = 500;

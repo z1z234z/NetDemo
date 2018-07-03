@@ -26,7 +26,7 @@ namespace Demo.Service
             return loseTypesDao.Select(null, null);
         }
 
-        public List<Owner> GetOwnerByType(String type)
+        public List<Owner> GetOwnerByType(String type, int index)
         {
             LoseType loseType = null;
             var items = loseTypesDao.Select(null, type);
@@ -34,10 +34,10 @@ namespace Demo.Service
             {
                 loseType = item;
             }
-            return ownerDao.Select(null, null, null, null, null, loseType);
+            return ownerDao.Select(null, null, null, null, null, loseType, index);
         }
 
-        public List<Finder> GetFinderByType(String type)
+        public List<Finder> GetFinderByType(String type, int index)
         {
             LoseType loseType = null;
             var items = loseTypesDao.Select(null, type);
@@ -45,7 +45,7 @@ namespace Demo.Service
             {
                 loseType = item;
             }
-            return finderDao.Select(null, null, null, null, null, null, null, loseType);
+            return finderDao.Select(null, null, null, null, null, null, null, loseType, index);
         }
     }
 }
