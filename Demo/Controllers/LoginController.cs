@@ -95,7 +95,7 @@ namespace CoremvcDemo.Controllers
             }
             return Ok(new
             {
-                success = result,
+                result = result,
                 code = 200
             });
         }
