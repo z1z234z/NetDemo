@@ -12,6 +12,8 @@ namespace Demo.Models
         public string Content { get; set; }
         public bool Complete { get; set; }
         public DateTime Time { get; set; }
+        public DateTime LastReplyTime { get; set; }
         public LoseType LoseType { get; set; }
+        public bool hidden { get; set; }
     }
 }

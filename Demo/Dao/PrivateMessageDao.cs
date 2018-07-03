@@ -6,24 +6,22 @@ using Demo.Models;
 
 namespace Demo.Dao
 {
-    public class FinderDao
+    public class PrivateMessageDao
     {
         private readonly DBContext _context;
-        public FinderDao(DBContext context)
+        public PrivateMessageDao(DBContext context)
         {
             _context = context;
         }
-        public List<Finder> Select(int? id, User user, String content, bool? complete, String question, String answer, DateTime? time, DateTime? lasttime, LoseType losetype, bool? hidden, int index)
+        public List<PrivateMessage> Select(int? id, User sender, User receiver, String content, String source, DateTime time)
         {
             try
             {
-                var items = from s in _context.Finders
-                            where ((id == null) || s.ID == id) && ((user == null) || s.User == user) && ((content == null) || s.Content == content) && ((complete == null) || s.Complete == complete)
-                             && ((question == null) || s.Question == question) && ((answer == null) || s.Answer == answer) && ((time == null) || s.Time == time) && ((lasttime == null) || s.LastReplyTime == lasttime)
-                             && ((losetype == null) || s.LoseType == losetype) && ((hidden == null) || s.hidden == hidden)
+                var items = from s in _context.PrivateMessages
+                            where ((id == null) || s.ID == id) && ((sender == null) || s.Sender == sender) && ((time == null) || s.time == time)
+                                   && ((receiver == null) || s.Receiver == receiver) && ((content == null) || s.content == content) && ((source == null) || s.source == source)
                             select s;
-                var li = items.OrderByDescending(u => u.LastReplyTime).Skip(50 * (index - 1)).Take(50);
-                List<Finder> list = new List<Finder>();
+                List<PrivateMessage> list = new List<PrivateMessage>();
                 foreach (var item in items)
                 {
                     list.Add(item);
@@ -37,11 +35,11 @@ namespace Demo.Dao
             }
         }
 
-        public bool Edit(Finder finder)
+        public bool Edit(PrivateMessage privateMessage)
         {
             try
             {
-                _context.Update(finder);
+                _context.Update(privateMessage);
                 _context.SaveChanges();
                 return true;
             }
@@ -52,11 +50,11 @@ namespace Demo.Dao
             }
         }
 
-        public bool Create(Finder finder)
+        public bool Create(PrivateMessage privateMessage)
         {
             try
             {
-                _context.Add(finder);
+                _context.Add(privateMessage);
                 _context.SaveChanges();
                 return true;
             }
@@ -71,10 +69,10 @@ namespace Demo.Dao
         {
             try
             {
-                Finder finder = _context.Finders.Find(id);
-                if (finder != null)
+                PrivateMessage privateMessage = _context.PrivateMessages.Find(id);
+                if (privateMessage != null)
                 {
-                    _context.Finders.Remove(finder);
+                    _context.PrivateMessages.Remove(privateMessage);
                     _context.SaveChanges();
                     return true;
                 }

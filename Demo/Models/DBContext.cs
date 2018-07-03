@@ -17,5 +17,8 @@ namespace Demo.Models
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Owner> Owners { get; set; }
         public DbSet<Finder> Finders { get; set; }
+        public DbSet<Reply> Replies { get; set; }
+        public DbSet<ReplyComment> ReplyComments { get; set; }
+        public DbSet<PrivateMessage> PrivateMessages { get; set; }
     }
 }

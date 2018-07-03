@@ -11,11 +11,11 @@ namespace Demo.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly HomeService _service;
+        private readonly HomeService service;
 
         public HomeController(DBContext context)
         {
-            _service = new HomeService(context);
+            service = new HomeService(context);
 
         }
         public IActionResult Index()
@@ -48,7 +48,7 @@ namespace Demo.Controllers
             int code = 200;
             List<LoseType> list = new List<LoseType>();
             //前端向后端发送数据
-            list = _service.GetLoseTypes();
+            list = service.GetLoseTypes();
             if(list == null)
             {
                 code = 500;
@@ -70,7 +70,7 @@ namespace Demo.Controllers
             string temp = Request.Form["index"];
             int index = (temp == null) ? 0 : Convert.ToInt32(Request.Form["index"]);
             type = (type == "") ? null : type;
-            list = _service.GetOwnerByType(type, index);
+            list = service.GetOwnerByType(type, index);
             if (list == null)
             {
                 code = 500;
@@ -92,7 +92,7 @@ namespace Demo.Controllers
             string temp = Request.Form["index"];
             int index = (temp == null) ? 0 : Convert.ToInt32(Request.Form["index"]);
             type = (type == "") ? null : type;
-            list = _service.GetFinderByType(type, index);
+            list = service.GetFinderByType(type, index);
             if (list == null)
             {
                 code = 500;

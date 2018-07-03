@@ -13,15 +13,15 @@ namespace Demo.Dao
         {
             _context = context;
         }
-        public List<Owner> Select(int? id, User user, String content, bool? complete, DateTime? time, LoseType losetype, int index)
+        public List<Owner> Select(int? id, User user, String content, bool? complete, DateTime? time, DateTime? lasttime, LoseType losetype, bool? hidden, int index)
         {
             try
             {
                 var items = from s in _context.Owners
                             where ((id == null) || s.ID == id) && ((user == null) || s.User == user) && ((content == null) || s.Content == content) && ((complete == null) || s.Complete == complete)
-                            && ((time == null) || s.Time == time) && ((losetype == null) || s.LoseType == losetype)
+                            && ((time == null) || s.Time == time) && ((lasttime == null) || s.LastReplyTime == lasttime) && ((losetype == null) || s.LoseType == losetype) && ((hidden == null) || s.hidden == hidden)
                             select s;
-                var li = items.OrderByDescending(u => u.Time).Skip(50 * (index - 1)).Take(50);
+                var li = items.OrderByDescending(u => u.LastReplyTime).Skip(50 * (index - 1)).Take(50);
                 List<Owner> list = new List<Owner>();
                 foreach (var item in items)
                 {

@@ -19,6 +19,7 @@ namespace Demo.Service
         {
             loseTypesDao = new LoseTypesDao(context);
             ownerDao = new OwnerDao(context);
+            finderDao = new FinderDao(context);
         }
 
         public List<LoseType> GetLoseTypes()
@@ -34,7 +35,7 @@ namespace Demo.Service
             {
                 loseType = item;
             }
-            return ownerDao.Select(null, null, null, null, null, loseType, index);
+            return ownerDao.Select(null, null, null, null, null, null, loseType, null, index);
         }
 
         public List<Finder> GetFinderByType(String type, int index)
@@ -45,7 +46,7 @@ namespace Demo.Service
             {
                 loseType = item;
             }
-            return finderDao.Select(null, null, null, null, null, null, null, loseType, index);
+            return finderDao.Select(null, null, null, null, null, null, null, null, loseType, null, index);
         }
     }
 }

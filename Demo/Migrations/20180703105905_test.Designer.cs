@@ -10,7 +10,7 @@ using System;
 namespace Demo.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20180619123616_test")]
+    [Migration("20180703105905_test")]
     partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,6 +48,8 @@ namespace Demo.Migrations
 
                     b.Property<string>("Content");
 
+                    b.Property<DateTime>("LastReplyTime");
+
                     b.Property<int?>("LoseTypeID");
 
                     b.Property<string>("Question");
@@ -55,6 +57,8 @@ namespace Demo.Migrations
                     b.Property<DateTime>("Time");
 
                     b.Property<int?>("UserID");
+
+                    b.Property<bool>("hidden");
 
                     b.HasKey("ID");
 
@@ -86,11 +90,15 @@ namespace Demo.Migrations
 
                     b.Property<string>("Content");
 
+                    b.Property<DateTime>("LastReplyTime");
+
                     b.Property<int?>("LoseTypeID");
 
                     b.Property<DateTime>("Time");
 
                     b.Property<int?>("UserID");
+
+                    b.Property<bool>("hidden");
 
                     b.HasKey("ID");
 
@@ -99,6 +107,74 @@ namespace Demo.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("Owners");
+                });
+
+            modelBuilder.Entity("Demo.Models.PrivateMessage", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("ReceiverID");
+
+                    b.Property<int?>("SenderID");
+
+                    b.Property<string>("content");
+
+                    b.Property<string>("source");
+
+                    b.Property<DateTime>("time");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ReceiverID");
+
+                    b.HasIndex("SenderID");
+
+                    b.ToTable("PrivateMessages");
+                });
+
+            modelBuilder.Entity("Demo.Models.Reply", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ReplyContent");
+
+                    b.Property<int?>("UserID");
+
+                    b.Property<int?>("ownerID");
+
+                    b.Property<DateTime>("time");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserID");
+
+                    b.HasIndex("ownerID");
+
+                    b.ToTable("Replies");
+                });
+
+            modelBuilder.Entity("Demo.Models.ReplyComment", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("ReplierID");
+
+                    b.Property<string>("ReplyContent");
+
+                    b.Property<int?>("UserID");
+
+                    b.Property<DateTime>("time");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ReplierID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("ReplyComments");
                 });
 
             modelBuilder.Entity("Demo.Models.User", b =>
@@ -110,7 +186,7 @@ namespace Demo.Migrations
 
                     b.Property<string>("Address");
 
-                    b.Property<string>("Age");
+                    b.Property<int>("Age");
 
                     b.Property<string>("Name");
 
@@ -121,6 +197,8 @@ namespace Demo.Migrations
                     b.Property<string>("School");
 
                     b.Property<string>("Sex");
+
+                    b.Property<string>("UserName");
 
                     b.Property<string>("email");
 
@@ -145,6 +223,39 @@ namespace Demo.Migrations
                     b.HasOne("Demo.Models.LoseType", "LoseType")
                         .WithMany()
                         .HasForeignKey("LoseTypeID");
+
+                    b.HasOne("Demo.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID");
+                });
+
+            modelBuilder.Entity("Demo.Models.PrivateMessage", b =>
+                {
+                    b.HasOne("Demo.Models.User", "Receiver")
+                        .WithMany()
+                        .HasForeignKey("ReceiverID");
+
+                    b.HasOne("Demo.Models.User", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderID");
+                });
+
+            modelBuilder.Entity("Demo.Models.Reply", b =>
+                {
+                    b.HasOne("Demo.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID");
+
+                    b.HasOne("Demo.Models.Owner", "owner")
+                        .WithMany()
+                        .HasForeignKey("ownerID");
+                });
+
+            modelBuilder.Entity("Demo.Models.ReplyComment", b =>
+                {
+                    b.HasOne("Demo.Models.Reply", "Replier")
+                        .WithMany()
+                        .HasForeignKey("ReplierID");
 
                     b.HasOne("Demo.Models.User", "User")
                         .WithMany()

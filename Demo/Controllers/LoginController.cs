@@ -12,16 +12,16 @@ namespace CoremvcDemo.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly LoginService _service;
+        private readonly LoginService service;
 
         public LoginController(DBContext context)
         {
-            _service = new LoginService(context);
+            service = new LoginService(context);
 
         }
 
         // GET: Admins
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             return View();
         }
@@ -33,7 +33,7 @@ namespace CoremvcDemo.Controllers
             //前端向后端发送数据
             string account = Request.Form["account"];
             string password = Request.Form["password"];
-            if (_service.AccountComfirm(account, password))
+            if (service.AccountComfirm(account, password))
             {
                 result = "true";
 
@@ -51,7 +51,7 @@ namespace CoremvcDemo.Controllers
             bool result = false;
             //前端向后端发送数据
             string account = Request.Form["account"];
-            if (_service.CheckAccount(account))
+            if (service.CheckAccount(account))
             {
                 result = true;
             }
@@ -70,15 +70,18 @@ namespace CoremvcDemo.Controllers
             string account = Request.Form["accountreg"];
             string password = Request.Form["passwordreg"];
             string email = Request.Form["emailreg"];
+            string username = Request.Form["usernamereg"];
             string name = Request.Form["name"];
             string sex = Request.Form["gender"];
-            string age = Request.Form["age"];
+            string temp = Request.Form["age"];
+            int age = (temp == null) ? 0 : Convert.ToInt32(Request.Form["age"]);
             string school = Request.Form["school"];
             string phone = Request.Form["phone"];
             string address = Request.Form["address"];
             User user = new User();
             user.Account = account;
             user.Password = password;
+            user.UserName = username;
             user.email = email;
             user.Name = name;
             user.Sex = sex;
@@ -86,7 +89,7 @@ namespace CoremvcDemo.Controllers
             user.School = school;
             user.Phone = phone;
             user.Address = address;
-            if (_service.Register(user))
+            if (service.Register(user))
             {
                 result = "true";
             }

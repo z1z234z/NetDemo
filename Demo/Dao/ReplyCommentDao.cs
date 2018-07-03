@@ -6,24 +6,22 @@ using Demo.Models;
 
 namespace Demo.Dao
 {
-    public class FinderDao
+    public class ReplyCommentDao
     {
         private readonly DBContext _context;
-        public FinderDao(DBContext context)
+        public ReplyCommentDao(DBContext context)
         {
             _context = context;
         }
-        public List<Finder> Select(int? id, User user, String content, bool? complete, String question, String answer, DateTime? time, DateTime? lasttime, LoseType losetype, bool? hidden, int index)
+        public List<ReplyComment> Select(int? id, String replycontent, DateTime time, User user, Reply replier)
         {
             try
             {
-                var items = from s in _context.Finders
-                            where ((id == null) || s.ID == id) && ((user == null) || s.User == user) && ((content == null) || s.Content == content) && ((complete == null) || s.Complete == complete)
-                             && ((question == null) || s.Question == question) && ((answer == null) || s.Answer == answer) && ((time == null) || s.Time == time) && ((lasttime == null) || s.LastReplyTime == lasttime)
-                             && ((losetype == null) || s.LoseType == losetype) && ((hidden == null) || s.hidden == hidden)
+                var items = from s in _context.ReplyComments
+                            where ((id == null) || s.ID == id) && ((replycontent == null) || s.ReplyContent == replycontent) && ((time == null) || s.time == time)
+                                   && ((user == null) || s.User == user) && ((replier == null) || s.Replier == replier)
                             select s;
-                var li = items.OrderByDescending(u => u.LastReplyTime).Skip(50 * (index - 1)).Take(50);
-                List<Finder> list = new List<Finder>();
+                List<ReplyComment> list = new List<ReplyComment>();
                 foreach (var item in items)
                 {
                     list.Add(item);
@@ -37,11 +35,11 @@ namespace Demo.Dao
             }
         }
 
-        public bool Edit(Finder finder)
+        public bool Edit(ReplyComment replyComment)
         {
             try
             {
-                _context.Update(finder);
+                _context.Update(replyComment);
                 _context.SaveChanges();
                 return true;
             }
@@ -52,11 +50,11 @@ namespace Demo.Dao
             }
         }
 
-        public bool Create(Finder finder)
+        public bool Create(ReplyComment replyComment)
         {
             try
             {
-                _context.Add(finder);
+                _context.Add(replyComment);
                 _context.SaveChanges();
                 return true;
             }
@@ -71,10 +69,10 @@ namespace Demo.Dao
         {
             try
             {
-                Finder finder = _context.Finders.Find(id);
-                if (finder != null)
+                ReplyComment replyComment = _context.ReplyComments.Find(id);
+                if (replyComment != null)
                 {
-                    _context.Finders.Remove(finder);
+                    _context.ReplyComments.Remove(replyComment);
                     _context.SaveChanges();
                     return true;
                 }

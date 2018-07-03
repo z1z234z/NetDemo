@@ -6,24 +6,22 @@ using Demo.Models;
 
 namespace Demo.Dao
 {
-    public class FinderDao
+    public class ReplyDao
     {
         private readonly DBContext _context;
-        public FinderDao(DBContext context)
+        public ReplyDao(DBContext context)
         {
             _context = context;
         }
-        public List<Finder> Select(int? id, User user, String content, bool? complete, String question, String answer, DateTime? time, DateTime? lasttime, LoseType losetype, bool? hidden, int index)
+        public List<Reply> Select(int? id, String replycontent, DateTime time, User user, Owner owner)
         {
             try
             {
-                var items = from s in _context.Finders
-                            where ((id == null) || s.ID == id) && ((user == null) || s.User == user) && ((content == null) || s.Content == content) && ((complete == null) || s.Complete == complete)
-                             && ((question == null) || s.Question == question) && ((answer == null) || s.Answer == answer) && ((time == null) || s.Time == time) && ((lasttime == null) || s.LastReplyTime == lasttime)
-                             && ((losetype == null) || s.LoseType == losetype) && ((hidden == null) || s.hidden == hidden)
+                var items = from s in _context.Replies
+                            where ((id == null) || s.ID == id) && ((replycontent == null) || s.ReplyContent == replycontent) && ((time == null) || s.time == time)
+                                   && ((user == null) || s.User == user) && ((owner == null) || s.owner == owner)
                             select s;
-                var li = items.OrderByDescending(u => u.LastReplyTime).Skip(50 * (index - 1)).Take(50);
-                List<Finder> list = new List<Finder>();
+                List<Reply> list = new List<Reply>();
                 foreach (var item in items)
                 {
                     list.Add(item);
@@ -37,11 +35,11 @@ namespace Demo.Dao
             }
         }
 
-        public bool Edit(Finder finder)
+        public bool Edit(Reply reply)
         {
             try
             {
-                _context.Update(finder);
+                _context.Update(reply);
                 _context.SaveChanges();
                 return true;
             }
@@ -52,11 +50,11 @@ namespace Demo.Dao
             }
         }
 
-        public bool Create(Finder finder)
+        public bool Create(Reply reply)
         {
             try
             {
-                _context.Add(finder);
+                _context.Add(reply);
                 _context.SaveChanges();
                 return true;
             }
@@ -71,10 +69,10 @@ namespace Demo.Dao
         {
             try
             {
-                Finder finder = _context.Finders.Find(id);
-                if (finder != null)
+                Reply reply = _context.Replies.Find(id);
+                if (reply != null)
                 {
-                    _context.Finders.Remove(finder);
+                    _context.Replies.Remove(reply);
                     _context.SaveChanges();
                     return true;
                 }

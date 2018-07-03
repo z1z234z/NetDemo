@@ -19,7 +19,7 @@ namespace Demo.Service
         public bool AccountComfirm(string account, string password)
         {
             bool result = false;
-            var items = userDao.Select(null, account, password, null, null, null, null, null, null, null);
+            var items = userDao.Select(null, account, password, null, null, null, null, null, null, null, null);
             foreach(var item in items)
             {
                 result = true;
@@ -30,7 +30,7 @@ namespace Demo.Service
         public bool CheckAccount(String account)
         {
             bool result = true;
-            var items = userDao.Select(null, account, null, null, null, null, null, null, null, null);
+            var items = userDao.Select(null, account, null, null, null, null, null, null, null, null, null);
             foreach (var item in items)
             {
                 result = false;

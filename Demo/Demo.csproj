@@ -13,6 +13,8 @@
     <Compile Remove="Migrations\20180619034153_test.Designer.cs" />
     <Compile Remove="Migrations\20180619081945_test.cs" />
     <Compile Remove="Migrations\20180619081945_test.Designer.cs" />
+    <Compile Remove="Service\HomeController.cs" />
+    <Compile Remove="Service\LoginController.cs" />
   </ItemGroup>
 
   <ItemGroup>
