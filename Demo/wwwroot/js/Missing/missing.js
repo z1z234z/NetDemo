@@ -1,162 +1,26 @@
-﻿Vue.component('missing-overview', {
-    props: ['missingOverview'],
-    data: function () {
-        return {
-            itemHoverIndex: null,
-            isSendingHidden: false,
-            loadingHiddenStatus: false,
-            hasHidden: false
-        }
-    },
-    template: `<div>
-        <div>
-    <div class="publisherInfo">
-      <a :href="missingOverview.id">
-        <img class="avatar" :src="missingOverview.avatarURL">
-        <span class=".publisher"> {{ missingOverview.username }} </span>
-      </a>
-    </div>
-			<div class="summary">
-				<h3>
-                <a :href="missingOverview.id">
-					{{ missingOverview.questionTitle }}
-				</a>
-				</h3>
-				<div class="types">
-				{{ missingOverview.questionSubject }} -> {{ missingOverview.questionCourse }}
-				</div>
-			</div >
-		</div >
-    <div class="info">
-        <div class="solved-views">
-        {{ missingOverview.isAccepted }}
-      </div>
-    </div>
-  </div > `
-}) 
-new Vue({
+﻿new Vue({
     el: '#app',
     data: function () {
-        const validatePass2 = (rule, value, callback) => {
-            if (value === '') {
-                callback(new Error('请再次输入密码'))
-            } else if (value !== this.registerform.passwordreg) {
-                callback(new Error('两次输入密码不一致!'))
-            } else {
-                callback()
-            }
-        }
-        const validateNewPass2 = (rule, value, callback) => {
-            if (value === '') {
-                callback(new Error('请再次输入密码'))
-            } else if (value !== this.forgetform.password) {
-                callback(new Error('两次输入密码不一致!'))
-            } else {
-                callback()
-            }
-        }
-        const validateloginUserName = (rule, value, callback) => {
-            console.log("validateloginUserName")
-            if (value === '') {
-                callback(new Error('请输入账号!'))
-            } else {
-                ajaxPost("/Login/accountRepeatable", { account: value }, function (data) {
-                    if (data.code == 200) {
-                        console.log(data.result)
-                        if (!data.result) {
-                            console.log("here")
-                            callback(new Error('该账号已经存在，请尝试新的账号!'))
-                        }
-                        callback()
-
-                    }
-
-                })
-            }
-        }
-        const validatemailreg = (rule, value, callback) => {
-            console.log("validatemailreg")
-            let mailReg = /^\w+((-\w+)|(\.\w+))*\@@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
-            if (value === '') {
-                callback(new Error('请输入邮箱!'))
-            }
-            else if (!mailReg.test(value)) {
-                callback(new Error('邮箱格式不正确'))
-            }
-            callback()
-            /*else {
-                validateMailbox(value).then((response) => {
-                    if (response.status === '200') {
-                        if (response.result === false) {
-                            callback(new Error('该邮箱不存在，请确认邮箱是否输入正确!'))
-                        }
-                    }
-                    callback()
-                })
-            }*/
-        }
-        const item = {
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-        }
         return {
-            openindex:[""],
-            missingtype:"",
-            typedatas: [{
-                index: "1", type: "电子产品", children: [
-                    { index: "1-1", type: '手机' },
-                    { index: "1-2", type: '电脑' }
-                ]
-            }, {
-                index: "2", type: "生活用品", children: [
-                    { index: "2-1", type: '雨伞' },
-                    { index: "2-2", type: '水杯' }
-                ]}]
-                ,
-            sortParamRadio:"",
-            missingOverviewList: [{
-                id: 1,
-                avatarURL: "",
-                username: "12",
-                questionId: 123,
-                questionTitle: "title",
-                questionSubject: "asdf",
-                questionCourse: "asdff",
-                hidden: false,
-                thumbsUpCount: 2,
-                thumbsDownCount: false,
-                isAccepted:false
-
-            }],
-            loadingmissings: false,
-            loadingtypes:false,
-            register: 0,
-            forget: false,
-            registerform: {
-                accountreg: '',
-                usernamereg: '',
-                emailreg: '',
-                passwordreg: '',
-                passwordAgain: '',
-                name: '',
-                age: '',
-                gender: '',
-                school: '',
-                phone: '',
-                address: ''
-
+            question: {
+                questionTitle: '这是一个标题',
+                questionContent: '这是内容',
+                questionId: 2,
+                questionIsHidden: true,
+                accountId: 0
             },
-            registering: false,
-            resetting: false,
-            sending: false,
-            disableSend: false,
-            sendContent: '发送'
+            hasFollow: false,
+            hasAnswer: false,
+            questionLoading: false,
+            userId: 1,
+            questionId: null,
+            isSendingFollow: false,
+            loadingFollowStatus: false,
+            isSendingHidden: false,
+            loadingHiddenStatus: false
         }
     },
     created() {
-        this.getalltypes()
-        //this.getMissingbytype()
     },
     methods: {
         getMissingbytype(type, index) {
