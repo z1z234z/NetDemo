@@ -162,7 +162,7 @@ new Vue({
         getMissingbytype(type, index) {
             this.loadingmissings = true
             let _this = this
-            ajaxPost("/Home/getOwnerByType", { type: type }, function (data) {
+            ajaxPost("/Main/getOwnerByType", { type: type }, function (data) {
                 if (data.code == 200) {
                     _this.missingOverviewList = data.ownerlist
                 }
@@ -170,12 +170,12 @@ new Vue({
             })
         },
         getalltypes() {
-            /*ajaxPost("/Home/getOwnerByType", { type: type }, function (data) {
+            ajaxPost("/Home//Main/getType", { type: type }, function (data) {
                 if (data.code == 200) {
                     _this.missingOverviewList = data.ownerlist
                 }
 
-            })*/
+            })
         },
         updateMisssingOverviews() {
 
