@@ -55,7 +55,7 @@
             }
             $.ajax({
                 type: "POST",
-                url: "/Home/OnPostUpload",
+                url: "/ReleaseMissing/OnPostUpload",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("XSRF-TOKEN",
                         $('input:hidden[name="__RequestVerificationToken"]').val());
