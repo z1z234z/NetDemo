@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Demo.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Demo.Dao
 {
@@ -17,11 +18,14 @@ namespace Demo.Dao
         {
             try
             {
-                var items = from s in _context.Owners
+                var items = from s in _context.Owners.Include("LoseType").Include("User")
                             where ((id == null) || s.ID == id) && ((user == null) || s.User == user) && ((content == null) || s.Content == content) && ((complete == null) || s.Complete == complete)
                             && ((time == null) || s.Time == time) && ((lasttime == null) || s.LastReplyTime == lasttime) && ((losetype == null) || s.LoseType == losetype) && ((hidden == null) || s.hidden == hidden)
                             select s;
-                var li = items.OrderByDescending(u => u.LastReplyTime).Skip(50 * (index - 1)).Take(50);
+                if (index != 0)
+                {
+                    items = items.OrderByDescending(u => u.LastReplyTime).Skip(50 * (index - 1)).Take(50);
+                }
                 List<Owner> list = new List<Owner>();
                 foreach (var item in items)
                 {
@@ -35,6 +39,7 @@ namespace Demo.Dao
                 return null;
             }
         }
+
 
         public bool Edit(Owner owner)
         {

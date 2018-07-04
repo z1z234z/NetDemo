@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Demo.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Demo.Dao
 {
@@ -13,11 +14,11 @@ namespace Demo.Dao
         {
             _context = context;
         }
-        public List<ReplyComment> Select(int? id, String replycontent, DateTime time, User user, Reply replier)
+        public List<ReplyComment> Select(int? id, String replycontent, DateTime? time, User user, Reply replier)
         {
             try
             {
-                var items = from s in _context.ReplyComments
+                var items = from s in _context.ReplyComments.Include("Replier").Include("User")
                             where ((id == null) || s.ID == id) && ((replycontent == null) || s.ReplyContent == replycontent) && ((time == null) || s.time == time)
                                    && ((user == null) || s.User == user) && ((replier == null) || s.Replier == replier)
                             select s;
