@@ -23,10 +23,6 @@ namespace Demo.Controllers
             service = new HomeService(context);
 
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         public IActionResult About()
         {
@@ -52,72 +48,6 @@ namespace Demo.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        [HttpPost]
-        public IActionResult getType()
-        {
-            int code = 200;
-            List<LoseType> list = new List<LoseType>();
-            //前端向后端发送数据
-            list = service.GetLoseTypes();
-            if(list == null)
-            {
-                code = 500;
-            }
-            return Ok(new
-            {
-                typelist = list,
-                code = code
-            });
-        }
-
-        [HttpPost]
-        public IActionResult getOwnerByType()
-        {
-            int code = 200;
-            List<Owner> list = new List<Owner>();
-            //前端向后端发送数据
-            string type = Request.Form["type"];
-            string temp = Request.Form["index"];
-            int index = (temp == null) ? 0 : Convert.ToInt32(Request.Form["index"]);
-            type = (type == "") ? null : type;
-            list = service.GetOwnerByType(type, index);
-            if (list == null)
-            {
-                code = 500;
-            }
-            return Ok(new
-            {
-                ownerlist = list,
-                code = code
-            });
-        }
-
-        [HttpPost]
-        public IActionResult getFinderByType()
-        {
-            int code = 200;
-            List<Finder> list = new List<Finder>();
-            //前端向后端发送数据
-            string type = Request.Form["type"];
-            string temp = Request.Form["index"];
-            int index = (temp == null) ? 0 : Convert.ToInt32(Request.Form["index"]);
-            type = (type == "") ? null : type;
-            list = service.GetFinderByType(type, index);
-            if (list == null)
-            {
-                code = 500;
-            }
-            return Ok(new
-            {
-                finderlist = list,
-                code = code
-            });
-        }
-        public class ApplicationUser : IdentityUser
-        {
-            public byte[] AvatarImage { get; set; }
         }
 
         public class TemUrl
