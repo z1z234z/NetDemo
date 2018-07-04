@@ -72,6 +72,10 @@
                                     </el-option>
                                 </el-select>
                             </el-form-item>
+                            <el-form-item prop="age">
+                                <el-input icon="fa-key" type="text" v-model="registerform.age" autoComplete="false"
+                                          placeholder="请输入年龄"></el-input>
+                            </el-form-item>
                             <el-form-item prop="school">
                                 <el-input icon="fa-key" type="text" v-model="registerform.school" autoComplete="false"
                                           placeholder="请输入学校"></el-input>
@@ -169,7 +173,7 @@
                     if (value === '') {
                         callback(new Error('请输入账号!'))
                     } else {
-                        ajaxPost("/Login/accountRepeatable", value, function (data) {
+                        ajaxPost("/Login/accountRepeatable", {account:value}, function (data) {
                             if (data.code == 200) {
                                 console.log(data.result)
                                 if (!data.result) {
@@ -336,6 +340,8 @@
                         if (valid) {
                             _this.registering = true
                             ajaxPost("/Login/register", _this.registerform, function (data) {
+                                console.log(data.result)
+                                console.log(data.code)
                                 if (data.code == 200) {
                                     if (data.result) {
                                         _this.$message({
