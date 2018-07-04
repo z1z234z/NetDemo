@@ -10,7 +10,7 @@ using System;
 namespace Demo.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20180703105905_test")]
+    [Migration("20180703121215_test")]
     partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
