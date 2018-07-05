@@ -34,34 +34,6 @@ namespace Demo.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> OnPostUpload([FromServices]IHostingEnvironment environment)
-        {
-            List<TemUrl> list = new List<TemUrl>();
-            var files = Request.Form.Files;
-            string webRootPath = environment.WebRootPath;
-            string contentRootPath = environment.ContentRootPath;
-            foreach (var formFile in files)
-            {
-                if (formFile.Length > 0)
-                {
-                    var fileName = Guid.NewGuid().ToString() + ".jpg";
-                    var path = Path.Combine(environment.WebRootPath + "\\images\\upload", fileName);
-                    using (var stream = new FileStream(path, FileMode.CreateNew))
-                    {
-                        await formFile.CopyToAsync(stream);
-                        TemUrl tu = new TemUrl();
-                        tu.url = @"/images/upload/" + fileName;
-                        list.Add(tu); ;
-                    }
-                }
-            }
-
-            return new JsonResult(list);
-
-        }
-
-
-        [HttpPost]
         public IActionResult getChoiceType()
         {
             int code = 200;
@@ -123,5 +95,7 @@ namespace Demo.Controllers
                 });
             }
         }
+
+
     }
 }
