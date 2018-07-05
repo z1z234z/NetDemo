@@ -2,6 +2,9 @@
     el: '#app',
     data: function () {
         return {
+            isCurrentUser:false,
+            userInfo: { username: "shine", avatarURL:""},
+            dialogVisible: false,
             question: {
                 questionTitle: '这是一个标题',
                 questionContent: '这是内容',
@@ -44,15 +47,8 @@
     created() {
     },
     methods: {
-        getMissingbytype(type, index) {
-            this.loadingmissings = true
-            let _this = this
-            ajaxPost("/Home/getOwnerByType", { type: type }, function (data) {
-                if (data.code == 200) {
-                    _this.missingOverviewList = data.ownerlist
-                }
-                _this.loadingmissings = false
-            })
+        writeReply() {
+            this.$refs.replyinput.open()
         },
         getalltypes() {
             /*ajaxPost("/Home/getOwnerByType", { type: type }, function (data) {

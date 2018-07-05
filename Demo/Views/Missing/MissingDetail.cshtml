@@ -28,21 +28,21 @@
                             <el-button :loading="loadingFollowStatus" :disabled="isSendingFollow" @@click.prevent="followQuestion()" size="small" type="success">关注问题</el-button>
                         </el-tooltip>
                         <el-tooltip v-if="!this.hasAnswer" content="为该问题贡献自己的答案吧" placement="top">
-                            <el-button @@click.prevent="writeAnswer()" size="small" icon="edit" type="info">写回答</el-button>
+                            <el-button @@click.prevent="writeReply()" size="small" icon="edit" type="info">写回答</el-button>
                         </el-tooltip>
                         <el-tooltip v-else content="去修改自己的回答" placement="top">
                             <el-button @@click.prevent="modifyAnswer()" size="small" icon="edit" type="info">修改回答</el-button>
                         </el-tooltip>
                     </div>
-                    <el-dialog size="large" :visible.sync="dialogVisible">
+                    <el-dialog size="large" :visible.sync="dialogVisible" ref="replyinput">
                         <div v-if="userInfo" id="userinfo" style="position: fixed; top: 10px; margin-bottom: 20px">
                             <h3>感谢您的回答</h3>
                             <img class="useravatar" :src="userInfo.avatarURL" />
                             <span>{{ userInfo.username }}</span>
                         </div>
-                        <div style="margin-top: 20px">
-                            <div>
-                                <UE :fullscreen="false" :config="config" ref="ue"></UE>
+                        <div>
+                            <div id="editor">
+                                <p>在此处编辑</p>
                             </div>
                         </div>
                         <div slot="footer" class="dialog-footer">
@@ -65,7 +65,7 @@
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
     </div>
     <style>
         .answer {
@@ -98,6 +98,7 @@
         .user-info {
             cursor: pointer;
         }
+
         #answers-panel {
             border: 1px solid #ddd;
             background: #f9fafc;
@@ -115,6 +116,7 @@
             border-bottom: solid 2px saddlebrown;
             padding-bottom: 5px;
         }
+
         #questionContent {
             border: 1px solid #ddd;
             background: #f9fafc;
@@ -141,8 +143,16 @@
             width: 20%;
         }
 
-        .question-info span {
+            .question-info span {
                 width: 100%;
+            }
+
+        #userinfo .useravatar {
+            width: 38px;
+            height: 38px;
+            vertical-align: top;
+            margin-bottom: 20px;
+            margin-right: 20px;
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -154,5 +164,41 @@
     <script type="text/javascript" class="nc-required-js-1 nc-uab-script" src="//af.alicdn.com/js/uac.js?_t=212358"></script>
     <script src="~/js/Missing/replycomponent.js"></script>
     <script src="~/js/Missing/missing.js"></script>
+    <script type="text/javascript" src="~/js/wangEditor.min.js"></script>
+    <script type="text/javascript">
+        var E = window.wangEditor
+        var editor = new E('#editor')
+        // 或者 var editor = new E( document.getElementById('editor') )
+        //editor.customConfig.uploadImgServer = '/Home/Upload'
+        editor.customConfig.customUploadImg = function (files, insert) {
+            // files 是 input 中选中的文件列表
+            // insert 是获取图片 url 后，插入到编辑器的方法
+            var uploadData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                uploadData.append(files[i].name, files[i]);
+            }
+            $.ajax({
+                type: "POST",
+                url: "/ReleaseMissing/OnPostUpload",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: uploadData,
+                processData: false,
+                contentType: false,
+                async: false,
+                success: function (response) {
+                    for (var i = 0; i < response.length; i++) {
+                        insert(response[i].url);
+                    }
+                },
+                failure: function (response) {
+                    alert("faliar");
+                }
+            });
+        }
+        editor.create()
+    </script>
 </body>
 </html>
