@@ -7,7 +7,7 @@
             questionId: null,
             commentsList: [],
             newComment: '',
-
+            showAccept:false,
             isLoadingComment: false
         }
     },
@@ -17,7 +17,7 @@
     },
     methods: {
         getallcomments() {
-            this.commentsList = [{ commenter: { id: 1, id: "", username: "addf" }, commentContent: "comment content", commentDateTime: new Date()}]
+            this.commentsList = [{ commenter: { id: 1, username: "addf" }, commentContent: "comment content", commentDateTime: new Date()}]
         },
         toggleComment() {
             this.isLoadingComment = true

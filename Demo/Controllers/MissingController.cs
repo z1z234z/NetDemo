@@ -22,6 +22,10 @@ namespace Demo.Controllers
             return View();
         }
 
+        public IActionResult test()
+        {
+            return View();
+        }
         [HttpPost]
         public IActionResult Reply()
         {

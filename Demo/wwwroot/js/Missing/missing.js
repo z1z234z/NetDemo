@@ -5,11 +5,11 @@
             isCurrentUser:false,
             userInfo: { username: "shine", avatarURL:""},
             dialogVisible: false,
-            question: {
-                questionTitle: '这是一个标题',
-                questionContent: '这是内容',
-                questionId: 2,
-                questionIsHidden: true,
+            missing: {
+                missingTitle: '这是一个标题',
+                missingContent: '这是内容',
+                missingId: 2,
+                missingIsHidden: true,
                 accountId: 0
             },
             allreply: [{
@@ -17,7 +17,6 @@
                 answerDateTime: new Date(),
                 answerContent: "回答内容",
                 commentCount: 3,
-                accepted: true,
                 id:4
             }],
             answerLoading: false,
@@ -37,7 +36,6 @@
             hasAnswer: false,
             questionLoading: false,
             userId: 1,
-            questionId: null,
             isSendingFollow: false,
             loadingFollowStatus: false,
             isSendingHidden: false,
@@ -45,10 +43,18 @@
         }
     },
     created() {
+        //editor.create()
+        //var ue = UE.getEditor('richtxt');
     },
+    mounted() {
+        
+    },
+
     methods: {
+
         writeReply() {
-            this.$refs.replyinput.open()
+            this.dialogVisible = true
+            //this.$refs.replyinput.open()
         },
         getalltypes() {
             /*ajaxPost("/Home/getOwnerByType", { type: type }, function (data) {

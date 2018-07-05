@@ -13,12 +13,12 @@
                     <div id="question-top-panel">
                         <div class="question-title">
                             <h3>
-                                {{ question.questionTitle }}
+                                {{ missing.missingTitle }}
                             </h3>
                         </div>
                     </div>
                     <div id="question-detail"
-                         v-html="question.questionContent">
+                         v-html="missing.missingContent">
                     </div>
                     <div class="question-info" style="margin-right: 20px;margin-top: -30px">
                         <el-tooltip v-if="this.hasFollow" content="取消关注后将不会获得更新提醒" placement="top">
@@ -35,15 +35,15 @@
                         </el-tooltip>
                     </div>
                     <el-dialog size="large" :visible.sync="dialogVisible" ref="replyinput">
-                        <div v-if="userInfo" id="userinfo" style="position: fixed; top: 10px; margin-bottom: 20px">
+                        <div id="userinfo" style="top: 10px; margin-bottom: 20px">
                             <h3>感谢您的回答</h3>
                             <img class="useravatar" :src="userInfo.avatarURL" />
                             <span>{{ userInfo.username }}</span>
                         </div>
-                        <div>
-                            <div id="editor">
-                                <p>在此处编辑</p>
-                            </div>
+                        <div style="margin-top: 20px">
+                            <richtext id="richtxt">
+
+                            </richtext>
                         </div>
                         <div slot="footer" class="dialog-footer">
                             <el-button @@click.prevent="dialogVisible = false">取 消</el-button>
@@ -154,6 +154,14 @@
             margin-bottom: 20px;
             margin-right: 20px;
         }
+
+        #userinfo .useravatar {
+            width: 38px;
+            height: 38px;
+            vertical-align: top;
+            margin-bottom: 20px;
+            margin-right: 20px;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="~/js/test/ajax.js"></script>
@@ -162,43 +170,47 @@
     <script src="//aeu.alicdn.com/js/cj/109.js" id="AWSC_uabModule"></script>
     <script type="text/javascript" class="nc-required-js-1 nc-umid-script" src="//g.alicdn.com/security/umscript/3.3.2/um.js"></script>
     <script type="text/javascript" class="nc-required-js-1 nc-uab-script" src="//af.alicdn.com/js/uac.js?_t=212358"></script>
-    <script src="~/js/Missing/replycomponent.js"></script>
-    <script src="~/js/Missing/missing.js"></script>
     <script type="text/javascript" src="~/js/wangEditor.min.js"></script>
     <script type="text/javascript">
-        var E = window.wangEditor
-        var editor = new E('#editor')
-        // 或者 var editor = new E( document.getElementById('editor') )
-        //editor.customConfig.uploadImgServer = '/Home/Upload'
-        editor.customConfig.customUploadImg = function (files, insert) {
-            // files 是 input 中选中的文件列表
-            // insert 是获取图片 url 后，插入到编辑器的方法
-            var uploadData = new FormData();
-            for (var i = 0; i < files.length; i++) {
-                uploadData.append(files[i].name, files[i]);
-            }
-            $.ajax({
-                type: "POST",
-                url: "/ReleaseMissing/OnPostUpload",
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("XSRF-TOKEN",
-                        $('input:hidden[name="__RequestVerificationToken"]').val());
-                },
-                data: uploadData,
-                processData: false,
-                contentType: false,
-                async: false,
-                success: function (response) {
-                    for (var i = 0; i < response.length; i++) {
-                        insert(response[i].url);
-                    }
-                },
-                failure: function (response) {
-                    alert("faliar");
-                }
-            });
-        }
-        editor.create()
+        //var E = window.wangEditor
+        //var editor = new E('#richtxt')
+        //// 或者 var editor = new E( document.getElementById('editor') )
+        ////editor.customConfig.uploadImgServer = '/Home/Upload'
+        //editor.customConfig.customUploadImg = function (files, insert) {
+        //    // files 是 input 中选中的文件列表
+        //    // insert 是获取图片 url 后，插入到编辑器的方法
+        //    var uploadData = new FormData();
+        //    for (var i = 0; i < files.length; i++) {
+        //        uploadData.append(files[i].name, files[i]);
+        //    }
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "/ReleaseMissing/OnPostUpload",
+        //        beforeSend: function (xhr) {
+        //            xhr.setRequestHeader("XSRF-TOKEN",
+        //                $('input:hidden[name="__RequestVerificationToken"]').val());
+        //        },
+        //        data: uploadData,
+        //        processData: false,
+        //        contentType: false,
+        //        async: false,
+        //        success: function (response) {
+        //            for (var i = 0; i < response.length; i++) {
+        //                insert(response[i].url);
+        //            }
+        //        },
+        //        failure: function (response) {
+        //            alert("faliar");
+        //        }
+        //    });
+        //}
     </script>
+    <script src="~/js/uelib/ueditor.config.js"></script>
+    <script src="~/js/uelib/ueditor.all.js"></script>
+    <script src="~/js/uelib/zh-cn.js"></script>
+    <script src="~/js/richtext/richtextcomponent.js"></script>
+    <script src="~/js/Missing/replycomponent.js"></script>
+    <script src="~/js/Missing/missing.js"></script>
+
 </body>
 </html>
