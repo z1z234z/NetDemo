@@ -37,6 +37,7 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="upload\image\" />
+    <Folder Include="Views\User\" />
     <Folder Include="wwwroot\js\test\" />
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +121,11 @@
     <None Include="wwwroot\js\uelib\third-party\zeroclipboard\ZeroClipboard.js" />
     <None Include="wwwroot\js\uelib\third-party\zeroclipboard\ZeroClipboard.min.js" />
     <None Include="wwwroot\js\uelib\third-party\zeroclipboard\ZeroClipboard.swf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Views\Home\UserInformation.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

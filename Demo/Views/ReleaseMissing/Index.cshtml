@@ -94,16 +94,45 @@
                     options: [{}]
                 };
             },
+            created() { 
+
+                let _this = this
+                ajaxPost("/Common/getChoiceType", {}, function (data) {
+                    if (data.code == 200) {
+                        if (data.options) {
+                            _this.options = data.options
+                        }
+                        else {
+                            _this.$message({
+                                message: '获取类别为空',
+                                type: 'error',
+                                duration: 2000
+                            })
+                        }
+
+                    }
+                    else { 
+                        _this.$message({
+                            message: '获取类别失败',
+                            type: 'error',
+                            duration: 2000
+                        })
+                    }
+                })
+            },
             methods: {
                 onSubmit(ev) {
                     console.log('submit!');
                     let _this = this
                     this.$refs.form.validate((valid) => {
                         if (valid) {
+                            var url = ""
                             _this.submitting = true
-                            postdata = { title: _this.sizeForm.title, type: _this.sizeForm.type, content: _this.$refs.editorcompo.geteditor().getContent(), account: 2, question: _this.sizeForm.question }
+                            postdata = { title: _this.sizeForm.title, type: _this.sizeForm.type.toString(), content: _this.$refs.editorcompo.geteditor().getContent(), account: 2, question: _this.sizeForm.question }
                             if (_this.missorfind == 1)
-                                var url = "/ReleaseMissing/Submit"
+                                url = "/ReleaseMissing/Submit"
+                            else
+                                url = "/ReleaseFinding/Submit"
                             ajaxPost(url, postdata, function (data) {
                                 if (data.code == 200) {
                                     if (data.result) {
@@ -113,6 +142,8 @@
                                             duration: 5000
                                         })
                                         _this.$refs.form.resetFields()
+                                        $(location).attr('href', '/Main/Main');
+
 
                                     }
                                     else {
@@ -134,14 +165,14 @@
                                     })
                                 }
                                 _this.submitting = false
-                                $(location).attr('href', '/Main/Main');
+
                             })
                         }
                     })
 
                 },
                 handleChange(value) {
-                    console.log(value);
+                    console.log(value.toString());
                 }
             }
         })
