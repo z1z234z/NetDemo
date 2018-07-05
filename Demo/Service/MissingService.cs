@@ -96,15 +96,17 @@ namespace Demo.Service
         }
         public Owner getDetail(int id)
         {
-            bool result = false;
-            Reply reply = null;
-            User user = null;
             Owner owner = null;
             if (ownerDao.Select(id, null, null, null, null, null, null, null, 0).Count > 0)
             {
                 owner = ownerDao.Select(id, null, null, null, null, null, null, null, 0)[0];
             }
             return owner;
+        }
+
+        public bool completed(Owner owner)
+        {
+            return ownerDao.Edit(owner);
         }
     }
 }

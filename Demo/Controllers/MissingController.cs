@@ -102,5 +102,44 @@ namespace Demo.Controllers
                 });
             }
         }
+
+        [HttpPost]
+        public IActionResult Completed()
+        {
+            bool result = false;
+            //前端向后端发送数据
+            String temp = Request.Form["id"];
+            int id = (temp == null) ? 0 : Convert.ToInt32(temp);
+            Owner owner = service.getDetail(id);
+            if (owner != null)
+            {
+                owner.Complete = true;
+                result = service.completed(owner);
+                if (result)
+                {
+                    return Ok(new
+                    {
+                        result = result,
+                        code = 200
+                    });
+                }
+                else
+                {
+                    return Ok(new
+                    {
+                        result = result,
+                        code = 500
+                    });
+                }
+            }
+            else
+            {
+                return Ok(new
+                {
+                    result = result,
+                    code = 500
+                });
+            }
+        }
     }
 }
