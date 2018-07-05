@@ -40,7 +40,7 @@ namespace Demo.Controllers
             String temp = Request.Form["type"];
             String content = Request.Form["content"];
             String account = Request.Form["account"];
-            String[] types = temp.Split('/');
+            String[] types = temp.Split(',');
             String type = types[1];
             if (service.saveInfomation(title, type, content, account))
             {

@@ -104,5 +104,60 @@ namespace Demo.Controllers
                 code = code
             });
         }
+
+        [HttpPost]
+        public IActionResult Search()
+        {
+            int code = 200;
+            List<Finder> finderlist = new List<Finder>();
+            List<Owner> ownerlist = new List<Owner>();
+            //前端向后端发送数据
+            string text = Request.Form["searchtext"];
+            string temp = Request.Form["missingorfind"];
+            string type = Request.Form["type"];
+            int missingorfind = (temp == null) ? 0 : Convert.ToInt32(temp);
+            type = (type == "") ? null : type;
+            if (missingorfind == 1)
+            {
+                List<Owner> list = service.GetOwnerByType(type, 0);
+                foreach(Owner item in list)
+                {
+                    if (item.Content.Contains(text)/*|| item.Title.Contains(text)*/)
+                    {
+                        ownerlist.Add(item);
+                    }
+                }
+                return Ok(new
+                {
+                    infolist = ownerlist,
+                    code = code
+                });
+            }
+            else if (missingorfind == 2)
+            {
+                List<Finder> list = service.GetFinderByType(type, 0);
+                foreach (Finder item in list)
+                {
+                    if (item.Content.Contains(text)/*|| item.Title.Contains(text)*/)
+                    {
+                        finderlist.Add(item);
+                    }
+                }
+                return Ok(new
+                {
+                    infolist = finderlist,
+                    code = code
+                });
+            }
+            else
+            {
+                code = 500;
+                return Ok(new
+                {
+                    infolist = "",
+                    code = code
+                });
+            }
+        }
     }
 }
