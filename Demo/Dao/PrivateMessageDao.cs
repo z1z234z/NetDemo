@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Demo.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Demo.Dao
 {
@@ -17,7 +18,7 @@ namespace Demo.Dao
         {
             try
             {
-                var items = from s in _context.PrivateMessages
+                var items = from s in _context.PrivateMessages.Include("Sender").Include("Receiver")
                             where ((id == null) || s.ID == id) && ((sender == null) || s.Sender == sender) && ((time == null) || s.time == time)
                                    && ((receiver == null) || s.Receiver == receiver) && ((content == null) || s.content == content) && ((source == null) || s.source == source)
                             select s;

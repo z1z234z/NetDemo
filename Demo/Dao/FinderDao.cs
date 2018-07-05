@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Demo.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Demo.Dao
 {
@@ -17,12 +18,15 @@ namespace Demo.Dao
         {
             try
             {
-                var items = from s in _context.Finders
+                var items = from s in _context.Finders.Include("LoseType").Include("User")
                             where ((id == null) || s.ID == id) && ((user == null) || s.User == user) && ((content == null) || s.Content == content) && ((complete == null) || s.Complete == complete)
                              && ((question == null) || s.Question == question) && ((answer == null) || s.Answer == answer) && ((time == null) || s.Time == time) && ((lasttime == null) || s.LastReplyTime == lasttime)
                              && ((losetype == null) || s.LoseType == losetype) && ((hidden == null) || s.hidden == hidden)
                             select s;
-                var li = items.OrderByDescending(u => u.LastReplyTime).Skip(50 * (index - 1)).Take(50);
+                if (index != 0)
+                {
+                    items = items.OrderByDescending(u => u.LastReplyTime).Skip(50 * (index - 1)).Take(50);
+                }
                 List<Finder> list = new List<Finder>();
                 foreach (var item in items)
                 {

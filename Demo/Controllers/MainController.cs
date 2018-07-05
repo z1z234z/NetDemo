@@ -51,7 +51,7 @@ namespace Demo.Controllers
             //前端向后端发送数据
             string type = Request.Form["type"];
             string temp = Request.Form["index"];
-            int index = (temp == null) ? 0 : Convert.ToInt32(Request.Form["index"]);
+            int index = (temp == null) ? 0 : Convert.ToInt32(temp);
             type = (type == "") ? null : type;
             list = service.GetOwnerByType(type, index);
             if (list == null)
@@ -73,7 +73,7 @@ namespace Demo.Controllers
             //前端向后端发送数据
             string type = Request.Form["type"];
             string temp = Request.Form["index"];
-            int index = (temp == null) ? 0 : Convert.ToInt32(Request.Form["index"]);
+            int index = (temp == null) ? 0 : Convert.ToInt32(temp);
             type = (type == "") ? null : type;
             list = service.GetFinderByType(type, index);
             if (list == null)
