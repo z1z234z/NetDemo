@@ -37,70 +37,8 @@
 new Vue({
     el: '#app',
     data: function () {
-        const validatePass2 = (rule, value, callback) => {
-            if (value === '') {
-                callback(new Error('请再次输入密码'))
-            } else if (value !== this.registerform.passwordreg) {
-                callback(new Error('两次输入密码不一致!'))
-            } else {
-                callback()
-            }
-        }
-        const validateNewPass2 = (rule, value, callback) => {
-            if (value === '') {
-                callback(new Error('请再次输入密码'))
-            } else if (value !== this.forgetform.password) {
-                callback(new Error('两次输入密码不一致!'))
-            } else {
-                callback()
-            }
-        }
-        const validateloginUserName = (rule, value, callback) => {
-            console.log("validateloginUserName")
-            if (value === '') {
-                callback(new Error('请输入账号!'))
-            } else {
-                ajaxPost("/Login/accountRepeatable", { account: value }, function (data) {
-                    if (data.code == 200) {
-                        console.log(data.result)
-                        if (!data.result) {
-                            console.log("here")
-                            callback(new Error('该账号已经存在，请尝试新的账号!'))
-                        }
-                        callback()
-
-                    }
-
-                })
-            }
-        }
-        const validatemailreg = (rule, value, callback) => {
-            console.log("validatemailreg")
-            let mailReg = /^\w+((-\w+)|(\.\w+))*\@@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
-            if (value === '') {
-                callback(new Error('请输入邮箱!'))
-            }
-            else if (!mailReg.test(value)) {
-                callback(new Error('邮箱格式不正确'))
-            }
-            callback()
-            /*else {
-                validateMailbox(value).then((response) => {
-                    if (response.status === '200') {
-                        if (response.result === false) {
-                            callback(new Error('该邮箱不存在，请确认邮箱是否输入正确!'))
-                        }
-                    }
-                    callback()
-                })
-            }*/
-        }
-        const item = {
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-        }
         return {
+            pageindex:1,
             openindex:[""],
             missingtype:"",
             typedatas: [{
@@ -114,7 +52,7 @@ new Vue({
                     { index: "2-2", type: '水杯' }
                 ]}]
                 ,
-            sortParamRadio:1,
+            missingorlose:2,
             infoOverviewList: [{
                 id: 1,
                 avatarURL: "",
@@ -156,23 +94,30 @@ new Vue({
     },
     created() {
         this.getalltypes()
-        //this.getMissingbytype()
+        this.getMissingbytype()
     },
     methods: {
         getMissingbytype(type, index) {
             this.loadingmissings = true
+            var url = ""
+            if (missingorlose == 1) {
+                url = "/Main/getOwnerByType"
+            } else {
+                url = "/Main/getFinderByType"
+            }
             let _this = this
-            ajaxPost("/Main/getOwnerByType", { type: type }, function (data) {
+            ajaxPost(url, { type: type,index:index }, function (data) {
                 if (data.code == 200) {
-                    _this.missingOverviewList = data.ownerlist
+                    _this.infoOverviewList = data.infolist
                 }
                 _this.loadingmissings = false
             })
         },
         getalltypes() {
-            ajaxPost("/Home//Main/getType", { type: type }, function (data) {
+            var _this = this
+            ajaxPost("/Main/getType", {}, function (data) {
                 if (data.code == 200) {
-                    _this.missingOverviewList = data.ownerlist
+                    _this.typedatas = data.typelist
                 }
 
             })

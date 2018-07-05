@@ -28,7 +28,7 @@
                 <el-container>
                     <el-header>
                         <span id="choose-params-panel">
-                            <el-radio-group v-model="sortParamRadio" @@change="radioChange()">
+                            <el-radio-group v-model="missingorlose" @@change="radioChange()">
                                 <el-radio-button label=1>不幸丢失的帖子</el-radio-button>
                                 <el-radio-button label=2>拾物不昧的帖子</el-radio-button>
                             </el-radio-group>
@@ -36,14 +36,12 @@
                     </el-header>
                     <el-main>
                         <div v-loading='loadingmissings' element-loading-text="玩命加载中"></div>
-                        <div v-for="infoOverview in 
-                             
-                             ">
+                        <div v-for="infoOverview in infoOverviewList">
                             <info-overview v-bind:info-Overview="infoOverview"></info-overview>
                         </div>
                     </el-main>
                     <el-footer>
-                        <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+                        <el-pagination background layout="prev, pager, next" :total="1000" v-model="pageindex"></el-pagination>
                     </el-footer>
                 </el-container>
             </el-container>
