@@ -13,70 +13,71 @@
                     <div id="question-top-panel">
                         <div class="question-title">
                             <h3>
-                                {{ missing.missingTitle }}
+                                {{ finder.finderTitle }}
                             </h3>
                         </div>
                     </div>
                     <div id="question-detail"
-                         v-html="missing.missingContent">
+                         v-html="finder.finderContent">
                     </div>
                     <div class="question-info" style="margin-right: 20px;margin-top: -30px">
-                        <el-tooltip content="给丢东西的人发个私信告诉他东西在哪吧" placement="top">
+            
+                        <el-tooltip v-if="!this.isWriter" content="给丢东西的人发个私信告诉他东西在哪吧" placement="top">
                             <el-button @@click.prevent="writeMessage()" size="small" icon="edit" type="info">写私信</el-button>
-                        </el-tooltip>
-                        <el-tooltip v-if="!this.hasAnswer" content="为该问题贡献自己的答案吧" placement="top">
-                            <el-button @@click.prevent="writeReply()" size="small" icon="edit" type="info">写回答</el-button>
                         </el-tooltip>
                         <el-tooltip v-else content="去修改自己的回答" placement="top">
                             <el-button @@click.prevent="modifyAnswer()" size="small" icon="edit" type="info">修改问题</el-button>
                         </el-tooltip>
                     </div>
-                    <el-dialog size="large" :visible.sync="replydialogVisible" ref="replyinput">
-                        <div id="userinfo" style="top: 10px; margin-bottom: 20px">
-                            <h3>感谢您的回答</h3>
-                            <img class="useravatar" :src="userInfo.avatarURL" />
-                            <span>{{ userInfo.username }}</span>
-                        </div>
-                        <div style="margin-top: 20px">
-                            <richtext id="richtxt">
-
-                            </richtext>
-                        </div>
-                        <div slot="footer" class="dialog-footer">
-                            <el-button @@click.prevent="dialogVisible = false">取 消</el-button>
-                            <el-button type="primary" @@click.prevent="submitAnswer()">确 定</el-button>
-                        </div>
-                    </el-dialog>
                     <el-dialog size="large" :visible.sync="messagedialogVisible" ref="replyinput">
                         <div id="userinfo" style="top: 10px; margin-bottom: 20px">
                             <img class="useravatar" :src="userInfo.avatarURL" />
                             <h3>向<span>{{ userInfo.username }}</span>发送私信</h3>
                         </div>
                         <div style="margin-top: 20px">
-                            <el-input type="textarea"
-                                      :autosize="{ minRows: 2, maxRows: 4}"
-                                      placeholder="请输入私信内容"
-                                      v-model="messagetouser">
-                            </el-input>
+                            <el-form id="edit" ref="form" :model="sizeForm" label-width="80px" size="mini" :rules="editrule">
+                                <div>
+                                    <el-form-item prop="content">
+                                        <el-input type="textarea"
+                                                  :autosize="{ minRows: 2, maxRows: 4}"
+                                                  placeholder="请输入私信内容"
+                                                  v-model="messagetofinder.content">
+                                        </el-input>
+                                    </el-form-item>
+                                </div>
+                                <div>
+                                    <el-form-item label="预置的问题：">
+                                        {{finder.question}}
+                                    </el-form-item>
+                                </div>
+                                <div>
+                                    <el-form-item label="回答" prop="answer">
+                                        <el-input v-model="messagetofinder.answer"></el-input>
+                                    </el-form-item>
+                                </div>
+                                <div>
+                                    <el-form-item label="你的联系方式，如果你的问题和私信让对方觉得你就是失主，将会通过你给的联系方式联系你：">
+                                    </el-form-item>
+                                </div>
+                                <div>
+                                    <el-form-item label="联系方式" prop="contactinfo">
+                                        <el-input v-model="messagetofinder.contactinfo"></el-input>
+                                    </el-form-item>
+                                </div>
+
+                                <div>
+                                    <el-form-item>
+                                        <el-button type="primary" @@click="onSubmit" v-loading='submitting' element-loading-text="发送中">发布启事</el-button>
+                                        <el-button>返回</el-button>
+                                    </el-form-item>
+                                </div>
+                            </el-form>
                         </div>
                         <div slot="footer" class="dialog-footer">
                             <el-button @@click.prevent="dialogVisible = false">取 消</el-button>
                             <el-button type="primary" @@click.prevent="submitAnswer()">确 定</el-button>
                         </div>
                     </el-dialog>
-                </div>
-                <div id="answers-panel"
-                     v-loading.lock="answerLoading" element-loading-text="拼命加载中">
-                    <div id="answer-summary">
-                        共有 {{ answerNum }} 个回答
-                        <el-radio-group @@change="answerSortChange()" size="small" id="sort-panel" v-model="sortParamLabel" style="margin-top: -10px">
-                            <el-radio-button label="默认"></el-radio-button>
-                            <el-radio-button label="时间"></el-radio-button>
-                        </el-radio-group>
-                    </div>
-                    <div v-for="replydata in allreply" class="answer">
-                        <reply :isCurrentUser="isCurrentUser" :reply-Data="replydata" @@onToggleComment="lastScrollTop = -1"></reply>
-                    </div>
                 </div>
             </div>
         </div>
