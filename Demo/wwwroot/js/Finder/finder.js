@@ -12,7 +12,7 @@
                 finderContent: '这是内容',
                 finderId: 2,
                 finderIsHidden: true,
-                question:"这是一个问题"，
+                question:"这是一个问题",
                 accountId: 0
             },
             allreply: [{
