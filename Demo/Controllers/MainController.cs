@@ -33,12 +33,21 @@ namespace Demo.Controllers
             List<Hashtable> typelist = new List<Hashtable>();
             //前端向后端发送数据
             List<LoseType> list = service.GetLoseTypes();
-            for(int i = 0; i < list.Count; i++)
+            for(int i = 0; i < list.Count/2; i++)
             {
                 Hashtable table = new Hashtable();
-                table.Add("index", i);
+                table.Add("index", (i+1).ToString());
                 table.Add("type", list[i].Name);
-                table.Add("children", new List<Hashtable>());
+                List<LoseType> childrenlists = service.GetLoseTypes();
+                List<Hashtable> childrentypelist = new List<Hashtable>();
+                for (int j = 3; j < childrenlists.Count; j++)
+                {
+                    Hashtable childrentable = new Hashtable();
+                    childrentable.Add("index", (i + 1).ToString() + "-" + (j + 1).ToString());
+                    childrentable.Add("type", childrenlists[i].Name);
+                    childrentypelist.Add(childrentable);
+                }
+                table.Add("children", childrentypelist);
                 typelist.Add(table);
             }
             if (list == null)
