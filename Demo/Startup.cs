@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Net.WebSockets;
 using Microsoft.AspNetCore.Http;
 using System.Threading;
+using UEditor.Core;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace Demo
 {
@@ -27,6 +30,7 @@ namespace Demo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DBContext>(options => options.UseMySQL(Configuration.GetConnectionString("MySql")));
+            services.AddUEditorService();
             services.AddMvc();
         }
 
@@ -57,7 +61,16 @@ namespace Demo
                     name: "default",
                     template: "{controller=Login}/{action=Index}/{id?}");
             });
-
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                   Path.Combine(Directory.GetCurrentDirectory(), "upload")),
+                RequestPath = "/upload",
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=36000");
+                }
+            });
             app.Use(async (context, next) =>
             {
                 if (context.Request.Path == "/Home/ws")
