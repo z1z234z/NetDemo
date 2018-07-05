@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Demo.Models;
 using Demo.Service;
+using System.Collections;
 
 namespace Demo.Controllers
 {
@@ -134,6 +135,83 @@ namespace Demo.Controllers
                 {
                     result = result,
                     code = 500
+                });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult DetailReply()
+        {
+            //前端向后端发送数据
+            String temp = Request.Form["id"];
+            int id = (temp == null) ? 0 : Convert.ToInt32(temp);
+            Owner owner = service.getDetail(id);
+            List<Hashtable> result = new List<Hashtable>();
+            if (owner != null)
+            {
+                List<Reply> replylist = service.getReplyListByOwner(owner);
+                foreach (Reply item in replylist)
+                {
+                    Hashtable table = new Hashtable();
+                    Hashtable account = new Hashtable();
+                    List<ReplyComment> replyComments = service.getReplyCommentListByReply(item);
+                    account.Add("username", item.User.UserName);
+                    table.Add("account", account);
+                    table.Add("answerDateTime", item.time);
+                    table.Add("answerContent", item.ReplyContent);
+                    table.Add("commentCount", replyComments.Count);
+                    table.Add("id", item.ID);
+                    result.Add(table);
+                }
+                return Ok(new
+                {
+                    result = result,
+                    code = 200,
+                });
+            }
+            else
+            {
+                return Ok(new
+                {
+                    result = result,
+                    code = 500,
+                });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult DetailComment()
+        {
+            //前端向后端发送数据
+            String temp = Request.Form["id"];
+            int id = (temp == null) ? 0 : Convert.ToInt32(temp);
+            Reply reply = service.getReply(id);
+            List<Hashtable> result = new List<Hashtable>();
+            if (reply != null)
+            {
+                List<ReplyComment> replyComments = service.getReplyCommentListByReply(reply);
+                foreach (ReplyComment item in replyComments)
+                {
+                    Hashtable table = new Hashtable();
+                    Hashtable commenter = new Hashtable();
+                    commenter.Add("id", item.ID);
+                    commenter.Add("username", item.User.UserName);
+                    table.Add("commentContent", commenter);
+                    table.Add("commentDateTime", item.time);
+                    result.Add(table);
+                }
+                return Ok(new
+                {
+                    result = result,
+                    code = 200,
+                });
+            }
+            else
+            {
+                return Ok(new
+                {
+                    result = result,
+                    code = 500,
                 });
             }
         }

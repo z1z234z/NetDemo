@@ -104,9 +104,39 @@ namespace Demo.Service
             return owner;
         }
 
+        public Reply getReply(int id)
+        {
+            Reply reply = null;
+            if (replyDao.Select(id, null, null, null, null).Count > 0)
+            {
+                reply = replyDao.Select(id, null, null, null, null)[0];
+            }
+            return reply;
+        }
+
         public bool completed(Owner owner)
         {
             return ownerDao.Edit(owner);
+        }
+
+        public List<Reply> getReplyListByOwner(Owner owner)
+        {
+            List<Reply> list = new List<Reply>();
+            if (replyDao.Select(null, null, null, null, owner).Count > 0)
+            {
+                list = replyDao.Select(null, null, null, null, owner);
+            }
+            return list;
+        }
+
+        public List<ReplyComment> getReplyCommentListByReply(Reply reply)
+        {
+            List<ReplyComment> list = new List<ReplyComment>();
+            if (replyCommentDao.Select(null, null, null, null, reply).Count > 0)
+            {
+                list = replyCommentDao.Select(null, null, null, null, reply);
+            }
+            return list;
         }
     }
 }
