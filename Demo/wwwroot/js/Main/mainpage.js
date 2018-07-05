@@ -52,7 +52,7 @@ new Vue({
                     { index: "2-2", type: '水杯' }
                 ]}]
                 ,
-            missingorlose:2,
+            missingorlose:1,
             infoOverviewList: [{
                 id: 1,
                 avatarURL: "",
@@ -62,7 +62,7 @@ new Vue({
                 questionSubject: "asdf",
                 questionCourse: "asdff",
                 hidden: false,
-                thumbsUpCount: 2,
+                thumbsUpCount: 1,
                 thumbsDownCount: false,
                 isAccepted:false
 
@@ -94,13 +94,16 @@ new Vue({
     },
     created() {
         this.getalltypes()
-        this.getMissingbytype()
+        this.getinfobytype()
     },
     methods: {
-        getMissingbytype(type, index) {
+        radioChange() {
+            this.getinfobytype()
+        },
+        getinfobytype(type, index) {
             this.loadingmissings = true
             var url = ""
-            if (missingorlose == 1) {
+            if (this.missingorlose == 1) {
                 url = "/Main/getOwnerByType"
             } else {
                 url = "/Main/getFinderByType"
