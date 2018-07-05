@@ -36,7 +36,9 @@
                     </el-header>
                     <el-main>
                         <div v-loading='loadingmissings' element-loading-text="玩命加载中"></div>
-                        <div v-for="infoOverview in infoOverviewList">
+                        <div v-for="infoOverview in 
+                             
+                             ">
                             <info-overview v-bind:info-Overview="infoOverview"></info-overview>
                         </div>
                     </el-main>
