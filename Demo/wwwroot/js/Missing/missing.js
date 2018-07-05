@@ -4,7 +4,9 @@
         return {
             isCurrentUser:false,
             userInfo: { username: "shine", avatarURL:""},
-            dialogVisible: false,
+            replydialogVisible: false,
+            messagedialogVisible: false,
+            messagetouser:"",
             missing: {
                 missingTitle: '这是一个标题',
                 missingContent: '这是内容',
@@ -51,7 +53,9 @@
     },
 
     methods: {
-
+        writeMessage() {
+            this.messagedialogVisible=true
+        },
         writeReply() {
             this.dialogVisible = true
             //this.$refs.replyinput.open()

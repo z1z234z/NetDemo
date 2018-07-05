@@ -14,27 +14,41 @@
                         <el-input v-model="sizeForm.title"></el-input>
                     </el-form-item>
                 </div>
-                <div style="position:relative; z-index:99;" prop="type">
-                    <el-form-item label="类型">
+                <div style="position:relative;z-Index:5000;">
+                    <el-form-item label="类型" prop="type">
                         <el-cascader :options="options"
                                      v-model="sizeForm.type"
                                      @@change="handleChange">
                         </el-cascader>
                     </el-form-item>
                 </div>
-                <div style="position:relative; z-index:9;">
+                <div style="position:relative;z-Index:1;">
                     <el-form-item label="内容">
+                        <richtext id="richtxt" ref="editorcompo"></richtext>
+                    </el-form-item>
+                </div>
+                <div>
+                    <el-form-item>
+                        <el-select v-model="missorfind" placeholder="请选择贴子的种类">
+                            <el-option value=1 label="丢了东西">
+                            </el-option>
+                            <el-option value=2 label="捡到东西">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                </div>
+                <div v-if="missorfind==2">
+                    <el-form-item>
+                        请输入对来联系领取的人的问题（给你一个参考，把东西还给真正的失主）:
+                    </el-form-item>
+                    <el-form-item prop="question">
+                        <el-input v-model="sizeForm.question"></el-input>
+                    </el-form-item>
+                </div>
 
-                    </el-form-item>
-                </div>
                 <div>
                     <el-form-item>
-                        <richtext id="richtxt"></richtext>
-                    </el-form-item>
-                </div>
-                <div>
-                    <el-form-item>
-                        <el-button type="primary" @@click="onSubmit">发布启事</el-button>
+                        <el-button type="primary" @@click="onSubmit" v-loading='submitting' element-loading-text="发送中">发布启事</el-button>
                         <el-button>返回</el-button>
                     </el-form-item>
                 </div>
@@ -49,6 +63,7 @@
     <script src="~/js/uelib/ueditor.all.js"></script>
     <script src="~/js/uelib/zh-cn.js"></script>
     <script src="~/js/richtext/richtextcomponent.js"></script>
+    <script src="~/js/test/ajax.js"></script>
     <script type="text/javascript">
         new Vue({
             el: '#app',
@@ -61,10 +76,12 @@
                     }
                 }
                 return {
+                    missorfind:"丢了东西",
                     submitting:false,
                     sizeForm: {
                         title: '',
                         type: '',
+                        question:'',
                     },
                     editrule: {
                         title: [
@@ -84,7 +101,10 @@
                     this.$refs.form.validate((valid) => {
                         if (valid) {
                             _this.submitting = true
-                            ajaxPost("/Login/register", _this.form, function (data) {
+                            postdata = { title: _this.sizeForm.title, type: _this.sizeForm.type, content: _this.$refs.editorcompo.geteditor().getContent(), account: 2, question: _this.sizeForm.question }
+                            if (_this.missorfind == 1)
+                                var url = "/ReleaseMissing/Submit"
+                            ajaxPost(url, postdata, function (data) {
                                 if (data.code == 200) {
                                     if (data.result) {
                                         _this.$message({
@@ -113,6 +133,8 @@
                                         duration: 2000
                                     })
                                 }
+                                _this.submitting = false
+                                $(location).attr('href', '/Main/Main');
                             })
                         }
                     })

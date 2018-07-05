@@ -29,15 +29,15 @@
                     <el-header>
                         <span id="choose-params-panel">
                             <el-radio-group v-model="sortParamRadio" @@change="radioChange()">
-                                <el-radio-button label="最新问题"></el-radio-button>
-                                <el-radio-button label="最热问题"></el-radio-button>
+                                <el-radio-button label=1>不幸丢失的帖子</el-radio-button>
+                                <el-radio-button label=2>拾物不昧的帖子</el-radio-button>
                             </el-radio-group>
                         </span>
                     </el-header>
                     <el-main>
                         <div v-loading='loadingmissings' element-loading-text="玩命加载中"></div>
-                        <div v-for="missingOverview in missingOverviewList">
-                            <missing-overview v-bind:missing-Overview="missingOverview"></missing-overview>
+                        <div v-for="infoOverview in infoOverviewList">
+                            <info-overview v-bind:info-Overview="infoOverview"></info-overview>
                         </div>
                     </el-main>
                     <el-footer>

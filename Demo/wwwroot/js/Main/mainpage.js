@@ -1,5 +1,5 @@
-﻿Vue.component('missing-overview', {
-    props: ['missingOverview'],
+﻿Vue.component('info-overview', {
+    props: ['infoOverview'],
     data: function () {
         return {
             itemHoverIndex: null,
@@ -11,25 +11,25 @@
     template: `<div>
         <div>
     <div class="publisherInfo">
-      <a :href="missingOverview.id">
-        <img class="avatar" :src="missingOverview.avatarURL">
-        <span class=".publisher"> {{ missingOverview.username }} </span>
+      <a :href="infoOverview.id">
+        <img class="avatar" :src="infoOverview.avatarURL">
+        <span class=".publisher"> {{ infoOverview.username }} </span>
       </a>
     </div>
 			<div class="summary">
 				<h3>
-                <a :href="missingOverview.id">
-					{{ missingOverview.questionTitle }}
+                <a :href="infoOverview.id">
+					{{ infoOverview.questionTitle }}
 				</a>
 				</h3>
 				<div class="types">
-				{{ missingOverview.questionSubject }} -> {{ missingOverview.questionCourse }}
+				{{ infoOverview.questionSubject }} -> {{ infoOverview.questionCourse }}
 				</div>
 			</div >
 		</div >
     <div class="info">
         <div class="solved-views">
-        {{ missingOverview.isAccepted }}
+        {{ infoOverview.isAccepted }}
       </div>
     </div>
   </div > `
@@ -114,8 +114,8 @@ new Vue({
                     { index: "2-2", type: '水杯' }
                 ]}]
                 ,
-            sortParamRadio:"",
-            missingOverviewList: [{
+            sortParamRadio:1,
+            infoOverviewList: [{
                 id: 1,
                 avatarURL: "",
                 username: "12",

@@ -24,17 +24,17 @@
                         <el-tooltip v-if="this.hasFollow" content="取消关注后将不会获得更新提醒" placement="top">
                             <el-button :disabled="isSendingFollow" @@click.prevent="unFollowQuestion()" size="small" type="warning">取消关注</el-button>
                         </el-tooltip>
-                        <el-tooltip v-else content="关注之后将获得更新提醒" placement="top">
-                            <el-button :loading="loadingFollowStatus" :disabled="isSendingFollow" @@click.prevent="followQuestion()" size="small" type="success">关注问题</el-button>
+                        <el-tooltip v-else content="给丢东西的人发个私信告诉他东西在哪吧" placement="top">
+                            <el-button @@click.prevent="writeMessage()" size="small" icon="edit" type="info">写私信</el-button>
                         </el-tooltip>
                         <el-tooltip v-if="!this.hasAnswer" content="为该问题贡献自己的答案吧" placement="top">
                             <el-button @@click.prevent="writeReply()" size="small" icon="edit" type="info">写回答</el-button>
                         </el-tooltip>
                         <el-tooltip v-else content="去修改自己的回答" placement="top">
-                            <el-button @@click.prevent="modifyAnswer()" size="small" icon="edit" type="info">修改回答</el-button>
+                            <el-button @@click.prevent="modifyAnswer()" size="small" icon="edit" type="info">修改问题</el-button>
                         </el-tooltip>
                     </div>
-                    <el-dialog size="large" :visible.sync="dialogVisible" ref="replyinput">
+                    <el-dialog size="large" :visible.sync="replydialogVisible" ref="replyinput">
                         <div id="userinfo" style="top: 10px; margin-bottom: 20px">
                             <h3>感谢您的回答</h3>
                             <img class="useravatar" :src="userInfo.avatarURL" />
@@ -44,6 +44,23 @@
                             <richtext id="richtxt">
 
                             </richtext>
+                        </div>
+                        <div slot="footer" class="dialog-footer">
+                            <el-button @@click.prevent="dialogVisible = false">取 消</el-button>
+                            <el-button type="primary" @@click.prevent="submitAnswer()">确 定</el-button>
+                        </div>
+                    </el-dialog>
+                    <el-dialog size="large" :visible.sync="messagedialogVisible" ref="replyinput">
+                        <div id="userinfo" style="top: 10px; margin-bottom: 20px">
+                            <img class="useravatar" :src="userInfo.avatarURL" />
+                            <h3>向<span>{{ userInfo.username }}</span>发送私信</h3>
+                        </div>
+                        <div style="margin-top: 20px">
+                            <el-input type="textarea"
+                                      :autosize="{ minRows: 2, maxRows: 4}"
+                                      placeholder="请输入私信内容"
+                                      v-model="messagetouser">
+                            </el-input>
                         </div>
                         <div slot="footer" class="dialog-footer">
                             <el-button @@click.prevent="dialogVisible = false">取 消</el-button>
