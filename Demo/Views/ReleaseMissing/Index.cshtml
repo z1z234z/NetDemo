@@ -61,6 +61,7 @@
                     }
                 }
                 return {
+                    submitting:false,
                     sizeForm: {
                         title: '',
                         type: '',
@@ -82,7 +83,7 @@
                     let _this = this
                     this.$refs.form.validate((valid) => {
                         if (valid) {
-                            _this.registering = true
+                            _this.submitting = true
                             ajaxPost("/Login/register", _this.form, function (data) {
                                 if (data.code == 200) {
                                     if (data.result) {
