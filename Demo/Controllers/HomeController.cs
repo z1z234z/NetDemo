@@ -38,5 +38,61 @@ namespace Demo.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpPost]
+        public IActionResult GetUserInfo()
+        {
+            bool result = false;
+            //前端向后端发送数据
+            string account = Request.Form["account"];
+            User user = service.getUserInfo(account);
+            if (user != null)
+            {
+                result = true;
+                return Ok(new
+                {
+                    user = user,
+                    result = result,
+                    code = 200
+                });
+            }
+            else
+            {
+                return Ok(new
+                {
+                    user = user,
+                    result = result,
+                    code = 200
+                });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult SendPrivateMessage()
+        {
+            bool result = false;
+            //前端向后端发送数据
+            string account = Request.Form["account"];
+            User user = service.getUserInfo(account);
+            if (user != null)
+            {
+                result = true;
+                return Ok(new
+                {
+                    user = user,
+                    result = result,
+                    code = 200
+                });
+            }
+            else
+            {
+                return Ok(new
+                {
+                    user = user,
+                    result = result,
+                    code = 200
+                });
+            }
+        }
     }
 }
