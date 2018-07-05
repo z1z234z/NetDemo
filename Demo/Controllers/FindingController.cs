@@ -10,17 +10,17 @@ using Demo.Service;
 
 namespace Demo.Controllers
 {
-    public class FindingController : Controller
+    public class FinderController : Controller
     {
         private readonly FindingService service;
 
-        public FindingController(DBContext context)
+        public FinderController(DBContext context)
         {
             service = new FindingService(context);
 
         }
         // GET: /<controller>/
-        public IActionResult Index()
+        public IActionResult FinderDetail()
         {
             return View();
         }

@@ -1,0 +1,182 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+    <title>丢了么</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="http://v3.jiathis.com/code_mini/jia.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div id="questionDetail">
+            <div id="question-answer">
+                <div id="questionContent" v-loading='questionLoading' element-loading-text="拼命加载中">
+                    <div id="question-top-panel">
+                        <div class="question-title">
+                            <h3>
+                                {{ finder.finderTitle }}
+                            </h3>
+                        </div>
+                    </div>
+                    <div id="question-detail"
+                         v-html="finder.finderContent">
+                    </div>
+                    <div class="question-info" style="margin-right: 20px;margin-top: -30px">
+            
+                        <el-tooltip v-if="!this.isWriter" content="给丢东西的人发个私信告诉他东西在哪吧" placement="top">
+                            <el-button @@click.prevent="writeMessage()" size="small" icon="edit" type="info">写私信</el-button>
+                        </el-tooltip>
+                        <el-tooltip v-else content="去修改自己的回答" placement="top">
+                            <el-button @@click.prevent="modifyAnswer()" size="small" icon="edit" type="info">修改问题</el-button>
+                        </el-tooltip>
+                    </div>
+                    <el-dialog size="large" :visible.sync="messagedialogVisible" ref="replyinput">
+                        <div id="userinfo" style="top: 10px; margin-bottom: 20px">
+                            <img class="useravatar" :src="userInfo.avatarURL" />
+                            <h3>向<span>{{ userInfo.username }}</span>发送私信</h3>
+                        </div>
+                        <div style="margin-top: 20px">
+                            <el-form id="edit" ref="form" :model="sizeForm" label-width="80px" size="mini" :rules="editrule" :label-position="'top'">
+                                <div>
+                                    <el-form-item prop="content">
+                                        <el-input type="textarea"
+                                                  :autosize="{ minRows: 2, maxRows: 4}"
+                                                  placeholder="请输入私信内容"
+                                                  v-model="messagetofinder.content">
+                                        </el-input>
+                                    </el-form-item>
+                                </div>
+                                <div>
+                                    <el-form-item label="预置的问题:" >
+                                        {{finder.question}}
+                                    </el-form-item>
+                                </div>
+                                <div>
+                                    <el-form-item label="回答" prop="answer">
+                                        <el-input v-model="messagetofinder.answer"></el-input>
+                                    </el-form-item>
+                                </div>
+                                <div>
+                                    <el-form-item label="你的联系方式，如果你的问题和私信让对方觉得你就是失主，将会通过你给的联系方式联系你：" >
+                                        <el-input v-model="messagetofinder.contactinfo"></el-input>
+                                    </el-form-item>
+                                </div>
+                               
+
+                            </el-form>
+                        </div>
+                        <div slot="footer" class="dialog-footer">
+                            <el-button @@click.prevent="messagedialogVisible = false">取 消</el-button>
+                            <el-button type="primary" @@click.prevent="submitAnswer()">确 定</el-button>
+                        </div>
+                    </el-dialog>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .answer {
+            border-bottom: 1px solid grey;
+            margin-bottom: 10px;
+        }
+
+            .answer .user-avatar {
+                width: 38px;
+                height: 38px;
+                border-radius: 2px;
+                background: #fff;
+                vertical-align: top;
+                margin-right: 10px;
+                margin-bottom: 10px;
+            }
+
+        .feedback > span {
+            margin-right: 10px;
+        }
+
+        .feedback > span {
+            cursor: pointer;
+        }
+
+            .feedback > span:hover {
+                color: #017E66;
+            }
+
+        .user-info {
+            cursor: pointer;
+        }
+
+        #answers-panel {
+            border: 1px solid #ddd;
+            background: #f9fafc;
+            padding: 2rem;
+            margin: 1rem;
+        }
+
+        #sort-panel {
+            float: right;
+            margin-right: 5px;
+        }
+
+        #answer-summary {
+            margin-bottom: 10px;
+            border-bottom: solid 2px saddlebrown;
+            padding-bottom: 5px;
+        }
+
+        #questionContent {
+            border: 1px solid #ddd;
+            background: #f9fafc;
+            padding: 2rem;
+            margin: 1rem;
+        }
+
+        #question-detail {
+            clear: both;
+            margin-top: 70px;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+
+        .question-title {
+            float: left;
+            width: 60%;
+        }
+
+        .question-info {
+            margin-bottom: -10px;
+            margin-right: 30px;
+            float: right;
+            width: 20%;
+        }
+
+            .question-info span {
+                width: 100%;
+            }
+
+        #userinfo .useravatar {
+            width: 38px;
+            height: 38px;
+            vertical-align: top;
+            margin-bottom: 20px;
+            margin-right: 20px;
+        }
+
+        #userinfo .useravatar {
+            width: 38px;
+            height: 38px;
+            vertical-align: top;
+            margin-bottom: 20px;
+            margin-right: 20px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="~/js/test/ajax.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="//aeu.alicdn.com/js/cj/109.js" id="AWSC_uabModule"></script>
+    <script type="text/javascript" class="nc-required-js-1 nc-umid-script" src="//g.alicdn.com/security/umscript/3.3.2/um.js"></script>
+    <script type="text/javascript" class="nc-required-js-1 nc-uab-script" src="//af.alicdn.com/js/uac.js?_t=212358"></script>
+    <script src="~/js/Finder/finder.js"></script>
+
+</body>
+</html>
