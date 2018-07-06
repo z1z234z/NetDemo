@@ -26,6 +26,15 @@ namespace Demo.Service
             }
             return result;
         }
+        public User GetUserByAccount(string account, string password)
+        {
+            User user = null;
+            if (userDao.Select(null, account, password, null, null, null, null, null, null, null, null).Count > 0)
+            {
+                user = userDao.Select(null, account, password, null, null, null, null, null, null, null, null)[0];
+            }
+            return user;
+        }
 
         public bool CheckAccount(String account)
         {
