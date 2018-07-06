@@ -161,8 +161,8 @@ namespace Demo.Controllers
                     List<ReplyComment> replyComments = service.getReplyCommentListByReply(item);
                     account.Add("username", item.User.UserName);
                     table.Add("account", account);
-                    table.Add("answerDateTime", item.time);
-                    table.Add("answerContent", item.ReplyContent);
+                    table.Add("replyDateTime", item.time);
+                    table.Add("replyContent", item.ReplyContent);
                     table.Add("commentCount", replyComments.Count);
                     table.Add("id", item.ID);
                     result.Add(table);
@@ -200,7 +200,9 @@ namespace Demo.Controllers
                     Hashtable commenter = new Hashtable();
                     commenter.Add("id", item.ID);
                     commenter.Add("username", item.User.UserName);
-                    table.Add("commentContent", commenter);
+                    commenter.Add("avatarURL", "http://localhost:25978/wwwroot/upload/head/default.jpg");
+                    table.Add("commenter", commenter);
+                    table.Add("commentContent", item.ReplyContent);
                     table.Add("commentDateTime", item.time);
                     result.Add(table);
                 }
