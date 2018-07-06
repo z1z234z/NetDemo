@@ -2,9 +2,24 @@
     el: '#app',
     data() {
         return {
+            isLoadingData:false,
+            pageSize:10,
+            total1: 20,
+            currentPage1: 1,
+            total3: 20,
+            currentPage3: 1,
+            total2:20,
+            currentPage2:1,
+            sortParam3: '',
+            sortParam1: '',
+            sortParam2:'',
+            messagelist: [{ senduserinfo: { username: "asasd", avatarURL: "avatarURL", id: "id", account: "account" },content:"私信内容",sourcetitle:"帖子来源",sourceurl:"",sendtime:""}],
+            infolist: [{ pageindex: 1, complete: true, completetext: "未找到", title: "标题12",infourl: "/", releasetime: new Date() }],
+            allreaply: [{ title: "回复贴的标题",infourl: "/", releasetime: "" }],
             imageUrl: "",
-            avatarURL: "",
-            username: "shine",
+            userInfo: { username: window.localStorage["username"], avatarURL: window.localStorage["avatarURL"], id: window.localStorage["id"], account: window.localStorage["account"] },
+            school: "同济大学",
+            viewindex:1,
             creditPoint: 3,
             infoPrefix:"我的",
             isCurrentUser:true,
@@ -30,7 +45,109 @@
             loginUser: { avatarURL:""}
         }
     },
+    created() {
+        //this.userInfo = { username: window.localStorage["username"], avatarURL: window.localStorage["avatarURL"], id: window.localStorage["id"], account: window.localStorage["account"] }
+    },
     methods: {
+        getdetailinfo() {
+            let _this = this
+            this.isLoadingData = true
+            ajaxPost("/Home/GetUserInfo", { account: this.userInfo.account }, function (data) {
+                if (data.code == 200) {
+                    if (data.userinfo) {
+                        _this.userInfo = data.userinfo
+                    }
+                    else {
+                        _this.$message({
+                            message: '获取个人信息为空',
+                            type: 'error',
+                            duration: 2000
+                        })
+                    }
+
+                }
+                else {
+                    _this.$message({
+                        message: '获取个人信息异常',
+                        type: 'error',
+                        duration: 2000
+                    })
+                }
+                _this.isLoadingData = false
+            })
+        },
+        getreplylist() {
+            let _this = this
+            this.isLoadingData = true
+            ajaxPost("/Home/GetReplyByUser", { account: this.userInfo.account }, function (data) {
+                if (data.code == 200) {
+                    if (data.result) {
+                        _this.userInfo = data.result
+                    }
+                    else {
+                        _this.$message({
+                            message: '获取我的回复为空',
+                            type: 'error',
+                            duration: 2000
+                        })
+                    }
+
+                }
+                else {
+                    _this.$message({
+                        message: '获取我的回复异常',
+                        type: 'error',
+                        duration: 2000
+                    })
+                }
+                _this.isLoadingData = false
+            })
+        },
+        getmessagelist() {
+            let _this = this
+            this.isLoadingData = true
+            ajaxPost("/Home/GetReplyByUser", { account: this.userInfo.account }, function (data) {
+                if (data.code == 200) {
+                    if (data.result) {
+                        _this.userInfo = data.result
+                    }
+                    else {
+                        _this.$message({
+                            message: '获取我的回复为空',
+                            type: 'error',
+                            duration: 2000
+                        })
+                    }
+
+                }
+                else {
+                    _this.$message({
+                        message: '获取我的回复异常',
+                        type: 'error',
+                        duration: 2000
+                    })
+                }
+                _this.isLoadingData = false
+            })
+        },
+        saveProfile() {
+
+        },
+        changeview(index) {
+            this.viewindex = index
+            if (index == 1) {
+                this.getmessagelist()
+            }
+            else if (index == 2) {
+                this.getdetailinfo()
+            }
+            else if (index == 3) {
+                this.getreplylist()
+            }
+        },
+        handleCurrentChange1() { },
+        handleCurrentChange2() { },
+        handleCurrentChange3() { },
         handleAvatarSuccess(res, file) {
             this.imageUrl = URL.createObjectURL(file.raw);
         },

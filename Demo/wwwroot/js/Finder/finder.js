@@ -13,7 +13,9 @@
                 finderId: 2,
                 finderIsHidden: true,
                 question:"这是一个问题",
-                accountId: 0
+                account: 0,
+                complete: true,
+                createtime: new Date()
             },
             allreply: [{
                 account: { username: "shine" },
