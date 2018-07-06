@@ -65,7 +65,6 @@
     <Folder Include="wwwroot\js\test\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\dll\WebSoketDLL.dll" />
     <None Include="wwwroot\js\uelib\dialogs\attachment\attachment.js" />
     <None Include="wwwroot\js\uelib\dialogs\background\background.js" />
     <None Include="wwwroot\js\uelib\dialogs\charts\chart.config.js" />
