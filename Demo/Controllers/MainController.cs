@@ -143,7 +143,7 @@ namespace Demo.Controllers
                     }
                     Hashtable table = new Hashtable();
                     table.Add("id", item.User.ID);
-                    table.Add(" avatarURL", "http://localhost:59823/wwwroot/images/head/default.jpg");
+                    table.Add(" avatarURL", "/wwwroot/images/head/default.jpg");
                     table.Add("username", item.User.UserName);
                     table.Add("infoId", item.ID);
                     table.Add("infoTitle", "default");
@@ -152,7 +152,7 @@ namespace Demo.Controllers
                     table.Add("hidden", item.hidden);
                     table.Add("complete", item.Complete);
                     table.Add("completetext", completetext);
-                    table.Add("infourl", "http://localhost:59823/Finding/FinderDetail?id=" + item.ID.ToString());
+                    table.Add("infourl", "/Finding/FinderDetail?id=" + item.ID.ToString());
                     infolist.Add(table);
                 }
             }
