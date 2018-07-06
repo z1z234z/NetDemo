@@ -18,6 +18,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="upload\image\20180705\6366643173096102609513307.jpg" />
+    <None Remove="upload\image\20180706\6366644129683340734967269.jpg" />
+    <None Remove="upload\image\20180706\6366644188835709539295881.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="upload\image\20180705\6366643173096102609513307.jpg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="upload\image\20180706\6366644129683340734967269.jpg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="upload\image\20180706\6366644188835709539295881.jpg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Jieba.NETCore" Version="1.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.WebSockets" Version="2.1.1" />
@@ -36,7 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="upload\image\" />
     <Folder Include="Views\User\" />
     <Folder Include="wwwroot\js\test\" />
   </ItemGroup>
@@ -121,6 +138,11 @@
     <None Include="wwwroot\js\uelib\third-party\zeroclipboard\ZeroClipboard.js" />
     <None Include="wwwroot\js\uelib\third-party\zeroclipboard\ZeroClipboard.min.js" />
     <None Include="wwwroot\js\uelib\third-party\zeroclipboard\ZeroClipboard.swf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="WebSoketDLL">
+      <HintPath>Dll\WebSoketDLL.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Update="Views\Home\UserInformation.cshtml">
