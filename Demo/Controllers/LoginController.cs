@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Demo.Models;
 using Demo.Service;
 using System.Collections;
+using WebSoketDLL;
 
 namespace CoremvcDemo.Controllers
 {

@@ -14,7 +14,7 @@ using System.Threading;
 using UEditor.Core;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
-using Demo.WebSoket;
+using WebSoketDLL;
 using Demo.Utils;
 using Microsoft.AspNetCore.Mvc.Razor.Compilation;
 

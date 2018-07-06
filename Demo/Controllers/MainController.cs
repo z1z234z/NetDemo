@@ -18,6 +18,7 @@ namespace Demo.Controllers
 
         public MainController(DBContext context)
         {
+
             service = new MainService(context);
 
         }
