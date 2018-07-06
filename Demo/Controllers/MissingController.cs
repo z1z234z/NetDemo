@@ -18,9 +18,17 @@ namespace Demo.Controllers
             service = new MissingService(context);
 
         }
-        public IActionResult MissingDetail()
+        public IActionResult MissingDetail(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return View();
+            }
+            else
+            {
+                Owner owner = service.getDetail(id.Value);
+                return View(owner);
+            }
         }
 
         public IActionResult test()

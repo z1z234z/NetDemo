@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <ApplicationIcon />
+    <Win32Resource />
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +17,10 @@
     <Compile Remove="Migrations\20180619081945_test.Designer.cs" />
     <Compile Remove="Service\HomeController.cs" />
     <Compile Remove="Service\LoginController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\dll\WebSoketDLL.dll" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +50,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="UEditor.Core" Version="1.0.6" />
+    <PackageReference Include="WebSoketDLL" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,6 +65,7 @@
     <Folder Include="wwwroot\js\test\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="wwwroot\dll\WebSoketDLL.dll" />
     <None Include="wwwroot\js\uelib\dialogs\attachment\attachment.js" />
     <None Include="wwwroot\js\uelib\dialogs\background\background.js" />
     <None Include="wwwroot\js\uelib\dialogs\charts\chart.config.js" />
@@ -138,11 +146,6 @@
     <None Include="wwwroot\js\uelib\third-party\zeroclipboard\ZeroClipboard.js" />
     <None Include="wwwroot\js\uelib\third-party\zeroclipboard\ZeroClipboard.min.js" />
     <None Include="wwwroot\js\uelib\third-party\zeroclipboard\ZeroClipboard.swf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="WebSoketDLL">
-      <HintPath>wwwroot\dll\WebSoketDLL.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Update="Views\Home\UserInformation.cshtml">

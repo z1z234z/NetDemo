@@ -18,6 +18,7 @@ namespace Demo.Controllers
 
         public MainController(DBContext context)
         {
+
             service = new MainService(context);
 
         }
@@ -121,7 +122,7 @@ namespace Demo.Controllers
             string type = Request.Form["type"];
             string temp = Request.Form["index"];
             int index = (temp == "" || type == null) ? 0 : Convert.ToInt32(temp);
-            type = (type == "") ? null : type;
+            type = (temp == "" || type == null) ? null : type;
             list = service.GetFinderByType(type, index);
             if (list == null)
             {
