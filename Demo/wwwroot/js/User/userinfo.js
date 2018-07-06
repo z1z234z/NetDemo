@@ -106,10 +106,10 @@
         getmessagelist() {
             let _this = this
             this.isLoadingData = true
-            ajaxPost("/Home/GetReplyByUser", { account: this.userInfo.account }, function (data) {
+            ajaxPost("/Home/GetPMByUser", { account: this.userInfo.account }, function (data) {
                 if (data.code == 200) {
                     if (data.result) {
-                        _this.userInfo = data.result
+                        _this.messagelist = data.result
                     }
                     else {
                         _this.$message({
@@ -130,8 +130,63 @@
                 _this.isLoadingData = false
             })
         },
-        saveProfile() {
+        getinfolist() {
+            let _this = this
+            this.isLoadingData = true
+            ajaxPost("/Home/GetFindingByUser", { account: this.userInfo.account }, function (data) {
+                if (data.code == 200) {
+                    if (data.result) {
+                        _this.infolist = data.result
+                    }
+                    else {
+                        _this.$message({
+                            message: '获取我的发帖为空',
+                            type: 'error',
+                            duration: 2000
+                        })
+                    }
 
+                }
+                else {
+                    _this.$message({
+                        message: '获取我的发帖异常',
+                        type: 'error',
+                        duration: 2000
+                    })
+                }
+                _this.isLoadingData = false
+            })
+        },
+        saveProfile() {
+            let _this = this
+            this.isLoadingData = true
+            ajaxPost("/Home/EditProfile", { account: this.userInfo.account, profile: this.profile }, function (data) {
+                if (data.code == 200) {
+                    if (data.result) {
+                        _this.$message({
+                            message: '编辑简介成功',
+                            type: 'success',
+                            duration: 2000
+                        })
+                    }
+                    else {
+                        _this.$message({
+                            message: '编辑简介失败',
+                            type: 'error',
+                            duration: 2000
+                        })
+                    }
+
+                }
+                else {
+                    _this.$message({
+                        message: '编辑简介异常',
+                        type: 'error',
+                        duration: 2000
+                    })
+                }
+                _this.isLoadingData = false
+            })
         },
         changeview(index) {
             this.viewindex = index

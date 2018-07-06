@@ -96,7 +96,7 @@
                 };
             },
             created() { 
-
+                this.userinfo = { username: window.localStorage["username"], avatarURL: window.localStorage["avatarURL"], id: window.localStorage["id"], account: window.localStorage["account"] }
                 let _this = this
                 ajaxPost("/Common/getChoiceType", {}, function (data) {
                     if (data.code == 200) {
@@ -131,12 +131,12 @@
                             _this.submitting = true
                             postdata = { title: _this.sizeForm.title, type: _this.sizeForm.type.toString(), content: _this.$refs.editorcompo.geteditor().getContent(), account: _this.userinfo.account, question: _this.sizeForm.question }
                             console.log(postdata)
-                            alert(_this.missorfind)
                             if (_this.missorfind == 1)
                                 url = "/ReleaseMissing/Submit"
                             else
                                 url = "/ReleaseFinding/Submit"
                             ajaxPost(url, postdata, function (data) {
+                                console.log(data)
                                 if (data.code == 200) {
                                     if (data.result) {
                                         _this.$message({
