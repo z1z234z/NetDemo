@@ -92,7 +92,7 @@ namespace Demo.Controllers
                     }
                     Hashtable table = new Hashtable();
                     table.Add("id",item.User.ID);
-                    table.Add(" avatarURL", "http://localhost:25978/wwwroot/upload/head/default.jpg");
+                    table.Add(" avatarURL", "/wwwroot/upload/head/default.jpg");
                     table.Add("username", item.User.UserName);
                     table.Add("infoId", item.ID);
                     table.Add("infoTitle", "default");
@@ -101,7 +101,7 @@ namespace Demo.Controllers
                     table.Add("hidden", item.hidden);
                     table.Add("complete", item.Complete);
                     table.Add("completetext", completetext);
-                    table.Add("infourl", "http://localhost:25978/Missing/MissingDetail?id="+item.ID.ToString());
+                    table.Add("infourl", "/Missing/MissingDetail?id="+item.ID.ToString());
                     infolist.Add(table);
                 }
             }
