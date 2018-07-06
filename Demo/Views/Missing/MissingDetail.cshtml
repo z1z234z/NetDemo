@@ -1,4 +1,6 @@
-﻿<html>
+﻿@model Demo.Models.Owner
+
+<html>
 <head>
     <meta charset="utf-8">
     <title>丢了么</title>
@@ -186,38 +188,38 @@
     <script type="text/javascript" class="nc-required-js-1 nc-uab-script" src="//af.alicdn.com/js/uac.js?_t=212358"></script>
     <script type="text/javascript" src="~/js/wangEditor.min.js"></script>
     <script type="text/javascript">
-        //var E = window.wangEditor
-        //var editor = new E('#richtxt')
-        //// 或者 var editor = new E( document.getElementById('editor') )
-        ////editor.customConfig.uploadImgServer = '/Home/Upload'
-        //editor.customConfig.customUploadImg = function (files, insert) {
-        //    // files 是 input 中选中的文件列表
-        //    // insert 是获取图片 url 后，插入到编辑器的方法
-        //    var uploadData = new FormData();
-        //    for (var i = 0; i < files.length; i++) {
-        //        uploadData.append(files[i].name, files[i]);
-        //    }
-        //    $.ajax({
-        //        type: "POST",
-        //        url: "/ReleaseMissing/OnPostUpload",
-        //        beforeSend: function (xhr) {
-        //            xhr.setRequestHeader("XSRF-TOKEN",
-        //                $('input:hidden[name="__RequestVerificationToken"]').val());
-        //        },
-        //        data: uploadData,
-        //        processData: false,
-        //        contentType: false,
-        //        async: false,
-        //        success: function (response) {
-        //            for (var i = 0; i < response.length; i++) {
-        //                insert(response[i].url);
-        //            }
-        //        },
-        //        failure: function (response) {
-        //            alert("faliar");
-        //        }
-        //    });
-        //}
+                //var E = window.wangEditor
+                //var editor = new E('#richtxt')
+                //// 或者 var editor = new E( document.getElementById('editor') )
+                ////editor.customConfig.uploadImgServer = '/Home/Upload'
+                //editor.customConfig.customUploadImg = function (files, insert) {
+                //    // files 是 input 中选中的文件列表
+                //    // insert 是获取图片 url 后，插入到编辑器的方法
+                //    var uploadData = new FormData();
+                //    for (var i = 0; i < files.length; i++) {
+                //        uploadData.append(files[i].name, files[i]);
+                //    }
+                //    $.ajax({
+                //        type: "POST",
+                //        url: "/ReleaseMissing/OnPostUpload",
+                //        beforeSend: function (xhr) {
+                //            xhr.setRequestHeader("XSRF-TOKEN",
+                //                $('input:hidden[name="__RequestVerificationToken"]').val());
+                //        },
+                //        data: uploadData,
+                //        processData: false,
+                //        contentType: false,
+                //        async: false,
+                //        success: function (response) {
+                //            for (var i = 0; i < response.length; i++) {
+                //                insert(response[i].url);
+                //            }
+                //        },
+                //        failure: function (response) {
+                //            alert("faliar");
+                //        }
+                //    });
+                //}
     </script>
     <script src="~/js/uelib/ueditor.config.js"></script>
     <script src="~/js/uelib/ueditor.all.js"></script>
