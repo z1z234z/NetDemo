@@ -16,11 +16,14 @@
     },
     methods: {
         getallcomments() {
+            this.isLoadingComment = true
             let _this = this
-            ajaxPost("/Missing/DetailComment", { id: replyData.id }, function (data) {
+            ajaxPost("/Missing/DetailComment", { id: this.replyData.id }, function (data) {
                 if (data.code == 200) {
-                    if (data.options) {
+                    if (data.result) {
                         _this.commentsList = data.result
+                        _this.replyData.commentCount = data.result.length
+
                     }
                     else {
 
@@ -34,6 +37,7 @@
                         duration: 2000
                     })
                 }
+                this.isLoadingComment = false
             })
     
         },
@@ -44,19 +48,32 @@
             this.isLoadingComment = false
         },
         addNewComment() {
-            ajaxPost("/Missing/Comment", { account: this.userinfo.id, id: this.replyData.id, content: this.newComment }, function (data) {
+            let _this = this
+            postdata = { account: window.localStorage["account"], id: this.replyData.id, content: this.newComment }
+            console.log(postdata)
+            ajaxPost("/Missing/Comment", { account: window.localStorage["account"], id: this.replyData.id, content: this.newComment }, function (data) {
                 if (data.code == 200) {
-                    if (data.options) {
-                        _this.commentsList = data.result
-                    }
-                    else {
+                    if (data.result) {
+                        _this.$message({
+                            message: '发送评论成功',
+                            type: 'success',
+                            duration: 2000
+                        })
+                        _this.newComment = ''
+                        _this.getallcomments()
 
+                    } else {
+                        _this.$message({
+                            message: '发送评论失败',
+                            type: 'error',
+                            duration: 2000
+                        })
                     }
 
                 }
                 else {
                     _this.$message({
-                        message: '获取回复失败',
+                        message: '发送评论失败',
                         type: 'error',
                         duration: 2000
                     })
