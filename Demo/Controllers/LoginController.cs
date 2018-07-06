@@ -25,6 +25,8 @@ namespace CoremvcDemo.Controllers
         // GET: Admins
         public IActionResult Index()
         {
+            //HelloATL.Interop.FirstComObject firstComObjectClass = new HelloATL.Interop.FirstComObject();
+            //int x = firstComObjectClass.MyAdd(2, 1);
             return View();
         }
 
@@ -39,7 +41,7 @@ namespace CoremvcDemo.Controllers
             if (service.AccountComfirm(account, password))
             {
                 User user = service.GetUserByAccount(account, password);
-                result.Add("username", user.Name);
+                result.Add("username", user.UserName);
                 result.Add("avatarURL", "http://localhost:25978/wwwroot/upload/head/default.jpg");
                 result.Add("id", user.ID);
                 result.Add("account", user.Account);
