@@ -11,7 +11,7 @@
     template: `<div>
         <div>
     <div class="publisherInfo">
-      <a :href="infoOverview.id">
+      <a :href="infoOverview.infourl">
         <img class="avatar" :src="infoOverview.avatarURL">
         <span class=".publisher"> {{ infoOverview.username }} </span>
       </a>
@@ -19,17 +19,17 @@
 			<div class="summary">
 				<h3>
                 <a :href="infoOverview.id">
-					{{ infoOverview.questionTitle }}
+					{{ infoOverview.infoTitle }}
 				</a>
 				</h3>
 				<div class="types">
-				{{ infoOverview.questionSubject }} -> {{ infoOverview.questionCourse }}
+				{{ infoOverview.fatherType }} -> {{ infoOverview.type }}
 				</div>
 			</div >
 		</div >
     <div class="info">
         <div class="solved-views">
-        {{ infoOverview.isAccepted }}
+        {{ infoOverview.completetext }}
       </div>
     </div>
   </div > `
@@ -57,34 +57,20 @@ new Vue({
                 id: 1,
                 avatarURL: "",
                 username: "12",
-                questionId: 123,
-                questionTitle: "title",
-                questionSubject: "asdf",
-                questionCourse: "asdff",
+                infoId: 123,
+                infoTitle: "title",
+                fatherType: "asdf",
+                type: "asdff",
                 hidden: false,
-                thumbsUpCount: 1,
-                thumbsDownCount: false,
-                isAccepted:false
-
+                complete: false,
+                completetext: "",
+                infourl: ""
             }],
+            completetext:"",
             loadingmissings: false,
             loadingtypes:false,
             register: 0,
             forget: false,
-            registerform: {
-                accountreg: '',
-                usernamereg: '',
-                emailreg: '',
-                passwordreg: '',
-                passwordAgain: '',
-                name: '',
-                age: '',
-                gender: '',
-                school: '',
-                phone: '',
-                address: ''
-
-            },
             registering: false,
             resetting: false,
             sending: false,
@@ -112,6 +98,13 @@ new Vue({
             ajaxPost(url, { type: type,index:index }, function (data) {
                 if (data.code == 200) {
                     _this.infoOverviewList = data.infolist
+                }
+                else {
+                    _this.$message({
+                        message: '注册失败!',
+                        type: 'error',
+                        duration: 2000
+                    })
                 }
                 _this.loadingmissings = false
             })

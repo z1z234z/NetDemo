@@ -1,5 +1,5 @@
 ﻿Vue.component('reply', {
-    props: ['replyData','isCurrentUser'],
+    props: ['replyData','isCurrentUser','complete'],
     data: function () {
         return {
             isFeedback: false,
@@ -8,24 +8,60 @@
             commentsList: [],
             newComment: '',
             showAccept:false,
-            isLoadingComment: false
+            isLoadingComment: false,
+            userinfo: {id:1,name:"123"}
         }
     },
     created() {
-        //this.getallcomments()
-        //this.getMissingbytype()
     },
     methods: {
         getallcomments() {
-            this.commentsList = [{ commenter: { id: 1, username: "addf" }, commentContent: "comment content", commentDateTime: new Date()}]
+            let _this = this
+            ajaxPost("/Missing/DetailComment", { id: replyData.id }, function (data) {
+                if (data.code == 200) {
+                    if (data.options) {
+                        _this.commentsList = data.result
+                    }
+                    else {
+
+                    }
+
+                }
+                else {
+                    _this.$message({
+                        message: '获取评论失败',
+                        type: 'error',
+                        duration: 2000
+                    })
+                }
+            })
+    
         },
         toggleComment() {
             this.isLoadingComment = true
             this.getallcomments()
             this.showComment = !this.showComment
             this.isLoadingComment = false
+        },
+        addNewComment() {
+            ajaxPost("/Missing/Comment", { account: this.userinfo.id, id: this.replyData.id, content: this.newComment }, function (data) {
+                if (data.code == 200) {
+                    if (data.options) {
+                        _this.commentsList = data.result
+                    }
+                    else {
 
+                    }
 
+                }
+                else {
+                    _this.$message({
+                        message: '获取回复失败',
+                        type: 'error',
+                        duration: 2000
+                    })
+                }
+            })
         }
     },
     template: `<div class="answer">
@@ -34,16 +70,16 @@
         <span><img :src="replyData.account.avatarURL"   class="user-avatar"/></span>
         <span>{{ replyData.account.username }}</span>
       </a>
-      发布于 <span>{{ replyData.answerDateTime }}</span>
+      发布于 <span>{{ replyData.replyDateTime }}</span>
     </div>
-    <div class="answer-info" v-html="replyData.answerContent">
+    <div class="answer-info" v-html="replyData.replyContent">
     </div>
     <div class="feedback">
       <span @click="toggleComment()"  class="comment"><i class="fa  fa-comments-o fa-lg"></i>
             <span v-show="!showComment">{{ replyData.commentCount || 0 }}条评论</span>
             <span v-show="showComment"> 收起评论 </span>
       </span>
-      <span v-if="replyData.accepted">
+      <span v-if="complete">
         <el-tooltip effect="dark" content="失主已经找到了" placement="top">
           <i style="color: green" class="el-icon-circle-check"></i>
         </el-tooltip>
@@ -75,10 +111,6 @@
           <div class="commentInfo">
             <div class="option">
               <span> {{ comment.commentDateTime  }}</span>
-              <span><i></i> 回复 </span>
-              <span><i></i> 赞 </span>
-              <span><i></i> 踩 </span>
-              <span><i></i> 举报 </span>
             </div>
           </div>
         </div>

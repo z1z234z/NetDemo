@@ -9,7 +9,7 @@
     <div id="app">
         <div id="questionDetail">
             <div id="question-answer">
-                <div id="questionContent" v-loading='questionLoading' element-loading-text="拼命加载中">
+                <div id="questionContent" v-loading='missingLoading' element-loading-text="拼命加载中">
                     <div id="question-top-panel">
                         <div class="question-title">
                             <h3>
@@ -24,10 +24,10 @@
                         <el-tooltip content="给丢东西的人发个私信告诉他东西在哪吧" placement="top">
                             <el-button @@click.prevent="writeMessage()" size="small" icon="edit" type="info">写私信</el-button>
                         </el-tooltip>
-                        <el-tooltip v-if="!this.hasAnswer" content="为该问题贡献自己的答案吧" placement="top">
+                        <el-tooltip v-if="!missing.complete and !isCurrentUser" content="为该问题贡献自己的答案吧" placement="top">
                             <el-button @@click.prevent="writeReply()" size="small" icon="edit" type="info">写回答</el-button>
                         </el-tooltip>
-                        <el-tooltip v-else content="去修改自己的回答" placement="top">
+                        <el-tooltip v-if="!missing.complete and isCurrentUser" content="去修改自己的问题" placement="top">
                             <el-button @@click.prevent="modifyAnswer()" size="small" icon="edit" type="info">修改问题</el-button>
                         </el-tooltip>
                     </div>
@@ -38,13 +38,13 @@
                             <span>{{ userInfo.username }}</span>
                         </div>
                         <div style="margin-top: 20px">
-                            <richtext id="richtxt">
+                            <richtext id="richtxt" ref="richreply">
 
                             </richtext>
                         </div>
                         <div slot="footer" class="dialog-footer">
                             <el-button @@click.prevent="replydialogVisible = false">取 消</el-button>
-                            <el-button type="primary" @@click.prevent="submitAnswer()">确 定</el-button>
+                            <el-button type="primary" @@click.prevent="submitReply()">确 定</el-button>
                         </div>
                     </el-dialog>
                     <el-dialog size="large" :visible.sync="messagedialogVisible" ref="replyinput">
@@ -61,12 +61,12 @@
                         </div>
                         <div slot="footer" class="dialog-footer">
                             <el-button @@click.prevent="messagedialogVisible = false">取 消</el-button>
-                            <el-button type="primary" @@click.prevent="submitAnswer()">确 定</el-button>
+                            <el-button type="primary" @@click.prevent="submitMessage()">确 定</el-button>
                         </div>
                     </el-dialog>
                 </div>
                 <div id="answers-panel"
-                     v-loading.lock="answerLoading" element-loading-text="拼命加载中">
+                     v-loading.lock="replyLoading" element-loading-text="拼命加载中">
                     <div id="answer-summary">
                         共有 {{ answerNum }} 个回答
                         <el-radio-group @@change="answerSortChange()" size="small" id="sort-panel" v-model="sortParamLabel" style="margin-top: -10px">
@@ -75,7 +75,7 @@
                         </el-radio-group>
                     </div>
                     <div v-for="replydata in allreply" class="answer">
-                        <reply :isCurrentUser="isCurrentUser" :reply-Data="replydata" @@onToggleComment="lastScrollTop = -1"></reply>
+                        <reply :isCurrentUser="isCurrentUser" :reply-Data="replydata" :complete="missing.complete" @@onToggleComment="lastScrollTop = -1"></reply>
                     </div>
                 </div>
             </div>
