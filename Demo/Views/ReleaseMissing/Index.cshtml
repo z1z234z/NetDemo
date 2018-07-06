@@ -77,7 +77,8 @@
                 }
                 return {
                     missorfind:"丢了东西",
-                    submitting:false,
+                    submitting: false,
+                    userinfo: { username:"",avatarURL:"",id:"",account: "1234" },
                     sizeForm: {
                         title: '',
                         type: '',
@@ -128,7 +129,8 @@
                         if (valid) {
                             var url = ""
                             _this.submitting = true
-                            postdata = { title: _this.sizeForm.title, type: _this.sizeForm.type.toString(), content: _this.$refs.editorcompo.geteditor().getContent(), account: 2, question: _this.sizeForm.question }
+                            postdata = { title: _this.sizeForm.title, type: _this.sizeForm.type.toString(), content: _this.$refs.editorcompo.geteditor().getContent(), account: _this.userinfo.account, question: _this.sizeForm.question }
+                            console.log(postdata)
                             if (_this.missorfind == 1)
                                 url = "/ReleaseMissing/Submit"
                             else
@@ -159,7 +161,7 @@
                                 else {
                                     _this.$registering = false
                                     Message({
-                                        message: '发送失败!',
+                                        message: '发送异常!',
                                         type: 'error',
                                         duration: 2000
                                     })
