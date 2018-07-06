@@ -14,7 +14,7 @@ namespace Demo.Dao
         {
             _context = context;
         }
-        public List<PrivateMessage> Select(int? id, User sender, User receiver, String content, String source, DateTime time)
+        public List<PrivateMessage> Select(int? id, User sender, User receiver, String content, String source, DateTime? time)
         {
             try
             {

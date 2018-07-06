@@ -36,10 +36,10 @@ namespace Demo.Controllers
             String content = Request.Form["content"];
             String account = Request.Form["account"];
             String question = Request.Form["question"];
-            String answer = Request.Form["answer"];
             String[] types = temp.Split(',');
+            String fathertype = types[0];
             String type = types[1];
-            if (service.saveInfomation(title, type, content, account, question, answer))
+            if (service.saveInfomation(title, fathertype, type, content, account, question))
             {
                 result = true;
             }

@@ -14,11 +14,11 @@ namespace Demo.Models
         public string Content { get; set; }
         public bool Complete { get; set; }
         public string Question { get; set; }
-        public string Answer { get; set; }
         public DateTime Time { get; set; }
         public DateTime LastReplyTime { get; set; }
         [ForeignKey("LoseTypeID")]
         public LoseType LoseType { get; set; }
         public bool hidden { get; set; }
+        public string Title { get; set; }
     }
 }

@@ -25,6 +25,8 @@ namespace CoremvcDemo.Controllers
         // GET: Admins
         public IActionResult Index()
         {
+            //HelloATL.Interop.FirstComObject firstComObjectClass = new HelloATL.Interop.FirstComObject();
+            //int x = firstComObjectClass.MyAdd(2, 1);
             return View();
         }
 
@@ -39,8 +41,8 @@ namespace CoremvcDemo.Controllers
             if (service.AccountComfirm(account, password))
             {
                 User user = service.GetUserByAccount(account, password);
-                result.Add("username", user.Name);
-                result.Add("avatarURL", "http://localhost:25978/wwwroot/upload/head/default.jpg");
+                result.Add("username", user.UserName);
+                result.Add("avatarURL", user.head);
                 result.Add("id", user.ID);
                 result.Add("account", user.Account);
                 comfirm = "true";
@@ -98,6 +100,8 @@ namespace CoremvcDemo.Controllers
             user.School = school;
             user.Phone = phone;
             user.Address = address;
+            user.head = "/wwwroot/upload/head/default.jpg";
+            user.summary = "";
             if (service.Register(user))
             {
                 result = "true";

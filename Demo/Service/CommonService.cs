@@ -28,15 +28,20 @@ namespace Demo.Service
 
         public List<LoseType> GetLoseTypes()
         {
-            return loseTypesDao.Select(null, null);
+            return loseTypesDao.Select(null, null, null);
+        }
+
+        public List<LoseType> GetChildrenLoseTypes(LoseType fathertype)
+        {
+            return loseTypesDao.Select(null, null, fathertype);
         }
 
         public User getUserInfo(String account)
         {
             User user = null;
-            if (userDao.Select(null, account, null, null, null, null, null, null, null, null, null).Count > 0)
+            if (userDao.Select(null, account, null, null, null, null, null, null, null, null, null, null, null).Count > 0)
             {
-                user = userDao.Select(null, account, null, null, null, null, null, null, null, null, null)[0];
+                user = userDao.Select(null, account, null, null, null, null, null, null, null, null, null, null, null)[0];
             }
             return user;
         }

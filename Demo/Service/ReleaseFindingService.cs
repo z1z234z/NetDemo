@@ -24,22 +24,23 @@ namespace Demo.Service
             finderDao = new FinderDao(context);
             userDao = new UserDao(context);
         }
-        public bool saveInfomation(String title, String type, String content, String account, String question, String answer)
+        public bool saveInfomation(String title, String fathertype, String type, String content, String account, String question)
         {
             bool result = false;
             LoseType loseType = null;
+            LoseType fatherType = fatherType = loseTypesDao.Select(null, fathertype, null)[0];
             User user = null;
-            if (loseTypesDao.Select(null, type).Count > 0)
+            if (loseTypesDao.Select(null, type, fatherType).Count > 0)
             {
-                loseType = loseTypesDao.Select(null, type)[0];
+                loseType = loseTypesDao.Select(null, type, fatherType)[0];
             }
             else
             {
                 return result;
             }
-            if (userDao.Select(null, account, null, null, null, null, null, null, null, null, null).Count > 0)
+            if (userDao.Select(null, account, null, null, null, null, null, null, null, null, null, null, null).Count > 0)
             {
-                user = userDao.Select(null, account, null, null, null, null, null, null, null, null, null)[0];
+                user = userDao.Select(null, account, null, null, null, null, null, null, null, null, null, null, null)[0];
             }
             else
             {
@@ -54,7 +55,7 @@ namespace Demo.Service
             finder.Content = content;
             finder.User = user;
             finder.Question = question;
-            finder.Answer = answer;
+            finder.Title = title;
             if (finderDao.Create(finder))
             {
                 result = true;

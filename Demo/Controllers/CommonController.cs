@@ -40,22 +40,25 @@ namespace Demo.Controllers
             List<Hashtable> typelist = new List<Hashtable>();
             //前端向后端发送数据
             List<LoseType> list = service.GetLoseTypes();
-            for (int i = 0; i < list.Count / 2; i++)
+            for (int i = 0; i < list.Count; i++)
             {
-                Hashtable table = new Hashtable();
-                table.Add("value", list[i].Name);
-                table.Add("label", list[i].Name);
-                List<LoseType> childrenlists = service.GetLoseTypes();
-                List<Hashtable> childrentypelist = new List<Hashtable>();
-                for (int j = 3; j < childrenlists.Count; j++)
+                if (list[i].FatherType == null)
                 {
-                    Hashtable childrentable = new Hashtable();
-                    childrentable.Add("value", childrenlists[j].Name);
-                    childrentable.Add("label", childrenlists[j].Name);
-                    childrentypelist.Add(childrentable);
+                    Hashtable table = new Hashtable();
+                    table.Add("value", list[i].Name);
+                    table.Add("label", list[i].Name);
+                    List<LoseType> childrenlists = service.GetChildrenLoseTypes(list[i]);
+                    List<Hashtable> childrentypelist = new List<Hashtable>();
+                    for (int j = 0; j < childrenlists.Count; j++)
+                    {
+                        Hashtable childrentable = new Hashtable();
+                        childrentable.Add("value", childrenlists[j].Name);
+                        childrentable.Add("label", childrenlists[j].Name);
+                        childrentypelist.Add(childrentable);
+                    }
+                    table.Add("children", childrentypelist);
+                    typelist.Add(table);
                 }
-                table.Add("children", childrentypelist);
-                typelist.Add(table);
             }
             if (list == null)
             {

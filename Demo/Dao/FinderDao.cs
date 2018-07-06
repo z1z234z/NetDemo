@@ -14,13 +14,13 @@ namespace Demo.Dao
         {
             _context = context;
         }
-        public List<Finder> Select(int? id, User user, String content, bool? complete, String question, String answer, DateTime? time, DateTime? lasttime, LoseType losetype, bool? hidden, int index)
+        public List<Finder> Select(int? id, User user, String content, bool? complete, String question, String title, DateTime? time, DateTime? lasttime, LoseType losetype, bool? hidden, int index)
         {
             try
             {
                 var items = from s in _context.Finders.Include("LoseType").Include("User")
                             where ((id == null) || s.ID == id) && ((user == null) || s.User == user) && ((content == null) || s.Content == content) && ((complete == null) || s.Complete == complete)
-                             && ((question == null) || s.Question == question) && ((answer == null) || s.Answer == answer) && ((time == null) || s.Time == time) && ((lasttime == null) || s.LastReplyTime == lasttime)
+                             && ((question == null) || s.Question == question) && ((title == null) || s.Title == title) && ((time == null) || s.Time == time) && ((lasttime == null) || s.LastReplyTime == lasttime)
                              && ((losetype == null) || s.LoseType == losetype) && ((hidden == null) || s.hidden == hidden)
                             select s;
                 if (index != 0)
