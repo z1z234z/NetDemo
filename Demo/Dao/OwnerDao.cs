@@ -14,13 +14,13 @@ namespace Demo.Dao
         {
             _context = context;
         }
-        public List<Owner> Select(int? id, User user, String content, bool? complete, DateTime? time, DateTime? lasttime, LoseType losetype, bool? hidden, int index)
+        public List<Owner> Select(int? id, User user, String content, bool? complete, DateTime? time, DateTime? lasttime, LoseType losetype, bool? hidden, String title, int index)
         {
             try
             {
                 var items = from s in _context.Owners.Include("LoseType").Include("User")
                             where ((id == null) || s.ID == id) && ((user == null) || s.User == user) && ((content == null) || s.Content == content) && ((complete == null) || s.Complete == complete)
-                            && ((time == null) || s.Time == time) && ((lasttime == null) || s.LastReplyTime == lasttime) && ((losetype == null) || s.LoseType == losetype) && ((hidden == null) || s.hidden == hidden)
+                            && ((time == null) || s.Time == time) && ((lasttime == null) || s.LastReplyTime == lasttime) && ((losetype == null) || s.LoseType == losetype) && ((hidden == null) || s.hidden == hidden) && ((title == null) || s.Title == title)
                             select s;
                 if (index != 0)
                 {

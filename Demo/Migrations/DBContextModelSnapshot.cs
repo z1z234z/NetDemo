@@ -36,12 +36,36 @@ namespace Demo.Migrations
                     b.ToTable("Admins");
                 });
 
-            modelBuilder.Entity("Demo.Models.Finder", b =>
+            modelBuilder.Entity("Demo.Models.Attention", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Answer");
+                    b.Property<int?>("ReceiverID");
+
+                    b.Property<int?>("SenderID");
+
+                    b.Property<string>("content");
+
+                    b.Property<bool>("read");
+
+                    b.Property<string>("source");
+
+                    b.Property<DateTime>("time");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ReceiverID");
+
+                    b.HasIndex("SenderID");
+
+                    b.ToTable("Attentions");
+                });
+
+            modelBuilder.Entity("Demo.Models.Finder", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Complete");
 
@@ -54,6 +78,8 @@ namespace Demo.Migrations
                     b.Property<string>("Question");
 
                     b.Property<DateTime>("Time");
+
+                    b.Property<string>("Title");
 
                     b.Property<int?>("UserID");
 
@@ -73,9 +99,13 @@ namespace Demo.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("FatherTypeID");
+
                     b.Property<string>("Name");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("FatherTypeID");
 
                     b.ToTable("LoseTypes");
                 });
@@ -94,6 +124,8 @@ namespace Demo.Migrations
                     b.Property<int?>("LoseTypeID");
 
                     b.Property<DateTime>("Time");
+
+                    b.Property<string>("Title");
 
                     b.Property<int?>("UserID");
 
@@ -201,9 +233,24 @@ namespace Demo.Migrations
 
                     b.Property<string>("email");
 
+                    b.Property<string>("head");
+
+                    b.Property<string>("summary");
+
                     b.HasKey("ID");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Demo.Models.Attention", b =>
+                {
+                    b.HasOne("Demo.Models.User", "Receiver")
+                        .WithMany()
+                        .HasForeignKey("ReceiverID");
+
+                    b.HasOne("Demo.Models.User", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderID");
                 });
 
             modelBuilder.Entity("Demo.Models.Finder", b =>
@@ -215,6 +262,13 @@ namespace Demo.Migrations
                     b.HasOne("Demo.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserID");
+                });
+
+            modelBuilder.Entity("Demo.Models.LoseType", b =>
+                {
+                    b.HasOne("Demo.Models.LoseType", "FatherType")
+                        .WithMany()
+                        .HasForeignKey("FatherTypeID");
                 });
 
             modelBuilder.Entity("Demo.Models.Owner", b =>

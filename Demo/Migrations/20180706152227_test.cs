@@ -30,11 +30,18 @@ namespace Demo.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
+                    FatherTypeID = table.Column<int>(nullable: true),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LoseTypes", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_LoseTypes_LoseTypes_FatherTypeID",
+                        column: x => x.FatherTypeID,
+                        principalTable: "LoseTypes",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -52,11 +59,43 @@ namespace Demo.Migrations
                     School = table.Column<string>(nullable: true),
                     Sex = table.Column<string>(nullable: true),
                     UserName = table.Column<string>(nullable: true),
-                    email = table.Column<string>(nullable: true)
+                    email = table.Column<string>(nullable: true),
+                    head = table.Column<string>(nullable: true),
+                    summary = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Attentions",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    ReceiverID = table.Column<int>(nullable: true),
+                    SenderID = table.Column<int>(nullable: true),
+                    content = table.Column<string>(nullable: true),
+                    read = table.Column<bool>(nullable: false),
+                    source = table.Column<string>(nullable: true),
+                    time = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Attentions", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Attentions_Users_ReceiverID",
+                        column: x => x.ReceiverID,
+                        principalTable: "Users",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Attentions_Users_SenderID",
+                        column: x => x.SenderID,
+                        principalTable: "Users",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,13 +104,13 @@ namespace Demo.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
-                    Answer = table.Column<string>(nullable: true),
                     Complete = table.Column<bool>(nullable: false),
                     Content = table.Column<string>(nullable: true),
                     LastReplyTime = table.Column<DateTime>(nullable: false),
                     LoseTypeID = table.Column<int>(nullable: true),
                     Question = table.Column<string>(nullable: true),
                     Time = table.Column<DateTime>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
                     UserID = table.Column<int>(nullable: true),
                     hidden = table.Column<bool>(nullable: false)
                 },
@@ -103,6 +142,7 @@ namespace Demo.Migrations
                     LastReplyTime = table.Column<DateTime>(nullable: false),
                     LoseTypeID = table.Column<int>(nullable: true),
                     Time = table.Column<DateTime>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
                     UserID = table.Column<int>(nullable: true),
                     hidden = table.Column<bool>(nullable: false)
                 },
@@ -209,6 +249,16 @@ namespace Demo.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Attentions_ReceiverID",
+                table: "Attentions",
+                column: "ReceiverID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attentions_SenderID",
+                table: "Attentions",
+                column: "SenderID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Finders_LoseTypeID",
                 table: "Finders",
                 column: "LoseTypeID");
@@ -217,6 +267,11 @@ namespace Demo.Migrations
                 name: "IX_Finders_UserID",
                 table: "Finders",
                 column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoseTypes_FatherTypeID",
+                table: "LoseTypes",
+                column: "FatherTypeID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Owners_LoseTypeID",
@@ -263,6 +318,9 @@ namespace Demo.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Admins");
+
+            migrationBuilder.DropTable(
+                name: "Attentions");
 
             migrationBuilder.DropTable(
                 name: "Finders");

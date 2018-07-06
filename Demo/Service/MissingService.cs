@@ -30,17 +30,17 @@ namespace Demo.Service
             bool result = false;
             Owner owenr = null;
             User user = null;
-            if (ownerDao.Select(id, null, null, null, null, null, null, null, 0).Count > 0)
+            if (ownerDao.Select(id, null, null, null, null, null, null, null, null, 0).Count > 0)
             {
-                owenr = ownerDao.Select(id, null, null, null, null, null, null, null, 0)[0];
+                owenr = ownerDao.Select(id, null, null, null, null, null, null, null, null, 0)[0];
             }
             else
             {
                 return result;
             }
-            if (userDao.Select(null, account, null, null, null, null, null, null, null, null, null).Count > 0)
+            if (userDao.Select(null, account, null, null, null, null, null, null, null, null, null, null, null).Count > 0)
             {
-                user = userDao.Select(null, account, null, null, null, null, null, null, null, null, null)[0];
+                user = userDao.Select(null, account, null, null, null, null, null, null, null, null, null, null, null)[0];
             }
             else
             {
@@ -74,9 +74,9 @@ namespace Demo.Service
                 return result;
             }
             owner = reply.owner;
-            if (userDao.Select(null, account, null, null, null, null, null, null, null, null, null).Count > 0)
+            if (userDao.Select(null, account, null, null, null, null, null, null, null, null, null, null, null).Count > 0)
             {
-                user = userDao.Select(null, account, null, null, null, null, null, null, null, null, null)[0];
+                user = userDao.Select(null, account, null, null, null, null, null, null, null, null, null, null, null)[0];
             }
             else
             {
@@ -97,9 +97,9 @@ namespace Demo.Service
         public Owner getDetail(int id)
         {
             Owner owner = null;
-            if (ownerDao.Select(id, null, null, null, null, null, null, null, 0).Count > 0)
+            if (ownerDao.Select(id, null, null, null, null, null, null, null, null, 0).Count > 0)
             {
-                owner = ownerDao.Select(id, null, null, null, null, null, null, null, 0)[0];
+                owner = ownerDao.Select(id, null, null, null, null, null, null, null, null, 0)[0];
             }
             return owner;
         }

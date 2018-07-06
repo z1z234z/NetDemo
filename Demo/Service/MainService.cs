@@ -24,31 +24,36 @@ namespace Demo.Service
 
         public List<LoseType> GetLoseTypes()
         {
-            return loseTypesDao.Select(null, null);
+            return loseTypesDao.Select(null, null, null);
+        }
+
+        public List<LoseType> GetChildrenLoseTypes(LoseType fathertype)
+        {
+            return loseTypesDao.Select(null, null, fathertype);
         }
 
         public List<Owner> GetOwnerByType(String type, int index)
         {
             LoseType loseType = null;
-            var items = loseTypesDao.Select(null, type);
+            var items = loseTypesDao.Select(null, type, null);
             if (items.Count == 1)
             {
                 foreach (LoseType item in items)
                 {
                     loseType = item;
                 }
-                return ownerDao.Select(null, null, null, null, null, null, loseType, null, index);
+                return ownerDao.Select(null, null, null, null, null, null, loseType, null, null, index);
             }
             else
             {
-                return ownerDao.Select(null, null, null, null, null, null, null, null, index);
+                return ownerDao.Select(null, null, null, null, null, null, null, null, null, index);
             }
         }
 
         public List<Finder> GetFinderByType(String type, int index)
         {
             LoseType loseType = null;
-            var items = loseTypesDao.Select(null, type);
+            var items = loseTypesDao.Select(null, type, null);
             if (items.Count == 1)
             {
                 foreach (LoseType item in items)

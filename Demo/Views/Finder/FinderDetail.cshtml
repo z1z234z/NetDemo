@@ -1,4 +1,6 @@
-﻿<html>
+﻿@model Demo.Models.Finder
+
+<html>
 <head>
     <meta charset="utf-8">
     <title>丢了么</title>
@@ -21,7 +23,7 @@
                          v-html="finder.finderContent">
                     </div>
                     <div class="question-info" style="margin-right: 20px;margin-top: -30px">
-            
+
                         <el-tooltip v-if="!this.isWriter" content="给丢东西的人发个私信告诉他东西在哪吧" placement="top">
                             <el-button @@click.prevent="writeMessage()" size="small" icon="edit" type="info">写私信</el-button>
                         </el-tooltip>
@@ -46,7 +48,7 @@
                                     </el-form-item>
                                 </div>
                                 <div>
-                                    <el-form-item label="预置的问题:" >
+                                    <el-form-item label="预置的问题:">
                                         {{finder.question}}
                                     </el-form-item>
                                 </div>
@@ -56,11 +58,11 @@
                                     </el-form-item>
                                 </div>
                                 <div>
-                                    <el-form-item label="你的联系方式，如果你的问题和私信让对方觉得你就是失主，将会通过你给的联系方式联系你：" >
+                                    <el-form-item label="你的联系方式，如果你的问题和私信让对方觉得你就是失主，将会通过你给的联系方式联系你：">
                                         <el-input v-model="messagetofinder.contactinfo"></el-input>
                                     </el-form-item>
                                 </div>
-                               
+
 
                             </el-form>
                         </div>

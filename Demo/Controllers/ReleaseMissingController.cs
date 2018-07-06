@@ -41,8 +41,9 @@ namespace Demo.Controllers
             String content = Request.Form["content"];
             String account = Request.Form["account"];
             String[] types = temp.Split(',');
+            String fathertype = types[0];
             String type = types[1];
-            if (service.saveInfomation(title, type, content, account))
+            if (service.saveInfomation(title, fathertype, type, content, account))
             {
                 result = true;
             }

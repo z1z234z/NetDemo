@@ -90,7 +90,7 @@ namespace Demo.Controllers
                 result.Add("createtime", owner.Time);
                 result.Add("type", owner.LoseType);
                 result.Add("account", owner.User.Account);
-                result.Add("missingTitle", "default");
+                result.Add("missingTitle", owner.Title);
                 result.Add("missingId", owner.ID);
                 return Ok(new
                 {

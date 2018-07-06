@@ -18,6 +18,7 @@ namespace Demo.Models
         public string Phone { get; set; }
         public string Address { get; set; }
         public string email { get; set; }
-
+        public string head { get; set; }
+        public string summary { get; set; }
     }
 }

@@ -18,5 +18,6 @@ namespace Demo.Models
         [ForeignKey("LoseTypeID")]
         public LoseType LoseType { get; set; }
         public bool hidden { get; set; }
+        public string Title { get; set; }
     }
 }

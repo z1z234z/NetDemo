@@ -1,28 +1,28 @@
-﻿using System;
+﻿using Demo.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Demo.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Demo.Dao
 {
-    public class LoseTypesDao
+    public class AttentionDao
     {
         private readonly DBContext _context;
-        public LoseTypesDao(DBContext context)
+        public AttentionDao(DBContext context)
         {
             _context = context;
         }
-        public List<LoseType> Select(int? id, string name, LoseType fathertype)
+        public List<Attention> Select(int? id, User sender, User receiver, String content, String source, DateTime? time, bool? read)
         {
             try
             {
-                var items = from s in _context.LoseTypes.Include("FatherType")
-                            where ((id == null || s.ID == id) && (name == null || s.Name == name) && (fathertype == null || s.FatherType == fathertype))
+                var items = from s in _context.Attentions.Include("Sender").Include("Receiver")
+                            where ((id == null) || s.ID == id) && ((sender == null) || s.Sender == sender) && ((time == null) || s.time == time) && ((read == null) || s.read == read)
+                                   && ((receiver == null) || s.Receiver == receiver) && ((content == null) || s.content == content) && ((source == null) || s.source == source)
                             select s;
-                List<LoseType> list = new List<LoseType>();
+                List<Attention> list = new List<Attention>();
                 foreach (var item in items)
                 {
                     list.Add(item);
@@ -36,11 +36,11 @@ namespace Demo.Dao
             }
         }
 
-        public bool Edit(LoseType type)
+        public bool Edit(Attention attention)
         {
             try
             {
-                _context.Update(type);
+                _context.Update(attention);
                 _context.SaveChanges();
                 return true;
             }
@@ -51,11 +51,11 @@ namespace Demo.Dao
             }
         }
 
-        public bool Create(LoseType type)
+        public bool Create(Attention attention)
         {
             try
             {
-                _context.Add(type);
+                _context.Add(attention);
                 _context.SaveChanges();
                 return true;
             }
@@ -70,10 +70,10 @@ namespace Demo.Dao
         {
             try
             {
-                LoseType type = _context.LoseTypes.Find(id);
-                if (type != null)
+                Attention attention = _context.Attentions.Find(id);
+                if (attention != null)
                 {
-                    _context.LoseTypes.Remove(type);
+                    _context.Attentions.Remove(attention);
                     _context.SaveChanges();
                     return true;
                 }

@@ -42,7 +42,7 @@ namespace CoremvcDemo.Controllers
             {
                 User user = service.GetUserByAccount(account, password);
                 result.Add("username", user.UserName);
-                result.Add("avatarURL", "http://localhost:25978/wwwroot/upload/head/default.jpg");
+                result.Add("avatarURL", user.head);
                 result.Add("id", user.ID);
                 result.Add("account", user.Account);
                 comfirm = "true";
@@ -100,6 +100,8 @@ namespace CoremvcDemo.Controllers
             user.School = school;
             user.Phone = phone;
             user.Address = address;
+            user.head = "/wwwroot/upload/head/default.jpg";
+            user.summary = "";
             if (service.Register(user))
             {
                 result = "true";

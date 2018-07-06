@@ -13,14 +13,14 @@ namespace Demo.Dao
         {
             _context = context;
         }
-        public List<User> Select(int? id, String account, String password, String username, String name, String sex, int? age, String school, String phone, String address, String email)
+        public List<User> Select(int? id, String account, String password, String username, String name, String sex, int? age, String school, String phone, String address, String email, String head, String summary)
         {
             try
             {
                 var items = from s in _context.Users
                             where ((id == null) || s.ID == id) && ((account == null) || s.Account == account) && ((password == null) || s.Password == password) && ((username == null) || s.UserName == username) 
                             && ((name == null) || s.Name == name) && ((sex == null) || s.Sex == sex) && ((age == null) || s.Age == age) && ((school == null) || s.School == school) && ((phone == null) || s.Phone == phone) &&
-                            ((address == null) || s.Address == address) && ((email == null) || s.email == email)
+                            ((address == null) || s.Address == address) && ((email == null) || s.email == email) && ((head == null) || s.head == head) && ((summary == null) || s.summary == summary)
                             select s;
                 List<User> list = new List<User>();
                 foreach (var item in items)

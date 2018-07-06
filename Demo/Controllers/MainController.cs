@@ -35,22 +35,25 @@ namespace Demo.Controllers
             List<Hashtable> typelist = new List<Hashtable>();
             //前端向后端发送数据
             List<LoseType> list = service.GetLoseTypes();
-            for(int i = 0; i < list.Count/2; i++)
+            for(int i = 0; i < list.Count; i++)
             {
-                Hashtable table = new Hashtable();
-                table.Add("index", (i+1).ToString());
-                table.Add("type", list[i].Name);
-                List<LoseType> childrenlists = service.GetLoseTypes();
-                List<Hashtable> childrentypelist = new List<Hashtable>();
-                for (int j = 3; j < childrenlists.Count; j++)
+                if (list[i].FatherType == null)
                 {
-                    Hashtable childrentable = new Hashtable();
-                    childrentable.Add("index", (i + 1).ToString() + "-" + (j + 1).ToString());
-                    childrentable.Add("type", childrenlists[j].Name);
-                    childrentypelist.Add(childrentable);
+                    Hashtable table = new Hashtable();
+                    table.Add("index", (i + 1).ToString());
+                    table.Add("type", list[i].Name);
+                    List<LoseType> childrenlists = service.GetChildrenLoseTypes(list[i]);
+                    List<Hashtable> childrentypelist = new List<Hashtable>();
+                    for (int j = 0; j < childrenlists.Count; j++)
+                    {
+                        Hashtable childrentable = new Hashtable();
+                        childrentable.Add("index", (i + 1).ToString() + "-" + (j + 1).ToString());
+                        childrentable.Add("type", childrenlists[j].Name);
+                        childrentypelist.Add(childrentable);
+                    }
+                    table.Add("children", childrentypelist);
+                    typelist.Add(table);
                 }
-                table.Add("children", childrentypelist);
-                typelist.Add(table);
             }
             if (list == null)
             {
@@ -92,11 +95,11 @@ namespace Demo.Controllers
                     }
                     Hashtable table = new Hashtable();
                     table.Add("id",item.User.ID);
-                    table.Add(" avatarURL", "/wwwroot/upload/head/default.jpg");
+                    table.Add("avatarURL", item.User.head);
                     table.Add("username", item.User.UserName);
                     table.Add("infoId", item.ID);
-                    table.Add("infoTitle", "default");
-                    table.Add("fatherType", "fathertype");
+                    table.Add("infoTitle", item.Title);
+                    table.Add("fatherType", item.LoseType.FatherType.Name);
                     table.Add("type", item.LoseType.Name);
                     table.Add("hidden", item.hidden);
                     table.Add("complete", item.Complete);
@@ -143,11 +146,11 @@ namespace Demo.Controllers
                     }
                     Hashtable table = new Hashtable();
                     table.Add("id", item.User.ID);
-                    table.Add(" avatarURL", "/wwwroot/images/head/default.jpg");
+                    table.Add("avatarURL", item.User.head);
                     table.Add("username", item.User.UserName);
                     table.Add("infoId", item.ID);
-                    table.Add("infoTitle", "default");
-                    table.Add("fatherType", "fathertype");
+                    table.Add("infoTitle", item.Title);
+                    table.Add("fatherType", item.LoseType.FatherType.Name);
                     table.Add("type", item.LoseType.Name);
                     table.Add("hidden", item.hidden);
                     table.Add("complete", item.Complete);
@@ -180,7 +183,7 @@ namespace Demo.Controllers
                 List<Owner> list = service.GetOwnerByType(type, 0);
                 foreach(Owner item in list)
                 {
-                    if (item.Content.Contains(text)/*|| item.Title.Contains(text)*/)
+                    if (item.Content.Contains(text) || item.Title.Contains(text))
                     {
                         ownerlist.Add(item);
                     }
@@ -196,7 +199,7 @@ namespace Demo.Controllers
                 List<Finder> list = service.GetFinderByType(type, 0);
                 foreach (Finder item in list)
                 {
-                    if (item.Content.Contains(text)/*|| item.Title.Contains(text)*/)
+                    if (item.Content.Contains(text) || item.Title.Contains(text))
                     {
                         finderlist.Add(item);
                     }

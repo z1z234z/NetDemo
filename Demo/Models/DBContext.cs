@@ -20,5 +20,6 @@ namespace Demo.Models
         public DbSet<Reply> Replies { get; set; }
         public DbSet<ReplyComment> ReplyComments { get; set; }
         public DbSet<PrivateMessage> PrivateMessages { get; set; }
+        public DbSet<Attention> Attentions { get; set; }
     }
 }
