@@ -74,9 +74,11 @@ new Vue({
     },
     methods: {
         radioChange() {
-            this.getinfobytype()
+            console.log(this.missingtype)
+            this.getinfobytype(this.missingtype, this.pageindex)
         },
         getinfobytype(type, index) {
+            this.missingtype = type
             this.loadingmissings = true
             var url = ""
             if (this.missingorlose == 1) {
