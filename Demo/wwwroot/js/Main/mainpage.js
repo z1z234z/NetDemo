@@ -54,17 +54,7 @@ new Vue({
                 ,
             missingorlose:1,
             infoOverviewList: [{
-                id: 1,
-                avatarURL: "",
-                username: "12",
-                infoId: 123,
-                infoTitle: "title",
-                fatherType: "asdf",
-                type: "asdff",
-                hidden: false,
-                complete: false,
-                completetext: "",
-                infourl: ""
+                
             }],
             completetext:"",
             loadingmissings: false,
@@ -95,7 +85,7 @@ new Vue({
                 url = "/Main/getFinderByType"
             }
             let _this = this
-            ajaxPost(url, { type: type,index:index }, function (data) {
+            ajaxPost(url, { type: type, index: this.pageindex }, function (data) {
                 if (data.code == 200) {
                     _this.infoOverviewList = data.infolist
                 }

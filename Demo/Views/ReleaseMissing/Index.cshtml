@@ -76,7 +76,7 @@
                     }
                 }
                 return {
-                    missorfind:"丢了东西",
+                    missorfind:'',
                     submitting: false,
                     userinfo: { username:"",avatarURL:"",id:"",account: "1234" },
                     sizeForm: {
@@ -131,6 +131,7 @@
                             _this.submitting = true
                             postdata = { title: _this.sizeForm.title, type: _this.sizeForm.type.toString(), content: _this.$refs.editorcompo.geteditor().getContent(), account: _this.userinfo.account, question: _this.sizeForm.question }
                             console.log(postdata)
+                            alert(_this.missorfind)
                             if (_this.missorfind == 1)
                                 url = "/ReleaseMissing/Submit"
                             else
