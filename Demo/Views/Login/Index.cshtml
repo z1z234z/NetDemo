@@ -327,10 +327,12 @@
                                         type: 'success',
                                         duration: 5000
                                     })
-                                    _this.$refs.registerform.resetFields()
                                     _this.logining = false
                                     if (window.localStorage) {
-                                        window.localStorage["userinfo"] = data.userinfo
+                                        window.localStorage["username"] = data.userinfo.username
+                                        window.localStorage["avatarURL"] = data.userinfo.avatarURL
+                                        window.localStorage["id"] = data.userinfo.id
+                                        window.localStorage["account"] = data.userinfo.account
                                     } else { 
                                         _this.$message({
                                             message: '您的浏览器不支持localstorage!',

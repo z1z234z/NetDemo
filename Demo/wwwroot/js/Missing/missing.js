@@ -1,4 +1,5 @@
-﻿new Vue({
+﻿
+new Vue({
     el: '#app',
     data: function () {
         return {
@@ -20,7 +21,7 @@
                 createtime:new Date(),
             },
             allreply: [{
-                account: { username: "shine", avatarURL:"",id:3,userhref:"页面还在做，暂时可以不填"},
+                account: { username: "shine", avatarURL:"",id:3, userhref:"页面还在做，暂时可以不填"},
                 replyDateTime: new Date(),
                 replyContent: "回答内容",
                 commentCount: 3,
@@ -48,19 +49,32 @@
         }
     },
     created() {
-        this.getMissingdetail()
+        var _this = this
+        window.setTimeout(function () {
+            $(document).ready(function () {
+                _this.getid(_this)
+                _this.getMissingdetail()
+                _this.getReplyList()
+                _this.userInfo = { username: window.localStorage["username"], avatarURL: window.localStorage["avatarURL"], id: window.localStorage["id"], account: window.localStorage["account"] }
+                console.log(_this.userInfo)
+            })
+        },20)
+        
     },
     mounted() {
         
+        
     },
-
     methods: {
+        getid(th) {
+            th.id = $("#missingid").text()
+        },
         getMissingdetail() {
             let _this = this
             this.missingLoading = true
-            ajaxPost("/Missing/Detail", {id:id}, function (data) {
+            ajaxPost("/Missing/Detail", {id:this.id}, function (data) {
                 if (data.code == 200) {
-                    if (data.options) {
+                    if (data.result) {
                         _this.missing = data.result
                     }
                     else {
@@ -85,19 +99,16 @@
         getReplyList() {
             let _this = this
             this.replyLoading = true
-            ajaxPost("/Missing/DetailReply", { id: id }, function (data) {
+            ajaxPost("/Missing/DetailReply", { id: this.id }, function (data) {
                 if (data.code == 200) {
-                    if (data.options) {
-                        _this.missing = data.result
+                    if (data.result) {
+                        _this.allreply = data.result
                     }
-                    else {
-                       
-                    }
-
+                  
                 }
                 else {
                     _this.$message({
-                        message: '获取回复失败',
+                        message: '获取回复异常',
                         type: 'error',
                         duration: 2000
                     })
@@ -109,12 +120,12 @@
             this.messagedialogVisible=true
         },
         writeReply() {
-            this.dialogVisible = true
+            this.replydialogVisible = true
             //this.$refs.replyinput.open()
         },
         submitReply() {
             let _this = this
-            ajaxPost("/Missing/Reply", { account: this.userinfo.id, content: this.$refs.richreply.editorcompo.geteditor().getContent() }, function (data) {
+            ajaxPost("/Missing/Reply", { account: this.userInfo.account,id:this.id, content: this.$refs.richreply.geteditor().getContent() }, function (data) {
                 if (data.code == 200) {
                     if (data.result) {
                         _this.$message({
@@ -122,6 +133,8 @@
                             type: 'success',
                             duration: 2000
                         })
+                        _this.replydialogVisible = false
+                        _this.getReplyList()
                     }
                     else {
                         _this.$message({
@@ -139,11 +152,12 @@
                         duration: 2000
                     })
                 }
+
             })
         },
         submitMessage() {
             let _this = this
-            ajaxPost("/Missing/Message", { account: this.userinfo.id, content: this.messagetouser }, function (data) {
+            ajaxPost("/Missing/Message", { account: this.userInfo.account, content: this.messagetouser }, function (data) {
                 if (data.code == 200) {
                     if (data.result) {
                         _this.$message({
@@ -151,6 +165,7 @@
                             type: 'success',
                             duration: 2000
                         })
+                        _this.messagedialogVisible = false
                     }
                     else {
                         _this.$message({

@@ -18,7 +18,7 @@
     </div>
 			<div class="summary">
 				<h3>
-                <a :href="infoOverview.id">
+                <a :href="infoOverview.infourl">
 					{{ infoOverview.infoTitle }}
 				</a>
 				</h3>

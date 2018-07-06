@@ -4,7 +4,7 @@
         return {
             commentsList: [],
             newComment: '',
-            isLoadingComment: true
+            isLoadingComment: false
         }
     },
     created() {
@@ -13,7 +13,56 @@
     },
     methods: {
         getallcomments() {
-            this.commentsList = [{ commenter: { id: 1, id: "", username: "addf" }, commentContent: "comment content" }, commentDateTime: new Date()]
+            let _this = this
+            this.isLoadingComment = true
+            ajaxPost("/Missing/DetailComment", { id: answerId}, function (data) {
+                if (data.code == 200) {
+                    if (data.result) {
+                        _this.commentsList = data.result
+                    }
+
+                }
+                else {
+                    _this.$message({
+                        message: '获取回复异常',
+                        type: 'error',
+                        duration: 2000
+                    })
+                }
+                _this.replyLoading = false
+            })
+            
+        },
+        addNewComment() {
+            let _this = this
+            postdata = { id: answerId, account: window.localStorage["account"], content: this.newComment }
+            console.log(postdata)
+            ajaxPost("/Missing/Comment", { id: answerId, account: window.localStorage["account"], content:this.newComment }, function (data) {
+                if (data.code == 200) {
+                    if (data.result) {
+                        _this.$message({
+                            message: '发送评论成功',
+                            type: 'success',
+                            duration: 2000
+                        })
+
+                    } else {
+                        _this.$message({
+                            message: '发送评论失败',
+                            type: 'error',
+                            duration: 2000
+                        })
+                    }
+
+                }
+                else {
+                    _this.$message({
+                        message: '发送评论失败',
+                        type: 'error',
+                        duration: 2000
+                    })
+                }
+            })
         }
     },
     template: `

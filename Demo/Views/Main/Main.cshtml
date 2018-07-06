@@ -35,20 +35,50 @@
                         </span>
                     </el-header>
                     <el-main>
-                        <div v-loading='loadingmissings' element-loading-text="玩命加载中"></div>
-                        <div v-for="infoOverview in infoOverviewList">
-                            <info-overview v-bind:info-Overview="infoOverview"></info-overview>
+                        <div>
+                            <div v-loading='loadingmissings' element-loading-text="玩命加载中"></div>
+                            <div v-for="infoOverview in infoOverviewList" class="question-overview">
+                                <info-overview v-bind:info-Overview="infoOverview"></info-overview>
+                            </div>
                         </div>
                     </el-main>
                     <el-footer>
-                        <el-pagination ref="pages" background layout="prev, pager, next" :total="100" :page-size="10" :current-page.sync="pageindex" @@current-change="pagechange(this.currentPage)"></el-pagination>
+                        <div id="pagination-panel">
+                            <el-pagination ref="pages" background layout="prev, pager, next" :total="100" :page-size="10" :current-page.sync="pageindex" @@current-change="pagechange(this.currentPage)"></el-pagination>
+                        </div>
                     </el-footer>
                 </el-container>
             </el-container>
         </el-container>
     </div>
     <style>
+        #question-list {
+            margin-left: 5%;
+            margin-right: 5%;
+            width: 90%;
+        }
 
+        div.question-overview {
+            border-bottom: 2px solid #c0ccda;
+            padding: 12px 0 10px 0;
+            background: #f9fafd;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 5px;
+        }
+
+        #question-list .question-overview:hover {
+            box-shadow: #666 0px 0px 10px;
+        }
+
+        #question-list #pagination-panel {
+            float: right;
+        }
+
+        #choose-params-panel {
+            float: right;
+            margin-bottom: 10px;
+        }
 
         .el-aside {
             color: #333;
