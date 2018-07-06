@@ -19,7 +19,7 @@
                                 <i class="el-icon-message"></i>{{value.type}}
                             </template>
                             <el-menu-item-group>
-                                <el-menu-item v-for="childvalue in value.children" :index="childvalue.index" @@click="getinfobytype(childvalue.type,value.index)">{{childvalue.type}}</el-menu-item>
+                                <el-menu-item v-for="childvalue in value.children" :index="childvalue.index" @@click="typechange(childvalue.type,value.index)">{{childvalue.type}}</el-menu-item>
                             </el-menu-item-group>
                         </el-submenu>
                       
@@ -41,7 +41,7 @@
                         </div>
                     </el-main>
                     <el-footer>
-                        <el-pagination background layout="prev, pager, next" :total="1000" v-model="pageindex"></el-pagination>
+                        <el-pagination ref="pages" background layout="prev, pager, next" :total="100" :page-size="10" :current-page.sync="pageindex" @@current-change="pagechange(this.currentPage)"></el-pagination>
                     </el-footer>
                 </el-container>
             </el-container>
