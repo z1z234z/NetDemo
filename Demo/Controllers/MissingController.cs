@@ -70,21 +70,22 @@ namespace Demo.Controllers
         [HttpPost]
         public IActionResult Detail()
         {
-            bool result = false;
+            Hashtable result = new Hashtable();
             //前端向后端发送数据
             String temp = Request.Form["id"];
             int id = (temp == null) ? 0 : Convert.ToInt32(temp);
             Owner owner = service.getDetail(id);
             if (owner != null)
             {
-                result = true;
+                result.Add("complete", owner.Complete);
+                result.Add("missingContent", owner.Content);
+                result.Add("createtime", owner.Time);
+                result.Add("type", owner.LoseType);
+                result.Add("account", owner.User.Account);
+                result.Add("missingTitle", "default");
+                result.Add("missingId", owner.ID);
                 return Ok(new
                 {
-                    complete = owner.Complete,
-                    content = owner.Content,
-                    createtime = owner.Time,
-                    type = owner.LoseType,
-                    user = owner.User,
                     result = result,
                     code = 200,
                 });
@@ -93,11 +94,6 @@ namespace Demo.Controllers
             {
                 return Ok(new
                 {
-                    complete = "",
-                    content = "",
-                    createtime = "",
-                    type = "",
-                    user = "",
                     result = result,
                     code = 500,
                 });
