@@ -87,7 +87,10 @@ new Vue({
                 url = "/Main/getFinderByType"
             }
             let _this = this
+            console.log(type)
+            console.log(this.pageindex)
             ajaxPost(url, { type: type, index: this.pageindex }, function (data) {
+                console.log(data)
                 if (data.code == 200) {
                     _this.infoOverviewList = data.infolist
                 }
