@@ -45,7 +45,7 @@ namespace Demo.Controllers
                 {
                     Hashtable childrentable = new Hashtable();
                     childrentable.Add("index", (i + 1).ToString() + "-" + (j + 1).ToString());
-                    childrentable.Add("type", childrenlists[i].Name);
+                    childrentable.Add("type", childrenlists[j].Name);
                     childrentypelist.Add(childrentable);
                 }
                 table.Add("children", childrentypelist);
