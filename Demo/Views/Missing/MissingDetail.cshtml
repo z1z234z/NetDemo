@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="app">
-        <div hidden="hidden"></div>
+        <div id="missingid" hidden="hidden">@(Model.ID)</div>
         <div id="questionDetail">
             <div id="question-answer">
                 <div id="questionContent" v-loading='missingLoading' element-loading-text="拼命加载中">
@@ -27,10 +27,10 @@
                         <el-tooltip content="给丢东西的人发个私信告诉他东西在哪吧" placement="top">
                             <el-button @@click.prevent="writeMessage()" size="small" icon="edit" type="info">写私信</el-button>
                         </el-tooltip>
-                        <el-tooltip v-if="!missing.complete and !isCurrentUser" content="为该问题贡献自己的答案吧" placement="top">
+                        <el-tooltip v-if="!missing.complete && !isCurrentUser" content="为该问题贡献自己的答案吧" placement="top">
                             <el-button @@click.prevent="writeReply()" size="small" icon="edit" type="info">写回答</el-button>
                         </el-tooltip>
-                        <el-tooltip v-if="!missing.complete and isCurrentUser" content="去修改自己的问题" placement="top">
+                        <el-tooltip v-if="!missing.complete && isCurrentUser" content="去修改自己的问题" placement="top">
                             <el-button @@click.prevent="modifyAnswer()" size="small" icon="edit" type="info">修改问题</el-button>
                         </el-tooltip>
                     </div>
@@ -78,7 +78,7 @@
                         </el-radio-group>
                     </div>
                     <div v-for="replydata in allreply" class="answer">
-                        <reply :isCurrentUser="isCurrentUser" :reply-Data="replydata" :complete="missing.complete" @@onToggleComment="lastScrollTop = -1"></reply>
+                        <reply :is-current-user="isCurrentUser" :reply-Data="replydata" :complete="missing.complete" @@onToggleComment="lastScrollTop = -1"></reply>
                     </div>
                 </div>
             </div>
