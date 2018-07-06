@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Demo.Models;
 using Demo.Service;
+using System.Collections;
 
 namespace CoremvcDemo.Controllers
 {
@@ -29,18 +30,25 @@ namespace CoremvcDemo.Controllers
         [HttpPost]
         public IActionResult testlogin()
         {
-            string result = "false";
+            string comfirm = "false";
+            Hashtable result = new Hashtable();
             //前端向后端发送数据
             string account = Request.Form["account"];
             string password = Request.Form["password"];
             if (service.AccountComfirm(account, password))
             {
-                result = "true";
+                User user = service.GetUserByAccount(account, password);
+                result.Add("username", user.Name);
+                result.Add("avatarURL", "http://localhost:25978/wwwroot/upload/head/default.jpg");
+                result.Add("id", user.ID);
+                result.Add("account", user.Account);
+                comfirm = "true";
 
             }
             return Ok(new
             {
-                comfirm = result,
+                userinfo = result,
+                comfirm = comfirm,
                 code = 200
             });
         }
