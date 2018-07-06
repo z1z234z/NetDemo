@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Demo.Service;
 using Demo.Models;
 using System.Collections;
+using System.IO;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -66,6 +67,7 @@ namespace Demo.Controllers
         {
             int code = 200;
             List<Owner> list = new List<Owner>();
+            List<Hashtable> infolist = new List<Hashtable>();
             //前端向后端发送数据
             string type = Request.Form["type"];
             string temp = Request.Form["index"];
@@ -76,9 +78,35 @@ namespace Demo.Controllers
             {
                 code = 500;
             }
+            else{
+                foreach(Owner item in list){
+                    String completetext = null;
+                    if (item.Complete)
+                    {
+                        completetext = "已找到";
+                    }
+                    else
+                    {
+                        completetext = "未找到";
+                    }
+                    Hashtable table = new Hashtable();
+                    table.Add("id",item.User.ID);
+                    table.Add(" avatarURL", "http://localhost:25978/wwwroot/upload/head/default.jpg");
+                    table.Add("username", item.User.UserName);
+                    table.Add("infoId", item.ID);
+                    table.Add("infoTitle", "default");
+                    table.Add("fatherType", "fathertype");
+                    table.Add("type", item.LoseType.Name);
+                    table.Add("hidden", item.hidden);
+                    table.Add("complete", item.Complete);
+                    table.Add("completetext", completetext);
+                    table.Add("infourl", "http://localhost:25978/Missing/MissingDetail?id="+item.ID.ToString());
+                    infolist.Add(table);
+                }
+            }
             return Ok(new
             {
-                infolist = list,
+                infolist = infolist,
                 code = code
             });
         }
@@ -88,6 +116,7 @@ namespace Demo.Controllers
         {
             int code = 200;
             List<Finder> list = new List<Finder>();
+            List<Hashtable> infolist = new List<Hashtable>();
             //前端向后端发送数据
             string type = Request.Form["type"];
             string temp = Request.Form["index"];
@@ -98,9 +127,37 @@ namespace Demo.Controllers
             {
                 code = 500;
             }
+            else
+            {
+                foreach (Finder item in list)
+                {
+                    String completetext = null;
+                    if (item.Complete)
+                    {
+                        completetext = "已找到";
+                    }
+                    else
+                    {
+                        completetext = "未找到";
+                    }
+                    Hashtable table = new Hashtable();
+                    table.Add("id", item.User.ID);
+                    table.Add(" avatarURL", "http://localhost:59823/wwwroot/images/head/default.jpg");
+                    table.Add("username", item.User.UserName);
+                    table.Add("infoId", item.ID);
+                    table.Add("infoTitle", "default");
+                    table.Add("fatherType", "fathertype");
+                    table.Add("type", item.LoseType.Name);
+                    table.Add("hidden", item.hidden);
+                    table.Add("complete", item.Complete);
+                    table.Add("completetext", completetext);
+                    table.Add("infourl", "http://localhost:59823/Finding/FinderDetail?id=" + item.ID.ToString());
+                    infolist.Add(table);
+                }
+            }
             return Ok(new
             {
-                infolist = list,
+                infolist = infolist,
                 code = code
             });
         }
