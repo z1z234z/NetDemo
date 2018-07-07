@@ -14,7 +14,7 @@ namespace Demo.Dao
         {
             _context = context;
         }
-        public List<PrivateMessage> Select(int? id, User sender, User receiver, String content, String source, DateTime? time)
+        public List<PrivateMessage> Select(int? id, User sender, User receiver, String content, String source, DateTime? time,int index)
         {
             try
             {
@@ -22,6 +22,10 @@ namespace Demo.Dao
                             where ((id == null) || s.ID == id) && ((sender == null) || s.Sender == sender) && ((time == null) || s.time == time)
                                    && ((receiver == null) || s.Receiver == receiver) && ((content == null) || s.content == content) && ((source == null) || s.source == source)
                             select s;
+                if (index != 0)
+                {
+                    items = items.OrderByDescending(u => u.time).Skip(50 * (index - 1)).Take(50);
+                }
                 List<PrivateMessage> list = new List<PrivateMessage>();
                 foreach (var item in items)
                 {

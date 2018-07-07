@@ -14,7 +14,7 @@ namespace Demo.Dao
         {
             _context = context;
         }
-        public List<Reply> Select(int? id, String replycontent, DateTime? time, User user, Owner owner)
+        public List<Reply> Select(int? id, String replycontent, DateTime? time, User user, Owner owner, int index)
         {
             try
             {
@@ -23,6 +23,10 @@ namespace Demo.Dao
                                    && ((user == null) || s.User == user) && ((owner == null) || s.owner == owner)
                             select s;
                 List<Reply> list = new List<Reply>();
+                if (index != 0)
+                {
+                    items = items.OrderByDescending(u => u.time).Skip(50 * (index - 1)).Take(50);
+                }
                 foreach (var item in items)
                 {
                     list.Add(item);
