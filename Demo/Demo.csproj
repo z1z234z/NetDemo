@@ -147,6 +147,11 @@
     <None Include="wwwroot\js\uelib\third-party\zeroclipboard\ZeroClipboard.swf" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Timber.Assembly">
+      <HintPath>wwwroot\dll\Timber.Assembly.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Content Update="Views\Home\UserInformation.cshtml">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

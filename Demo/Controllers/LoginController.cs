@@ -9,12 +9,17 @@ using Demo.Models;
 using Demo.Service;
 using System.Collections;
 using WebSoketDLL;
+using System.Runtime.InteropServices;
 
 namespace CoremvcDemo.Controllers
 {
     public class LoginController : Controller
     {
+
         private readonly LoginService service;
+
+        [DllImport("../Win32Dll.dll")]
+        public extern static int netcode(bool success);
 
         public LoginController(DBContext context)
         {
@@ -25,7 +30,8 @@ namespace CoremvcDemo.Controllers
         // GET: Admins
         public IActionResult Index()
         {
-            //HelloATL.Interop.FirstComObject firstComObjectClass = new HelloATL.Interop.FirstComObject();
+            //double result = MyMath.Math.Add(1, 2);
+            ///HelloATL.Interop.FirstComObject firstComObjectClass = new HelloATL.Interop.FirstComObject();
             //int x = firstComObjectClass.MyAdd(2, 1);
             return View();
         }
@@ -33,6 +39,7 @@ namespace CoremvcDemo.Controllers
         [HttpPost]
         public IActionResult testlogin()
         {
+            bool success = false;
             string comfirm = "false";
             Hashtable result = new Hashtable();
             //前端向后端发送数据
@@ -46,13 +53,13 @@ namespace CoremvcDemo.Controllers
                 result.Add("id", user.ID);
                 result.Add("account", user.Account);
                 comfirm = "true";
-
+                success = false;
             }
             return Ok(new
             {
                 userinfo = result,
                 comfirm = comfirm,
-                code = 200
+                code = netcode(success)
             });
         }
 
