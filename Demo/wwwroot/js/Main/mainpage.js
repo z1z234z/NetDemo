@@ -38,6 +38,8 @@ new Vue({
     el: '#app',
     data: function () {
         return {
+            searchtext:"",
+            total:0,
             pageindex:1,
             openindex:[""],
             missingtype:"",
@@ -77,21 +79,16 @@ new Vue({
         },
         getinfo() {
             this.loadingmissings = true
-            var url = ""
-            if (this.missingorlose == 1) {
-                url = "/Main/getOwnerByType"
-            } else {
-                url = "/Main/getFinderByType"
-            }
             let _this = this
-            ajaxPost(url, { type: this.missingtype, index: this.pageindex }, function (data) {
+            ajaxPost(url, { type: this.missingtype, index: this.pageindex, missingorfind: this.missorfind, searchtext: this.searchtext }, function (data) {
                 console.log(data)
                 if (data.code == 200) {
                     _this.infoOverviewList = data.infolist
+                    _this.total = data.total
                 }
                 else {
                     _this.$message({
-                        message: '注册失败!',
+                        message: '获取失败!',
                         type: 'error',
                         duration: 2000
                     })

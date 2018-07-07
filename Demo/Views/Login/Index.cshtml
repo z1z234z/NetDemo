@@ -138,6 +138,104 @@
             </div>
         </div>
     </div>
+    <style>
+
+        ul.el-menu {
+            padding-left: 40px;
+        }
+
+        #notification ul.el-menu div {
+            max-height: 400px;
+            overflow: auto;
+        }
+
+        #notification .notice .user {
+            display: inline-block;
+            max-width: 60px;
+            overflow: hidden
+        }
+
+        #notification .notice .questionTitle {
+            display: inline-block;
+            max-width: 100px;
+            overflow: hidden
+        }
+
+        #notification .notice .answerTime {
+            padding-left: 10px;
+            overflow: hidden;
+            display: inline-block;
+            max-width: 100px
+        }
+
+        #notification, #personInfo, #register-menu-item, #login-menu-item {
+            float: right;
+        }
+
+        #notification {
+            margin-right: 10px;
+        }
+
+        #personInfo, #register-menu-item {
+            margin-right: 65px;
+        }
+
+        .top-header-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+
+        #question-list {
+            margin-left: 5%;
+            margin-right: 5%;
+            width: 90%;
+            #loginContainer
+
+        {
+            font-family: 'Avenir', Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-align: center;
+            color: #2c3e50;
+            margin: 123px auto;
+            width: 350px;
+            border: 1px solid #eaeaea;
+            box-shadow: 0 0 25px #cac6c6;
+            z-index: 1;
+        }
+
+        #loginContainer button span {
+            color: white;
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .login-title {
+            text-align: center;
+        }
+
+        #loginContainer .login-title span {
+            font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+            color: dodgerblue;
+            font-size: 2em;
+            line-height: 36px;
+        }
+
+        #wrap-banner {
+            position: relative;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            display: -webkit-flex;
+            display: flex;
+            height: 100%;
+            justify-content: center;
+        }
+
+       
+    </style>
     <!-- built files will be auto injected -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="~/js/test/ajax.js"></script>
@@ -146,6 +244,7 @@
     <script src="//aeu.alicdn.com/js/cj/109.js" id="AWSC_uabModule"></script>
     <script type="text/javascript" class="nc-required-js-1 nc-umid-script" src="//g.alicdn.com/security/umscript/3.3.2/um.js"></script>
     <script type="text/javascript" class="nc-required-js-1 nc-uab-script" src="//af.alicdn.com/js/uac.js?_t=212358"></script>
+    <script src="~/js/Main/topheadercomponent.js"></script>
     <script>
         new Vue({
             el: '#app',
