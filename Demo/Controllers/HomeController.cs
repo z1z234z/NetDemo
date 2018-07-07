@@ -84,15 +84,17 @@ namespace Demo.Controllers
             List<Hashtable> infolist = new List<Hashtable>();
             //前端向后端发送数据
             string account = Request.Form["account"];
+            string temp = Request.Form["pageindex"];
+            int index = (temp == null) ? 0 : Convert.ToInt32(temp);
             user = service.getUserInfo(account);
-            ownerlist = service.getOwnerByUser(user);
+            ownerlist = service.getOwnerByUser(user, index);
             if (user == null)
             {
                 code = 500;
             }
             else
             {
-                int sum = 0;
+                int sum = 1;
                 foreach (Owner item in ownerlist)
                 {
                     String completetext = null;
@@ -107,10 +109,11 @@ namespace Demo.Controllers
                     Hashtable table = new Hashtable();
                     table.Add("releasetime", item.Time);
                     table.Add("title", item.Title);
-                    table.Add("pageindex", (sum/50) + 1);
+                    table.Add("pageindex", sum);
                     table.Add("complete", item.Complete);
                     table.Add("completetext", completetext);
                     table.Add("infourl", "/Missing/MissingDetail?id=" + item.ID.ToString());
+                    table.Add("total", ownerlist.Count);
                     infolist.Add(table);
                     sum++;
                 }
@@ -131,15 +134,17 @@ namespace Demo.Controllers
             List<Hashtable> infolist = new List<Hashtable>();
             //前端向后端发送数据
             string account = Request.Form["account"];
+            string temp = Request.Form["pageindex"];
+            int index = (temp == null) ? 0 : Convert.ToInt32(temp);
             user = service.getUserInfo(account);
-            finderlist = service.getFinderByUser(user);
+            finderlist = service.getFinderByUser(user, index);
             if (user == null)
             {
                 code = 500;
             }
             else
             {
-                int sum = 0;
+                int sum = 1;
                 foreach (Finder item in finderlist)
                 {
                     String completetext = null;
@@ -154,10 +159,11 @@ namespace Demo.Controllers
                     Hashtable table = new Hashtable();
                     table.Add("releasetime", item.Time);
                     table.Add("title", item.Title);
-                    table.Add("pageindex", (sum / 50) + 1);
+                    table.Add("pageindex", sum);
                     table.Add("complete", item.Complete);
                     table.Add("completetext", completetext);
                     table.Add("infourl", "/Finding/FinderDetail?id=" + item.ID.ToString());
+                    table.Add("total", finderlist.Count);
                     infolist.Add(table);
                     sum++;
                 }
