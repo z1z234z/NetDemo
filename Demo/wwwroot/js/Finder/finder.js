@@ -1,6 +1,7 @@
 ﻿new Vue({
     el: '#app',
     data: function () {
+
         return {
             isCurrentUser: false,
             userInfo: { username: "shine", avatarURL: "" },
