@@ -15,7 +15,7 @@ using UEditor.Core;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using WebSoketDLL;
-using Demo.Utils;
+using Utils;
 using Microsoft.AspNetCore.Mvc.Razor.Compilation;
 
 namespace Demo
@@ -34,14 +34,14 @@ namespace Demo
         {
             services.AddDbContext<DBContext>(options => options.UseMySQL(Configuration.GetConnectionString("MySql")));
             services.AddUEditorService();
-            /*services.AddMvc().ConfigureApplicationPartManager(manager =>
+            services.AddMvc().ConfigureApplicationPartManager(manager =>
             {
                 //移除ASP.NET CORE MVC管理器中默认内置的MetadataReferenceFeatureProvider，该Provider如果不移除，还是会引发InvalidOperationException: Cannot find compilation library location for package 'MyNetCoreLib'这个错误
                 manager.FeatureProviders.Remove(manager.FeatureProviders.First(f => f is MetadataReferenceFeatureProvider));
                 //注册我们定义的ReferencesMetadataReferenceFeatureProvider到ASP.NET CORE MVC管理器来代替上面移除的MetadataReferenceFeatureProvider
                 manager.FeatureProviders.Add(new ReferencesMetadataReferenceFeatureProvider());
-            });*/
-            services.AddMvc();
+            });
+            //services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

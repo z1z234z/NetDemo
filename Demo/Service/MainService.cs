@@ -27,6 +27,11 @@ namespace Demo.Service
             return loseTypesDao.Select(null, null, null);
         }
 
+        public LoseType GetLoseTypesBuName(string name)
+        {
+            return loseTypesDao.Select(null, name, null)[0];
+        }
+
         public List<LoseType> GetChildrenLoseTypes(LoseType fathertype)
         {
             return loseTypesDao.Select(null, null, fathertype);
@@ -67,5 +72,6 @@ namespace Demo.Service
                 return finderDao.Select(null, null, null, null, null, null, null, null, null, null, index);
             }
         }
+
     }
 }

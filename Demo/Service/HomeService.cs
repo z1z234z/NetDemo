@@ -26,6 +26,7 @@ namespace Demo.Service
         public HomeService(DBContext context)
         {
             loseTypesDao = new LoseTypesDao(context);
+            userDao = new UserDao(context);
             ownerDao = new OwnerDao(context);
             finderDao = new FinderDao(context);
             replyDao = new ReplyDao(context);
@@ -43,14 +44,14 @@ namespace Demo.Service
             return user;
         }
 
-        public List<Owner> getOwnerByUser(User user)
+        public List<Owner> getOwnerByUser(User user, int index)
         {
-            return ownerDao.Select(null, user, null, null, null, null, null, null, null, 0);
+            return ownerDao.Select(null, user, null, null, null, null, null, null, null, index);
         }
 
-        public List<Finder> getFinderByUser(User user)
+        public List<Finder> getFinderByUser(User user, int index)
         {
-            return finderDao.Select(null, user, null, null, null, null, null, null, null, null, 0);
+            return finderDao.Select(null, user, null, null, null, null, null, null, null, null, index);
         }
 
         public List<Reply> getReplyByUser(User user)

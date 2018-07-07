@@ -144,13 +144,14 @@ namespace Demo.Controllers
                     {
                         completetext = "未找到";
                     }
+                    LoseType losttype = service.GetLoseTypesBuName(item.LoseType.Name);
                     Hashtable table = new Hashtable();
                     table.Add("id", item.User.ID);
                     table.Add("avatarURL", item.User.head);
                     table.Add("username", item.User.UserName);
                     table.Add("infoId", item.ID);
                     table.Add("infoTitle", item.Title);
-                    table.Add("fatherType", item.LoseType.FatherType.Name);
+                    table.Add("fatherType", losttype.FatherType.Name);
                     table.Add("type", item.LoseType.Name);
                     table.Add("hidden", item.hidden);
                     table.Add("complete", item.Complete);
