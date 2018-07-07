@@ -107,7 +107,7 @@ namespace CoremvcDemo.Controllers
             user.School = school;
             user.Phone = phone;
             user.Address = address;
-            user.head = "/wwwroot/upload/head/default.jpg";
+            user.head = "/wwwroot/images/head/default.jpg";
             user.summary = "";
             if (service.Register(user))
             {

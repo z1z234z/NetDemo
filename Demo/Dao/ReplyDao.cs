@@ -25,7 +25,7 @@ namespace Demo.Dao
                 List<Reply> list = new List<Reply>();
                 if (index != 0)
                 {
-                    items = items.OrderByDescending(u => u.time).Skip(50 * (index - 1)).Take(50);
+                    items = items.OrderByDescending(u => u.time).Skip(10 * (index - 1)).Take(10);
                 }
                 foreach (var item in items)
                 {

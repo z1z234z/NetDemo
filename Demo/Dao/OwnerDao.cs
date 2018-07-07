@@ -24,7 +24,7 @@ namespace Demo.Dao
                             select s;
                 if (index != 0)
                 {
-                    items = items.OrderByDescending(u => u.LastReplyTime).Skip(50 * (index - 1)).Take(50);
+                    items = items.OrderByDescending(u => u.LastReplyTime).Skip(10 * (index - 1)).Take(10);
                 }
                 List<Owner> list = new List<Owner>();
                 foreach (var item in items)
