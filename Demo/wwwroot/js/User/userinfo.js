@@ -47,6 +47,7 @@
     },
     created() {
         //this.userInfo = { username: window.localStorage["username"], avatarURL: window.localStorage["avatarURL"], id: window.localStorage["id"], account: window.localStorage["account"] }
+        this.getmessagelist()
     },
     methods: {
         getdetailinfo() {
