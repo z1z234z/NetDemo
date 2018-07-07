@@ -88,6 +88,7 @@ namespace Demo.Controllers
             int index = (temp == null) ? 0 : Convert.ToInt32(temp);
             user = service.getUserInfo(account);
             ownerlist = service.getOwnerByUser(user, index);
+            var all = service.getOwnerByUser(user, 0);
             if (user == null)
             {
                 code = 500;
@@ -113,7 +114,7 @@ namespace Demo.Controllers
                     table.Add("complete", item.Complete);
                     table.Add("completetext", completetext);
                     table.Add("infourl", "/Missing/MissingDetail?id=" + item.ID.ToString());
-                    table.Add("total", ownerlist.Count);
+                    table.Add("total", all.Count);
                     infolist.Add(table);
                     sum++;
                 }
@@ -138,6 +139,7 @@ namespace Demo.Controllers
             int index = (temp == null) ? 0 : Convert.ToInt32(temp);
             user = service.getUserInfo(account);
             finderlist = service.getFinderByUser(user, index);
+            var all = service.getFinderByUser(user, 0);
             if (user == null)
             {
                 code = 500;
@@ -163,7 +165,7 @@ namespace Demo.Controllers
                     table.Add("complete", item.Complete);
                     table.Add("completetext", completetext);
                     table.Add("infourl", "/Finding/FinderDetail?id=" + item.ID.ToString());
-                    table.Add("total", finderlist.Count);
+                    table.Add("total", all.Count);
                     infolist.Add(table);
                     sum++;
                 }
@@ -184,8 +186,11 @@ namespace Demo.Controllers
             List<Hashtable> infolist = new List<Hashtable>();
             //前端向后端发送数据
             string account = Request.Form["account"];
+            string temp = Request.Form["pageindex"];
+            int index = (temp == null) ? 0 : Convert.ToInt32(temp);
             user = service.getUserInfo(account);
-            replylist = service.getReplyByUser(user);
+            replylist = service.getReplyByUser(user, index);
+            var all = service.getReplyByUser(user, 0);
             if (user == null)
             {
                 code = 500;
@@ -198,6 +203,7 @@ namespace Demo.Controllers
                     table.Add("title", item.owner.Title);
                     table.Add("releasetime", item.time);
                     table.Add("infourl", "/Missing/MissingDetail?id=" + item.owner.ID.ToString());
+                    table.Add("total", all.Count);
                     infolist.Add(table);
                 }
             }
@@ -217,8 +223,11 @@ namespace Demo.Controllers
             List<Hashtable> infolist = new List<Hashtable>();
             //前端向后端发送数据
             string account = Request.Form["account"];
+            string temp = Request.Form["pageindex"];
+            int index = (temp == null) ? 0 : Convert.ToInt32(temp);
             user = service.getUserInfo(account);
-            pmlist = service.getPMByUser(user);
+            pmlist = service.getPMByUser(user, index);
+            var all = service.getPMByUser(user, 0);
             if (user == null)
             {
                 code = 500;
@@ -254,6 +263,7 @@ namespace Demo.Controllers
                     table.Add("sourcetitle", title);
                     table.Add("sourceurl",item.source);
                     table.Add("sendtime",item.time);
+                    table.Add("total", all.Count);
                     infolist.Add(table);
                 }
             }

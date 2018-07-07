@@ -11,11 +11,11 @@ using System.Collections;
 
 namespace Demo.Controllers
 {
-    public class FinderController : Controller
+    public class FindingController : Controller
     {
         private readonly FindingService service;
 
-        public FinderController(DBContext context)
+        public FindingController(DBContext context)
         {
             service = new FindingService(context);
 

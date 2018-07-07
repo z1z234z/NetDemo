@@ -54,14 +54,14 @@ namespace Demo.Service
             return finderDao.Select(null, user, null, null, null, null, null, null, null, null, index);
         }
 
-        public List<Reply> getReplyByUser(User user)
+        public List<Reply> getReplyByUser(User user, int index)
         {
-            return replyDao.Select(null, null, null, user, null);
+            return replyDao.Select(null, null, null, user, null, index);
         }
 
-        public List<PrivateMessage> getPMByUser(User user)
+        public List<PrivateMessage> getPMByUser(User user, int index)
         {
-            return privateMessageDao.Select(null, null, user, null, null, null);
+            return privateMessageDao.Select(null, null, user, null, null, null, index);
         }
 
         public Owner getOwnerById(int id)

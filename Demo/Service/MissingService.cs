@@ -65,9 +65,9 @@ namespace Demo.Service
             Reply reply = null;
             User user = null;
             Owner owner = null;
-            if (replyDao.Select(id, null, null, null, null).Count > 0)
+            if (replyDao.Select(id, null, null, null, null, 0).Count > 0)
             {
-                reply = replyDao.Select(id, null, null, null, null)[0];
+                reply = replyDao.Select(id, null, null, null, null, 0)[0];
             }
             else
             {
@@ -107,9 +107,9 @@ namespace Demo.Service
         public Reply getReply(int id)
         {
             Reply reply = null;
-            if (replyDao.Select(id, null, null, null, null).Count > 0)
+            if (replyDao.Select(id, null, null, null, null, 0).Count > 0)
             {
-                reply = replyDao.Select(id, null, null, null, null)[0];
+                reply = replyDao.Select(id, null, null, null, null, 0)[0];
             }
             return reply;
         }
@@ -122,9 +122,9 @@ namespace Demo.Service
         public List<Reply> getReplyListByOwner(Owner owner)
         {
             List<Reply> list = new List<Reply>();
-            if (replyDao.Select(null, null, null, null, owner).Count > 0)
+            if (replyDao.Select(null, null, null, null, owner, 0).Count > 0)
             {
-                list = replyDao.Select(null, null, null, null, owner);
+                list = replyDao.Select(null, null, null, null, owner, 0);
             }
             return list;
         }

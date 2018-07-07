@@ -78,6 +78,7 @@ namespace Demo.Controllers
             int index = (temp == "" || type == null) ? 0 : Convert.ToInt32(temp);
             type = (type == "" || type == null) ? null : type;
             list = service.GetOwnerByType(type, index);
+            var all = service.GetOwnerByType(type, 0);
             if (list == null)
             {
                 code = 500;
@@ -105,6 +106,7 @@ namespace Demo.Controllers
                     table.Add("complete", item.Complete);
                     table.Add("completetext", completetext);
                     table.Add("infourl", "/Missing/MissingDetail?id="+item.ID.ToString());
+                    table.Add("total", all.Count);
                     infolist.Add(table);
                 }
             }
@@ -127,6 +129,7 @@ namespace Demo.Controllers
             int index = (temp == "" || type == null) ? 0 : Convert.ToInt32(temp);
             type = (temp == "" || type == null) ? null : type;
             list = service.GetFinderByType(type, index);
+            var all = service.GetFinderByType(type, 0);
             if (list == null)
             {
                 code = 500;
@@ -157,6 +160,7 @@ namespace Demo.Controllers
                     table.Add("complete", item.Complete);
                     table.Add("completetext", completetext);
                     table.Add("infourl", "/Finding/FinderDetail?id=" + item.ID.ToString());
+                    table.Add("total", all.Count);
                     infolist.Add(table);
                 }
             }
