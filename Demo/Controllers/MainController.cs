@@ -191,7 +191,7 @@ namespace Demo.Controllers
                 if (text != "")
                 {
                     list = service.GetOwnerAndTextByType(type, text, index);
-                    all = list.Count;
+                    all = service.GetOwnerAndTextByType(type, text, 0).Count;
                     foreach (var item in list)
                     {
                         String completetext = null;
@@ -215,14 +215,14 @@ namespace Demo.Controllers
                         table.Add("hidden", item.hidden);
                         table.Add("complete", item.Complete);
                         table.Add("completetext", completetext);
-                        table.Add("infourl", "/Finding/FinderDetail?id=" + item.ID.ToString());
+                        table.Add("infourl", "/Missing/MissingDetail?id=" + item.ID.ToString());
                         infolist.Add(table);
                     }
                 }
                 else
                 {
                     list = service.GetOwnerByType(type, index);
-                    all = list.Count;
+                    all = service.GetOwnerByType(type, 0).Count;
                     foreach (var item in list)
                     {
                         String completetext = null;
@@ -246,7 +246,7 @@ namespace Demo.Controllers
                         table.Add("hidden", item.hidden);
                         table.Add("complete", item.Complete);
                         table.Add("completetext", completetext);
-                        table.Add("infourl", "/Finding/FinderDetail?id=" + item.ID.ToString());
+                        table.Add("infourl", "/Missing/MissingDetail?id=" + item.ID.ToString());
                         infolist.Add(table);
                     }
                 }
@@ -263,7 +263,7 @@ namespace Demo.Controllers
                 if (text != "")
                 {
                     list = service.GetFinderAndTextByType(type, text, index);
-                    all = list.Count;
+                    all = service.GetFinderAndTextByType(type, text, 0).Count;
                     foreach (var item in list)
                     {
                         String completetext = null;
@@ -294,7 +294,7 @@ namespace Demo.Controllers
                 else
                 {
                     list = service.GetFinderByType(type, index);
-                    all = list.Count;
+                    all = service.GetFinderByType(type, 0).Count;
                     foreach (var item in list)
                     {
                         String completetext = null;
