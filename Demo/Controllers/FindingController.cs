@@ -52,6 +52,7 @@ namespace Demo.Controllers
                 result.Add("finderTitle", finder.Title);
                 result.Add("finderId", finder.ID);
                 result.Add("question", finder.Question);
+                result.Add("finderIsHidden", finder.hidden);
                 return Ok(new
                 {
                     result = result,
