@@ -55,6 +55,24 @@ namespace Demo.Service
             }
         }
 
+        public List<Owner> GetOwnerAndTextByType(String type, String text, int index)
+        {
+            LoseType loseType = null;
+            var items = loseTypesDao.Select(null, type, null);
+            if (items.Count == 1)
+            {
+                foreach (LoseType item in items)
+                {
+                    loseType = item;
+                }
+                return ownerDao.SearchSelect(text, text, loseType, index);
+            }
+            else
+            {
+                return ownerDao.SearchSelect(text, text, null, index);
+            }
+        }
+
         public List<Finder> GetFinderByType(String type, int index)
         {
             LoseType loseType = null;
@@ -70,6 +88,24 @@ namespace Demo.Service
             else
             {
                 return finderDao.Select(null, null, null, null, null, null, null, null, null, null, index);
+            }
+        }
+
+        public List<Finder> GetFinderAndTextByType(String type, String text, int index)
+        {
+            LoseType loseType = null;
+            var items = loseTypesDao.Select(null, type, null);
+            if (items.Count == 1)
+            {
+                foreach (LoseType item in items)
+                {
+                    loseType = item;
+                }
+                return finderDao.SearchSelect(text, text, loseType, index);
+            }
+            else
+            {
+                return finderDao.SearchSelect(text, text, null, index);
             }
         }
 

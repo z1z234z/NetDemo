@@ -106,13 +106,13 @@ namespace Demo.Controllers
                     table.Add("complete", item.Complete);
                     table.Add("completetext", completetext);
                     table.Add("infourl", "/Missing/MissingDetail?id="+item.ID.ToString());
-                    table.Add("total", all.Count);
                     infolist.Add(table);
                 }
             }
             return Ok(new
             {
                 infolist = infolist,
+                total = all.Count,
                 code = code
             });
         }
@@ -160,13 +160,13 @@ namespace Demo.Controllers
                     table.Add("complete", item.Complete);
                     table.Add("completetext", completetext);
                     table.Add("infourl", "/Finding/FinderDetail?id=" + item.ID.ToString());
-                    table.Add("total", all.Count);
                     infolist.Add(table);
                 }
             }
             return Ok(new
             {
                 infolist = infolist,
+                total = all.Count,
                 code = code
             });
         }
@@ -181,14 +181,25 @@ namespace Demo.Controllers
             string text = Request.Form["searchtext"];
             string temp = Request.Form["missingorfind"];
             string type = Request.Form["type"];
+            string temp2 = Request.Form["index"];
+            int index = (temp2 == "" || temp2 == null) ? 0 : Convert.ToInt32(temp);
             int missingorfind = (temp == null) ? 0 : Convert.ToInt32(temp);
             type = (type == "") ? null : type;
             if (missingorfind == 1)
             {
-                List<Owner> list = service.GetOwnerByType(type, 0);
-                foreach(Owner item in list)
+                List<Owner> list = new List<Owner>();
+                if (text != "")
                 {
-                    if (item.Content.Contains(text) || item.Title.Contains(text))
+                    list = service.GetOwnerAndTextByType(type, text, index);
+                    foreach (var item in list)
+                    {
+                        ownerlist.Add(item);
+                    }
+                }
+                else
+                {
+                    list = service.GetOwnerByType(type, index);
+                    foreach (var item in list)
                     {
                         ownerlist.Add(item);
                     }
@@ -201,10 +212,19 @@ namespace Demo.Controllers
             }
             else if (missingorfind == 2)
             {
-                List<Finder> list = service.GetFinderByType(type, 0);
-                foreach (Finder item in list)
+                List<Finder> list = new List<Finder>();
+                if (text != "")
                 {
-                    if (item.Content.Contains(text) || item.Title.Contains(text))
+                    list = service.GetFinderAndTextByType(type, text, index);
+                    foreach (var item in list)
+                    {
+                        finderlist.Add(item);
+                    }
+                }
+                else
+                {
+                    list = service.GetFinderByType(type, index);
+                    foreach (var item in list)
                     {
                         finderlist.Add(item);
                     }

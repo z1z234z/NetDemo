@@ -114,7 +114,6 @@ namespace Demo.Controllers
                     table.Add("complete", item.Complete);
                     table.Add("completetext", completetext);
                     table.Add("infourl", "/Missing/MissingDetail?id=" + item.ID.ToString());
-                    table.Add("total", all.Count);
                     infolist.Add(table);
                     sum++;
                 }
@@ -122,6 +121,7 @@ namespace Demo.Controllers
             return Ok(new
             {
                 result = infolist,
+                total = all.Count,
                 code = code
             });
         }
@@ -165,7 +165,6 @@ namespace Demo.Controllers
                     table.Add("complete", item.Complete);
                     table.Add("completetext", completetext);
                     table.Add("infourl", "/Finding/FinderDetail?id=" + item.ID.ToString());
-                    table.Add("total", all.Count);
                     infolist.Add(table);
                     sum++;
                 }
@@ -173,6 +172,7 @@ namespace Demo.Controllers
             return Ok(new
             {
                 result = infolist,
+                total = all.Count,
                 code = code
             });
         }
@@ -203,13 +203,13 @@ namespace Demo.Controllers
                     table.Add("title", item.owner.Title);
                     table.Add("releasetime", item.time);
                     table.Add("infourl", "/Missing/MissingDetail?id=" + item.owner.ID.ToString());
-                    table.Add("total", all.Count);
                     infolist.Add(table);
                 }
             }
             return Ok(new
             {
                 result = infolist,
+                total = all.Count,
                 code = code
             });
         }
