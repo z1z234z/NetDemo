@@ -428,6 +428,10 @@
                                     })
                                     _this.logining = false
                                     if (window.localStorage) {
+                                        window.localStorage.removeItem("username")
+                                        window.localStorage.removeItem("avatarURL")
+                                        window.localStorage.removeItem("id")
+                                        window.localStorage.removeItem("account")
                                         window.localStorage["username"] = data.userinfo.username
                                         window.localStorage["avatarURL"] = data.userinfo.avatarURL
                                         window.localStorage["id"] = data.userinfo.id

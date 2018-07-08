@@ -100,9 +100,11 @@ new Vue({
             let _this = this
             this.replyLoading = true
             ajaxPost("/Missing/DetailReply", { id: this.id }, function (data) {
+                console.log(data)
                 if (data.code == 200) {
                     if (data.result) {
                         _this.allreply = data.result
+                        _this.answerNum = data.result.length
                     }
                   
                 }

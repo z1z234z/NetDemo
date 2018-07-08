@@ -106,7 +106,7 @@ new Vue({
             })
         },
         pagechange() {
-            getinfobytype(this.missingtype, this.pageindex)
+            this.getinfo(this.missingtype, this.pageindex)
         },
         typechange(type, index) {
             this.missingtype = type
