@@ -39,6 +39,7 @@
             console.log(postdata)
             ajaxPost("/Missing/Comment", { id: answerId, account: window.localStorage["account"], content:this.newComment }, function (data) {
                 if (data.code == 200) {
+                    console.log(data)
                     if (data.result) {
                         _this.$message({
                             message: '发送评论成功',
