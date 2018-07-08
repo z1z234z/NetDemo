@@ -37,7 +37,7 @@
                         duration: 2000
                     })
                 }
-                this.isLoadingComment = false
+                _this.isLoadingComment = false
             })
     
         },
