@@ -18,7 +18,7 @@
             messagelist: [{ senduserinfo: { username: "asasd", avatarURL: "avatarURL", id: "id", account: "account" },content:"私信内容",sourcetitle:"帖子来源",sourceurl:"",sendtime:""}],
             infolist: [{ pageindex: 1, complete: true, completetext: "未找到", title: "标题12",infourl: "/", releasetime: new Date() }],
             allreaply: [{ title: "回复贴的标题",infourl: "/", releasetime: "" }],
-            imageUrl: "",
+            imageUrl: window.localStorage["avatarURL"],
             userInfo: { username: window.localStorage["username"], avatarURL: window.localStorage["avatarURL"], id: window.localStorage["id"], account: window.localStorage["account"] },
             school: "同济大学",
             viewindex:1,
@@ -49,6 +49,7 @@
     },
     created() {
         //this.userInfo = { username: window.localStorage["username"], avatarURL: window.localStorage["avatarURL"], id: window.localStorage["id"], account: window.localStorage["account"] }
+        this.getdetailinfo()
         this.getmessagelist()
     },
     methods: {
@@ -57,8 +58,10 @@
             this.isLoadingData = true
             ajaxPost("/Home/GetUserInfo", { account: this.userInfo.account, pageindex: this.getcurrentpageindex()}, function (data) {
                 if (data.code == 200) {
+                    console.log(data)
                     if (data.userinfo) {
                         _this.userInfo = data.userinfo
+                        _this.profile = _this.userInfo.profile
                     }
                     else {
                         _this.$message({
@@ -78,6 +81,10 @@
                 }
                 _this.isLoadingData = false
             })
+        },
+        radioChange() {
+            this.currentPage2 = 1
+            this.getinfolist()
         },
         getreplylist() {
             let _this = this
@@ -169,7 +176,40 @@
                 _this.isLoadingData = false
             })
         },
+        save() {
+            alert("here")
+            let _this = this
+            this.isLoadingData = true
+            ajaxPost("/Home/EditProfile", { account: this.userInfo.account, profile: this.profile }, function (data) {
+                if (data.code == 200) {
+                    if (data.result) {
+                        _this.$message({
+                            message: '编辑简介成功',
+                            type: 'success',
+                            duration: 2000
+                        })
+                    }
+                    else {
+                        _this.$message({
+                            message: '编辑简介失败',
+                            type: 'error',
+                            duration: 2000
+                        })
+                    }
+
+                }
+                else {
+                    _this.$message({
+                        message: '编辑简介异常',
+                        type: 'error',
+                        duration: 2000
+                    })
+                }
+                _this.isLoadingData = false
+            })
+        },
         saveProfile() {
+            alert("here")
             let _this = this
             this.isLoadingData = true
             ajaxPost("/Home/EditProfile", { account: this.userInfo.account, profile: this.profile }, function (data) {

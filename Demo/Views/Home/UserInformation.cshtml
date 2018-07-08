@@ -65,7 +65,7 @@
                                                     </el-input>
                                                     <div class="button-panel" style="padding-top: 5px;float: right">
                                                         <el-button @@click="showEditProfilePanel=false" size="mini">取消</el-button>
-                                                        <el-button :disabled="isSavingProfile" @@click="saveProfile()" size="mini" type="success">保存</el-button>
+                                                        <el-button :disabled="isSavingProfile" @@click="save()" size="mini" type="success">保存</el-button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -134,7 +134,7 @@
                                         <h3 class="question_heading">
                                             <span>{{ infoPrefix }}发帖</span>
                                             <span class="sort-box" style="float: right">
-                                                <el-radio-group v-model="infotype">
+                                                <el-radio-group v-model="infotype" @@change="radioChange()">
                                                     <el-radio-button label="我的丢失"></el-radio-button>
                                                     <el-radio-button label="我的捡到"></el-radio-button>
                                                 </el-radio-group>
