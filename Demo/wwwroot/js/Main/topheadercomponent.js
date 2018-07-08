@@ -23,7 +23,7 @@
             this.searchtext = question
             this.loadingmissings = true
             let _this = this
-            ajaxPost("Main/Search", { type: this.type, index: this.pageindex, missingorfind: this.missorfind, searchtext: this.searchtext}, function (data) {
+            ajaxPost("/Main/Search", { type: this.type, index: this.pageindex, missingorfind: this.missorfind, searchtext: this.searchtext}, function (data) {
                 console.log(data)
                 if (data.code == 200) {
                     _this.infolist = data.infolist
@@ -65,7 +65,7 @@
         <img width="150" height="60" src="/images/title.jpg" />
       </div>
     </el-menu-item>
-    <el-menu-item index="1" v-if="showsearch=="true">
+    <el-menu-item index="1" v-if="showsearch">
       <el-input 
         @keyup.enter.native="search" v-model="question" placeholder="请输入搜索内容">
       </el-input>

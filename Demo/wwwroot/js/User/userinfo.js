@@ -142,7 +142,7 @@
             } else {
                 url = "/Home/GetMissingByUser"
             }
-            ajaxPost(url, { account: this.userInfo.account, pageindex:this.}, function (data) {
+            ajaxPost(url, { account: this.userInfo.account, pageindex: this.getcurrentpageindex() }, function (data) {
                 if (data.code == 200) {
                     if (data.result) {
                         _this.infolist = data.result
@@ -214,9 +214,16 @@
                 return this.currentPage1
             }
         },
-        handleCurrentChange1() { },
-        handleCurrentChange2() { },
-        handleCurrentChange3() { },
+        handleCurrentChange() {
+            if (this.viewindex == 1) {
+                alert(this.currentPage1)
+            } else if (this.viewindex == 2) {
+                alert(this.currentPage2)
+            } else if (this.currentPage3) {
+                alert(this.currentPage3)
+            }
+
+        },
         handleAvatarSuccess(res, file) {
             this.imageUrl = URL.createObjectURL(file.raw);
         },

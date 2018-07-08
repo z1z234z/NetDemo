@@ -80,7 +80,7 @@ new Vue({
         getinfo() {
             this.loadingmissings = true
             let _this = this
-            ajaxPost(url, { type: this.missingtype, index: this.pageindex, missingorfind: this.missorfind, searchtext: this.searchtext }, function (data) {
+            ajaxPost("/Main/Search", { type: this.missingtype, index: this.pageindex, missingorfind: this.missorfind, searchtext: this.searchtext }, function (data) {
                 console.log(data)
                 if (data.code == 200) {
                     _this.infoOverviewList = data.infolist
