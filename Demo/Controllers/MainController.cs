@@ -181,8 +181,9 @@ namespace Demo.Controllers
             string temp = Request.Form["missingorfind"];
             string type = Request.Form["type"];
             string temp2 = Request.Form["index"];
-            int index = (temp2 == "" || temp2 == null) ? 0 : Convert.ToInt32(temp);
+            int index = (temp2 == "" || temp2 == null) ? 0 : Convert.ToInt32(temp2);
             int missingorfind = (temp == null) ? 0 : Convert.ToInt32(temp);
+            int all = 0;
             type = (type == "") ? null : type;
             if (missingorfind == 1)
             {
@@ -190,6 +191,7 @@ namespace Demo.Controllers
                 if (text != "")
                 {
                     list = service.GetOwnerAndTextByType(type, text, index);
+                    all = list.Count;
                     foreach (var item in list)
                     {
                         String completetext = null;
@@ -220,6 +222,7 @@ namespace Demo.Controllers
                 else
                 {
                     list = service.GetOwnerByType(type, index);
+                    all = list.Count;
                     foreach (var item in list)
                     {
                         String completetext = null;
@@ -250,6 +253,7 @@ namespace Demo.Controllers
                 return Ok(new
                 {
                     infolist = infolist,
+                    total = all,
                     code = code
                 });
             }
@@ -259,6 +263,7 @@ namespace Demo.Controllers
                 if (text != "")
                 {
                     list = service.GetFinderAndTextByType(type, text, index);
+                    all = list.Count;
                     foreach (var item in list)
                     {
                         String completetext = null;
@@ -289,6 +294,7 @@ namespace Demo.Controllers
                 else
                 {
                     list = service.GetFinderByType(type, index);
+                    all = list.Count;
                     foreach (var item in list)
                     {
                         String completetext = null;
@@ -319,6 +325,7 @@ namespace Demo.Controllers
                 return Ok(new
                 {
                     infolist = infolist,
+                    total = all,
                     code = code
                 });
             }
@@ -327,7 +334,8 @@ namespace Demo.Controllers
                 code = 500;
                 return Ok(new
                 {
-                    infolist = "",
+                    infolist = infolist,
+                    total = all,
                     code = code
                 });
             }
