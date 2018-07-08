@@ -175,8 +175,7 @@ namespace Demo.Controllers
         public IActionResult Search()
         {
             int code = 200;
-            List<Finder> finderlist = new List<Finder>();
-            List<Owner> ownerlist = new List<Owner>();
+            List<Hashtable> infolist = new List<Hashtable>();
             //前端向后端发送数据
             string text = Request.Form["searchtext"];
             string temp = Request.Form["missingorfind"];
@@ -193,7 +192,29 @@ namespace Demo.Controllers
                     list = service.GetOwnerAndTextByType(type, text, index);
                     foreach (var item in list)
                     {
-                        ownerlist.Add(item);
+                        String completetext = null;
+                        if (item.Complete)
+                        {
+                            completetext = "已找到";
+                        }
+                        else
+                        {
+                            completetext = "未找到";
+                        }
+                        LoseType losttype = service.GetLoseTypesBuName(item.LoseType.Name);
+                        Hashtable table = new Hashtable();
+                        table.Add("id", item.User.ID);
+                        table.Add("avatarURL", item.User.head);
+                        table.Add("username", item.User.UserName);
+                        table.Add("infoId", item.ID);
+                        table.Add("infoTitle", item.Title);
+                        table.Add("fatherType", losttype.FatherType.Name);
+                        table.Add("type", item.LoseType.Name);
+                        table.Add("hidden", item.hidden);
+                        table.Add("complete", item.Complete);
+                        table.Add("completetext", completetext);
+                        table.Add("infourl", "/Finding/FinderDetail?id=" + item.ID.ToString());
+                        infolist.Add(table);
                     }
                 }
                 else
@@ -201,12 +222,34 @@ namespace Demo.Controllers
                     list = service.GetOwnerByType(type, index);
                     foreach (var item in list)
                     {
-                        ownerlist.Add(item);
+                        String completetext = null;
+                        if (item.Complete)
+                        {
+                            completetext = "已找到";
+                        }
+                        else
+                        {
+                            completetext = "未找到";
+                        }
+                        LoseType losttype = service.GetLoseTypesBuName(item.LoseType.Name);
+                        Hashtable table = new Hashtable();
+                        table.Add("id", item.User.ID);
+                        table.Add("avatarURL", item.User.head);
+                        table.Add("username", item.User.UserName);
+                        table.Add("infoId", item.ID);
+                        table.Add("infoTitle", item.Title);
+                        table.Add("fatherType", losttype.FatherType.Name);
+                        table.Add("type", item.LoseType.Name);
+                        table.Add("hidden", item.hidden);
+                        table.Add("complete", item.Complete);
+                        table.Add("completetext", completetext);
+                        table.Add("infourl", "/Finding/FinderDetail?id=" + item.ID.ToString());
+                        infolist.Add(table);
                     }
                 }
                 return Ok(new
                 {
-                    infolist = ownerlist,
+                    infolist = infolist,
                     code = code
                 });
             }
@@ -218,7 +261,29 @@ namespace Demo.Controllers
                     list = service.GetFinderAndTextByType(type, text, index);
                     foreach (var item in list)
                     {
-                        finderlist.Add(item);
+                        String completetext = null;
+                        if (item.Complete)
+                        {
+                            completetext = "已找到";
+                        }
+                        else
+                        {
+                            completetext = "未找到";
+                        }
+                        LoseType losttype = service.GetLoseTypesBuName(item.LoseType.Name);
+                        Hashtable table = new Hashtable();
+                        table.Add("id", item.User.ID);
+                        table.Add("avatarURL", item.User.head);
+                        table.Add("username", item.User.UserName);
+                        table.Add("infoId", item.ID);
+                        table.Add("infoTitle", item.Title);
+                        table.Add("fatherType", losttype.FatherType.Name);
+                        table.Add("type", item.LoseType.Name);
+                        table.Add("hidden", item.hidden);
+                        table.Add("complete", item.Complete);
+                        table.Add("completetext", completetext);
+                        table.Add("infourl", "/Finding/FinderDetail?id=" + item.ID.ToString());
+                        infolist.Add(table);
                     }
                 }
                 else
@@ -226,12 +291,34 @@ namespace Demo.Controllers
                     list = service.GetFinderByType(type, index);
                     foreach (var item in list)
                     {
-                        finderlist.Add(item);
+                        String completetext = null;
+                        if (item.Complete)
+                        {
+                            completetext = "已找到";
+                        }
+                        else
+                        {
+                            completetext = "未找到";
+                        }
+                        LoseType losttype = service.GetLoseTypesBuName(item.LoseType.Name);
+                        Hashtable table = new Hashtable();
+                        table.Add("id", item.User.ID);
+                        table.Add("avatarURL", item.User.head);
+                        table.Add("username", item.User.UserName);
+                        table.Add("infoId", item.ID);
+                        table.Add("infoTitle", item.Title);
+                        table.Add("fatherType", losttype.FatherType.Name);
+                        table.Add("type", item.LoseType.Name);
+                        table.Add("hidden", item.hidden);
+                        table.Add("complete", item.Complete);
+                        table.Add("completetext", completetext);
+                        table.Add("infourl", "/Finding/FinderDetail?id=" + item.ID.ToString());
+                        infolist.Add(table);
                     }
                 }
                 return Ok(new
                 {
-                    infolist = finderlist,
+                    infolist = infolist,
                     code = code
                 });
             }
