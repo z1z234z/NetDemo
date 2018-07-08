@@ -20,7 +20,7 @@
     },
     methods: {
         search() {
-            this.searchtext = question
+            this.searchtext = this.question
             this.loadingmissings = true
             let _this = this
             ajaxPost("/Main/Search", { type: this.type, index: this.pageindex, missingorfind: this.missorfind, searchtext: this.searchtext}, function (data) {
