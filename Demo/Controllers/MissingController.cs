@@ -76,6 +76,26 @@ namespace Demo.Controllers
         }
 
         [HttpPost]
+        public IActionResult Message()
+        {
+            bool result = false;
+            //前端向后端发送数据
+            String sourceurl = Request.Form["sourceurl"];
+            String touser = Request.Form["touser"];
+            String content = Request.Form["content"];
+            String account = Request.Form["account"];
+            if (service.saveMessage(account, touser, content, sourceurl))
+            {
+                result = true;
+            }
+            return Ok(new
+            {
+                result = result,
+                code = 200,
+            });
+        }
+
+        [HttpPost]
         public IActionResult Detail()
         {
             Hashtable result = new Hashtable();
@@ -107,6 +127,7 @@ namespace Demo.Controllers
                 });
             }
         }
+
 
         [HttpPost]
         public IActionResult Completed()

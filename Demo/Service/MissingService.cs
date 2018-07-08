@@ -17,12 +17,15 @@ namespace Demo.Service
 
         private readonly ReplyCommentDao replyCommentDao;
 
+        private readonly PrivateMessageDao privateMessageDao;
+
         public MissingService(DBContext context)
         {
             userDao = new UserDao(context);
             ownerDao = new OwnerDao(context);
             replyDao = new ReplyDao(context);
             replyCommentDao = new ReplyCommentDao(context);
+            privateMessageDao = new PrivateMessageDao(context);
         }
 
         public bool saveReply(int id, String content, String account)
@@ -89,6 +92,40 @@ namespace Demo.Service
             replycomment.User = user;
             owner.LastReplyTime = replycomment.time;
             if (replyCommentDao.Create(replycomment) && ownerDao.Edit(owner))
+            {
+                result = true;
+            }
+            return result;
+        }
+
+        public bool saveMessage(String account, String touser, String content, String url)
+        {
+            bool result = false;
+            User sender = null;
+            User receiver = null;
+            if (userDao.Select(null, account, null, null, null, null, null, null, null, null, null, null, null).Count > 0)
+            {
+                sender = userDao.Select(null, account, null, null, null, null, null, null, null, null, null, null, null)[0];
+            }
+            else
+            {
+                return result;
+            }
+            if (userDao.Select(null, touser, null, null, null, null, null, null, null, null, null, null, null).Count > 0)
+            {
+                receiver = userDao.Select(null, touser, null, null, null, null, null, null, null, null, null, null, null)[0];
+            }
+            else
+            {
+                return result;
+            }
+            PrivateMessage privateMessage = new PrivateMessage();
+            privateMessage.content = content;
+            privateMessage.Receiver = receiver;
+            privateMessage.time = DateTime.Now;
+            privateMessage.Sender = sender;
+            privateMessage.source = url;
+            if (privateMessageDao.Create(privateMessage))
             {
                 result = true;
             }
