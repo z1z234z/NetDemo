@@ -43,7 +43,7 @@ namespace CoremvcDemo.Controllers
             string comfirm = "false";
             Hashtable result = new Hashtable();
             //前端向后端发送数据
-            string account = Request.Form["account"];
+            string account = Request.Form["username"];
             string password = Request.Form["password"];
             if (service.AccountComfirm(account, password))
             {
