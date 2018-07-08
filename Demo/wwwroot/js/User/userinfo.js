@@ -55,7 +55,7 @@
         getdetailinfo() {
             let _this = this
             this.isLoadingData = true
-            ajaxPost("/Home/GetUserInfo", { account: this.userInfo.account }, function (data) {
+            ajaxPost("/Home/GetUserInfo", { account: this.userInfo.account, pageindex: this.getcurrentpageindex()}, function (data) {
                 if (data.code == 200) {
                     if (data.userinfo) {
                         _this.userInfo = data.userinfo
@@ -82,10 +82,11 @@
         getreplylist() {
             let _this = this
             this.isLoadingData = true
-            ajaxPost("/Home/GetReplyByUser", { account: this.userInfo.account }, function (data) {
+            ajaxPost("/Home/GetReplyByUser", { account: this.userInfo.account, pageindex: this.getcurrentpageindex()}, function (data) {
                 if (data.code == 200) {
                     if (data.result) {
                         _this.allreaply = data.result
+                        _this.total3 = data.total
                     }
                     else {
                         _this.$message({
@@ -109,10 +110,11 @@
         getmessagelist() {
             let _this = this
             this.isLoadingData = true
-            ajaxPost("/Home/GetPMByUser", { account: this.userInfo.account }, function (data) {
+            ajaxPost("/Home/GetPMByUser", { account: this.userInfo.account, pageindex: this.getcurrentpageindex()  }, function (data) {
                 if (data.code == 200) {
                     if (data.result) {
                         _this.messagelist = data.result
+                        _this.total1 = data.total
                     }
                     else {
                         _this.$message({
@@ -137,7 +139,7 @@
             let _this = this
             this.isLoadingData = true
             var url = ''
-            if (infotype == "我的捡到") {
+            if (this.infotype == "我的捡到") {
                 url = "/Home/GetFindingByUser"
             } else {
                 url = "/Home/GetMissingByUser"
@@ -146,6 +148,7 @@
                 if (data.code == 200) {
                     if (data.result) {
                         _this.infolist = data.result
+                        _this.total2 = data.total
                     }
                     else {
                         _this.$message({
@@ -199,11 +202,14 @@
         },
         changeview(index) {
             this.viewindex = index
+            this.currentPage1 = 1
+            this.currentPage2 = 1
+            this.currentPage3 = 1
             if (index == 1) {
                 this.getmessagelist()
             }
             else if (index == 2) {
-                this.getdetailinfo()
+                this.getinfolist()
             }
             else if (index == 3) {
                 this.getreplylist()
@@ -213,14 +219,19 @@
             if (this.viewindex == 1) {
                 return this.currentPage1
             }
+            else if (this.viewindex == 2) {
+                return this.currentPage2
+            } else if (this.viewindex == 3) {
+                return this.currentPage3
+            }
         },
         handleCurrentChange() {
             if (this.viewindex == 1) {
-                alert(this.currentPage1)
+                this.getmessagelist()
             } else if (this.viewindex == 2) {
-                alert(this.currentPage2)
+                this.getinfolist()
             } else if (this.currentPage3) {
-                alert(this.currentPage3)
+                this.getreplylist()
             }
 
         },
