@@ -164,6 +164,7 @@ namespace Demo.Controllers
                     Hashtable account = new Hashtable();
                     List<ReplyComment> replyComments = service.getReplyCommentListByReply(item);
                     account.Add("username", item.User.UserName);
+                    account.Add("avatarURL", item.User.head);
                     table.Add("account", account);
                     table.Add("replyDateTime", item.time);
                     table.Add("replyContent", item.ReplyContent);
@@ -204,7 +205,7 @@ namespace Demo.Controllers
                     Hashtable commenter = new Hashtable();
                     commenter.Add("id", item.ID);
                     commenter.Add("username", item.User.UserName);
-                    commenter.Add("avatarURL", "http://localhost:25978/wwwroot/upload/head/default.jpg");
+                    commenter.Add("avatarURL", item.User.head);
                     table.Add("commenter", commenter);
                     table.Add("commentContent", item.ReplyContent);
                     table.Add("commentDateTime", item.time);
