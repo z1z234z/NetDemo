@@ -89,7 +89,7 @@
                                     </div>
                                     <div class="operation-option">
                                         <el-menu :defaultActive="activeIndex">
-                                            <el-menu-item @@click="changeview(1)" index="1"><i class="fa fa-home fa-lg"></i>{{ infoPrefix }}私信</el-menu-item>
+                                            <el-menu-item @@click="changeview(1)" index="1"><span v-loading.lock="isGettingMessage"><i class="fa fa-home fa-lg"></i>{{ infoPrefix }}私信</span> </el-menu-item>
                                             <el-menu-item @@click="changeview(2)" index="2"><span v-loading.lock="isGettingQuestionCount"><i class="fa fa-question-circle fa-lg"></i>{{ infoPrefix }}发帖 {{ questionCount }}</span> </el-menu-item>
                                             <el-menu-item @@click="changeview(3)" index="3"><span v-loading.lock="isGettingAnswerCount"><i class="fa fa-key fa-lg"></i>{{ infoPrefix }}回复 {{ answerCount }}</span></el-menu-item>
                                         </el-menu>
@@ -134,9 +134,9 @@
                                         <h3 class="question_heading">
                                             <span>{{ infoPrefix }}发帖</span>
                                             <span class="sort-box" style="float: right">
-                                                <el-radio-group v-model="sortParam2">
-                                                    <el-radio-button label="发布时间"></el-radio-button>
-                                                    <el-radio-button label="最近回复"></el-radio-button>
+                                                <el-radio-group v-model="infotype">
+                                                    <el-radio-button label="我的丢失"></el-radio-button>
+                                                    <el-radio-button label="我的捡到"></el-radio-button>
                                                 </el-radio-group>
                                             </span>
                                         </h3>
@@ -169,6 +169,7 @@
                                             </div>
                                         </div>
                                     </div>
+                 
                                     <div v-if="viewindex==1">
                                         <h3 class="question_heading">
                                             <span>{{ infoPrefix }}私信</span>
@@ -191,7 +192,7 @@
                                                         <span style="margin-left: 10px" class="question-title">
                                                             {{ message.content }}
                                                         </span>
-                                                      
+
                                                     </el-col>
                                                     <el-col :span="4">
                                                         <a :href="message.sourceurl">

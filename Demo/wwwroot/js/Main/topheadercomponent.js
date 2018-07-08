@@ -65,7 +65,7 @@
         <img width="150" height="60" src="/images/title.jpg" />
       </div>
     </el-menu-item>
-    <el-menu-item index="1" v-if="showsearch==true">
+    <el-menu-item index="1" v-if="showsearch=="true">
       <el-input 
         @keyup.enter.native="search" v-model="question" placeholder="请输入搜索内容">
       </el-input>

@@ -2,6 +2,8 @@
     el: '#app',
     data() {
         return {
+            isGettingMessage:false,
+            infotype:'我的丢失',
             isLoadingData:false,
             pageSize:10,
             total1: 20,
@@ -83,7 +85,7 @@
             ajaxPost("/Home/GetReplyByUser", { account: this.userInfo.account }, function (data) {
                 if (data.code == 200) {
                     if (data.result) {
-                        _this.userInfo = data.result
+                        _this.allreaply = data.result
                     }
                     else {
                         _this.$message({
@@ -114,7 +116,7 @@
                     }
                     else {
                         _this.$message({
-                            message: '获取我的回复为空',
+                            message: '获取我的私信为空',
                             type: 'error',
                             duration: 2000
                         })
@@ -123,7 +125,7 @@
                 }
                 else {
                     _this.$message({
-                        message: '获取我的回复异常',
+                        message: '获取我的私信异常',
                         type: 'error',
                         duration: 2000
                     })
@@ -134,7 +136,13 @@
         getinfolist() {
             let _this = this
             this.isLoadingData = true
-            ajaxPost("/Home/GetFindingByUser", { account: this.userInfo.account }, function (data) {
+            var url = ''
+            if (infotype == "我的捡到") {
+                url = "/Home/GetFindingByUser"
+            } else {
+                url = "/Home/GetMissingByUser"
+            }
+            ajaxPost(url, { account: this.userInfo.account, pageindex:this.}, function (data) {
                 if (data.code == 200) {
                     if (data.result) {
                         _this.infolist = data.result
@@ -199,6 +207,11 @@
             }
             else if (index == 3) {
                 this.getreplylist()
+            }
+        },
+        getcurrentpageindex() {
+            if (this.viewindex == 1) {
+                return this.currentPage1
             }
         },
         handleCurrentChange1() { },
