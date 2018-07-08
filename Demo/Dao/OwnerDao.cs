@@ -40,6 +40,31 @@ namespace Demo.Dao
             }
         }
 
+        public List<Owner> SearchSelect(String content,String title, LoseType losetype, int index)
+        {
+            try
+            {
+                var items = from s in _context.Owners.Include("LoseType").Include("User")
+                            where (s.Content.Contains(content)) || (s.Title.Contains(title)) && ((losetype == null) || s.LoseType == losetype)
+                            select s;
+                if (index != 0)
+                {
+                    items = items.OrderByDescending(u => u.LastReplyTime).Skip(10 * (index - 1)).Take(10);
+                }
+                List<Owner> list = new List<Owner>();
+                foreach (var item in items)
+                {
+                    list.Add(item);
+                }
+                return list;
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return null;
+            }
+        }
+
 
         public bool Edit(Owner owner)
         {
