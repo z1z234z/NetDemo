@@ -159,7 +159,7 @@ new Vue({
         },
         submitMessage() {
             let _this = this
-            ajaxPost("/Missing/Message", { account: this.userInfo.account, touser: this.missing.account, content: this.messagetouser, souceurl: "/Missing/Detail/?id=" + this.missing.missingId }, function (data) {
+            ajaxPost("/Missing/Message", { account: this.userInfo.account, touser: this.missing.account, content: this.messagetouser, sourceurl: "/Missing/Detail/?id=" + this.missing.missingId }, function (data) {
                 if (data.code == 200) {
                     if (data.result) {
                         _this.$message({
