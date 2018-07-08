@@ -161,7 +161,7 @@ new Vue({
             let _this = this
             var tmep = { account: this.userInfo.account, touser: this.missing.account, content: this.messagetouser, sourceurl: "/Missing/Detail/?id=" + this.missing.missingId }
             console.log(tmep)
-            ajaxPost("/Missing/Message", { account: this.userInfo.account, touser: this.missing.account, content: this.messagetouser, sourceurl: "/Missing/Detail/?id=" + this.missing.missingId }, function (data) {
+            ajaxPost("/Missing/Message", { account: this.userInfo.account, touser: this.missing.account, content: this.messagetouser, sourceurl: "/Missing/MissingDetail/?id=" + this.missing.missingId }, function (data) {
                 if (data.code == 200) {
                     if (data.result) {
                         _this.$message({
